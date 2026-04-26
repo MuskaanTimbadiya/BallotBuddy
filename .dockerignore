@@ -1,0 +1,22 @@
+# Dependencies (Docker will install its own fresh copy)
+node_modules/
+
+# Environment variables (CRITICAL: Never bake secrets into the image)
+.env
+
+# Git files
+.git/
+.gitignore
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Docs and Tests (Not needed for the live running application)
+README.md
+test.js
+test-models.js
