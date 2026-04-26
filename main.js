@@ -137,12 +137,18 @@ const translations = {
     quizResultGood: "संतोषजनक। विस्तृत जानकारी के लिए कृपया गाइड देखें।",
     quizBtnClose: "क्विज बंद करें",
     timelines: [
-      { id: "kolkata", title: "कोलकाता विधानसभा चुनाव", content: "पश्चिम बंगाल विधानसभा चुनाव 2026: 23 अप्रैल और 29 अप्रैल।" },
-      { id: "tamilnadu", title: "तमिलनाडु विधानसभा चुनाव", content: "तमिलनाडु विधानसभा चुनाव 2026: 23 अप्रैल।" }
+      { id: "wb", title: "कोलकाता विधानसभा चुनाव", content: "पश्चिम बंगाल विधानसभा चुनाव 2026: चरण I - 23 अप्रैल, चरण II - 29 अप्रैल। मतगणना: 4 मई।" },
+      { id: "tn", title: "तमिलनाडु विधानसभा चुनाव", content: "तमिलनाडु विधानसभा चुनाव 2026: 23 अप्रैल (234 सीटें)। मतगणना: 4 मई।" },
+      { id: "mh", title: "महाराष्ट्र नगर निगम चुनाव", content: "महाराष्ट्र नगर निगम चुनाव 2026: 15 अक्टूबर।" },
+      { id: "dl", title: "दिल्ली विधानसभा चुनाव", content: "दिल्ली विधानसभा चुनाव 2026: 8 फरवरी।" }
     ],
     steps: [
-      { title: "चरण 1: पात्रता सत्यापित करें", content: "आप भारत के नागरिक होने चाहिए और आपकी आयु 18 वर्ष या उससे अधिक होनी चाहिए।" },
-      { title: "चरण 2: मतदाता पंजीकरण", content: "मतदाता फोटो पहचान पत्र (EPIC) प्राप्त करने के लिए पंजीकरण करें।" }
+      { title: "चरण 1: पात्रता सत्यापित करें", content: "आप भारत के नागरिक होने चाहिए और 18 वर्ष या उससे अधिक आयु के होने चाहिए।" },
+      { title: "चरण 2: मतदाता पंजीकरण (EPIC)", content: "फॉर्म 6 (नए मतदाता) या फॉर्म 8 (विवरण सुधार) के माध्यम से voters.eci.gov.in पर पंजीकरण करें।" },
+      { title: "चरण 3: निर्वाचक नामावली सत्यापन", content: "electoralsearch.eci.gov.in पर अपना नाम जांचें और अपना मतदान केंद्र नोट करें।" },
+      { title: "चरण 4: उम्मीदवार जानकारी", content: "ECI के KYC ऐप का उपयोग करके उम्मीदवारों के हलफनामे और घोषणापत्र देखें।" },
+      { title: "चरण 5: मतदान केंद्र प्रक्रिया", content: "मतदाता पहचान पत्र या स्वीकृत वैकल्पिक आईडी लेकर जाएं। मोबाइल फोन वर्जित है।" },
+      { title: "चरण 6: EVM/VVPAT द्वारा मतदान", content: "नीले बटन दबाकर वोट करें। VVPAT मशीन पर 7 सेकंड के लिए पर्ची दिखाई देगी।" }
     ],
     quiz: [
       { q: "भारत में मतदान के लिए न्यूनतम आयु क्या है?", options: ["16 वर्ष", "18 वर्ष", "21 वर्ष"], ans: 1 },
@@ -166,10 +172,18 @@ const translations = {
     quizResultGood: "সন্তোষজনক। বিস্তারিত জানার জন্য গাইডটি দেখুন।",
     quizBtnClose: "কুইজ বন্ধ করুন",
     timelines: [
-      { title: "কলকাতা বিধানসভা নির্বাচন", content: "২০২৬ সালের পশ্চিমবঙ্গ বিধানসভা নির্বাচনের অফিসিয়াল সময়সূচী: ২৩ এপ্রিল এবং ২৯ এপ্রিল।" }
+      { id: "wb", title: "কলকাতা বিধানসভা নির্বাচন", content: "পশ্চিমবঙ্গ বিধানসভা নির্বাচন 2026: পর্যায় I - ২৩ এপ্রিল, পর্যায় II - ২৯ এপ্রিল। ভোট গণনা: ৪ মে।" },
+      { id: "tn", title: "তামিলনাড়ু বিধানসভা নির্বাচন", content: "তামিলনাড়ু বিধানসভা নির্বাচন 2026: ২৩ এপ্রিল (234 আসন)। ভোট গণনা: ৪ মে।" },
+      { id: "mh", title: "মহারাষ্ট্র পৌর নির্বাচন", content: "মহারাষ্ট্র মিউনিসিপাল নির্বাচন 2026: ১৫ অক্টোবর।" },
+      { id: "dl", title: "দিল্লি বিধানসভা নির্বাচন", content: "দিল্লি বিধানসভা নির্বাচন 2026: ৮ ফেব্রুয়ারি।" }
     ],
     steps: [
-      { title: "ধাপ ১: যোগ্যতা যাচাই করুন", content: "আপনি ভারতের নাগরিক এবং ১৮ বছর বা তার বেশি বয়সী হতে হবে।" }
+      { title: "ধাপ ১: যোগ্যতা যাচাই করুন", content: "আপনি ভারতের নাগরিক এবং ১৮ বছর বা তার বেশি বয়সী হতে হবে।" },
+      { title: "ধাপ ২: ভোটার নিবন্ধন (EPIC)", content: "voters.eci.gov.in-এ ফর্ম ৬ (নতুন ভোটার) বা ফর্ম ৮ (তথ্য সংশোধন) দিয়ে নিবন্ধন করুন।" },
+      { title: "ধাপ ৩: ভোটার তালিকা যাচাই", content: "electoralsearch.eci.gov.in-এ আপনার নাম পরীক্ষা করুন এবং বুথ নম্বর নোট করুন।" },
+      { title: "ধাপ ৪: প্রার্থীর তথ্য", content: "ECI-এর KYC অ্যাপ ব্যবহার করে প্রার্থীদের হলফনামা ও ইশতেহার দেখুন।" },
+      { title: "ধাপ ৫: ভোটকেন্দ্রের নিয়ম", content: "ভোটার আইডি বা অনুমোদিত বিকল্প আইডি নিয়ে যান। মোবাইল ফোন নিষিদ্ধ।" },
+      { title: "ধাপ ৬: EVM/VVPAT-এ ভোট", content: "নীল বোতাম চেপে ভোট দিন। VVPAT মেশিনে ৭ সেকেন্ড স্লিপ দেখা যাবে।" }
     ],
     quiz: [
       { q: "ভারতে ভোট দেওয়ার জন্য সর্বনিম্ন বয়স কত?", options: ["১৬ বছর", "১৮ বছর", "২১ বছর"], ans: 1 }
@@ -192,10 +206,18 @@ const translations = {
     quizResultGood: "திருப்திகரம். கூடுதல் விவரங்களுக்கு வழிகாட்டியைப் பார்க்கவும்.",
     quizBtnClose: "மூடு",
     timelines: [
-      { title: "கொல்கத்தா சட்டசபை தேர்தல்கள்", content: "மேற்கு வங்க சட்டசபை தேர்தல்கள் 2026: ஏப்ரல் 23 மற்றும் ஏப்ரல் 29." }
+      { id: "wb", title: "கொல்கத்தா சட்டசபை தேர்தல்", content: "மேற்கு வங்கம் சட்டசபை தேர்தல் 2026: கட்டம் I - ஏப்ரல் 23, கட்டம் II - ஏப்ரல் 29. வாக்கு எண்ணிக்கை: மே 4." },
+      { id: "tn", title: "தமிழ்நாடு சட்டசபை தேர்தல்", content: "தமிழ்நாடு சட்டசபை தேர்தல் 2026: ஏப்ரல் 23 (234 தொகுதிகள்). வாக்கு எண்ணிக்கை: மே 4." },
+      { id: "mh", title: "மகாராஷ்டிரா நகராட்சி தேர்தல்", content: "மகாராஷ்டிரா நகராட்சி தேர்தல் 2026: அக்டோபர் 15." },
+      { id: "dl", title: "டெல்லி சட்டசபை தேர்தல்", content: "டெல்லி சட்டசபை தேர்தல் 2026: பிப்ரவரி 8." }
     ],
     steps: [
-      { title: "படி 1: தகுதியை சரிபார்க்கவும்", content: "நீங்கள் இந்திய குடிமகனாகவும் 18 வயது பூர்த்தியடைந்தவராகவும் இருக்க வேண்டும்." }
+      { title: "படி 1: தகுதியை சரிபார்க்கவும்", content: "நீங்கள் இந்திய குடிமகனாகவும் 18 வயது பூர்த்தியடைந்தவராகவும் இருக்க வேண்டும்." },
+      { title: "படி 2: வாக்காளர் பதிவு (EPIC)", content: "voters.eci.gov.in-ல் படிவம் 6 (புதிய வாக்காளர்) அல்லது படிவம் 8 (திருத்தம்) மூலம் பதிவு செய்யுங்கள்." },
+      { title: "படி 3: வாக்காளர் பட்டியல் சரிபார்ப்பு", content: "electoralsearch.eci.gov.in-ல் உங்கள் பெயரை சரிபார்க்கவும். வாக்குச்சாவடி எண்ணை குறித்துக்கொள்ளுங்கள்." },
+      { title: "படி 4: வேட்பாளர் தகவல்", content: "ECI KYC ஆப் மூலம் வேட்பாளர்களின் உறுதிமொழி மற்றும் அறிக்கைகளை பார்க்கவும்." },
+      { title: "படி 5: வாக்குச்சாவடி நடைமுறை", content: "வாக்காளர் அட்டை அல்லது அங்கீகரிக்கப்பட்ட ஐடி கொண்டு செல்லுங்கள். மொபைல் தடைசெய்யப்பட்டுள்ளது." },
+      { title: "படி 6: EVM/VVPAT மூலம் வாக்களிப்பு", content: "நீல பொத்தானை அழுத்தி வாக்களிக்கவும். VVPAT-ல் 7 வினாடிகள் சீட்டு தெரியும்." }
     ],
     quiz: [
       { q: "இந்தியாவில் வாக்களிக்க குறைந்தபட்ச வயது என்ன?", options: ["16 வயது", "18 வயது", "21 வயது"], ans: 1 }
@@ -218,10 +240,18 @@ const translations = {
     quizResultGood: "సంతృప్తికరం. మరిన్ని వివరాల కోసం గైడ్‌ను చూడండి.",
     quizBtnClose: "మూసివేయి",
     timelines: [
-      { title: "కోల్‌కతా అసెంబ్లీ ఎన్నికలు", content: "పశ్చిమ బెంగాల్ అసెంబ్లీ ఎన్నికలు 2026: ఏప్రిల్ 23 మరియు ఏప్రిల్ 29." }
+      { id: "wb", title: "కోల్‌కతా అసెంబ్లీ ఎన్నికలు", content: "పశ్చిమ బెంగాల్ అసెంబ్లీ ఎన్నికలు 2026: దశ I - ఏప్రిల్ 23, దశ II - ఏప్రిల్ 29. ఓటు లెక్కింపు: మే 4." },
+      { id: "tn", title: "తమిళనాడు అసెంబ్లీ ఎన్నికలు", content: "తమిళనాడు అసెంబ్లీ ఎన్నికలు 2026: ఏప్రిల్ 23 (234 నియోజకవర్గాలు). ఓటు లెక్కింపు: మే 4." },
+      { id: "mh", title: "మహారాష్ట్ర మునిసిపాల్ ఎన్నికలు", content: "మహారాష్ట్ర మునిసిపల్ ఎన్నికలు 2026: అక్టోబర్ 15." },
+      { id: "dl", title: "దెల్లీ అసెంబ్లీ ఎన్నికలు", content: "దెల్లీ అసెంబ్లీ ఎన్నికలు 2026: ఫిబ్రవరి 8." }
     ],
     steps: [
-      { title: "దశ 1: అర్హతను తనిఖీ చేయండి", content: "మీరు భారత పౌరులై ఉండాలి మరియు 18 ఏళ్లు నిండి ఉండాలి." }
+      { title: "దశ 1: అర్హతను తనిఖీ చేయండి", content: "మీరు భారత పౌరులై ఉండాలి మరియు 18 ఏళ్లు నిండి ఉండాలి." },
+      { title: "దశ 2: ఓటరు నమోదు (EPIC)", content: "voters.eci.gov.inలో ఫార్మ్ 6 (కొత్త ఓటరు) లేదా ఫార్మ్ 8 (వివరాల సవరణ) ద్వారా నమోదు చేయండి." },
+      { title: "దశ 3: ఎన్నికల జాబితా ధృవీకరణ", content: "electoralsearch.eci.gov.inలో మీ పేరు తనిఖీ చేసి మీ బూతు నంబర్ నోట్ చేసుకోండి." },
+      { title: "దశ 4: అభ్యర్ధి సమాచారం", content: "ECI KYC అప్లికేషన్ ద్వారా అభ్యర్ధుల షపథపత్రాలు మరియు వాగ్దానపత్రాలు చూడండి." },
+      { title: "దశ 5: పోలింగ్ స్టేషన్ విధానాలు", content: "ఓటరు గుర్తింపు లేదా అనుమతించిన ప్రత్యామ్నాయ ID తీసుకెళ్ళండి. మొబైల్ నిషిద్ధం." },
+      { title: "దశ 6: EVM/VVPAT ద్వారా ఓటు", content: "నీలం బటన్ నొక్కి ఓటు వేయండి. VVPATలో 7 సెకన్లు స్లిప్ కనిపిస్తుంది." }
     ],
     quiz: [
       { q: "భారతదేశంలో ఓటు వేయడానికి కనీస వయస్సు ఎంత?", options: ["16 ఏళ్లు", "18 ఏళ్లు", "21 ఏళ్లు"], ans: 1 }
@@ -254,13 +284,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateI18n() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[currentLang][key]) {
-            el.innerHTML = translations[currentLang][key];
+        const value = (translations[currentLang] && translations[currentLang][key])
+                      || translations['en'][key];
+        if (value) {
+            el.innerHTML = value;
         }
     });
 
     const chatInput = document.getElementById('chat-input');
-    if (chatInput) chatInput.placeholder = translations[currentLang].chatPlaceholder || "Enter your query...";
+    if (chatInput) chatInput.placeholder = (translations[currentLang] && translations[currentLang].chatPlaceholder) || translations['en'].chatPlaceholder || "Enter your query...";
     
     renderTimelines();
   }
@@ -311,19 +343,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function generateGuide() {
     activeSteps = [];
-    const allSteps = translations[currentLang].steps || translations['en'].steps;
+    // Always use English steps as the master list (non-EN langs only have 1-2 entries)
+    const enSteps = translations['en'].steps;
+    const localSteps = translations[currentLang].steps;
+
+    // Helper: get step by index, prefer localized, fall back to English
+    const getStep = (i) => (localSteps && localSteps[i]) ? localSteps[i] : enSteps[i];
 
     if (userProfile.firstTime) {
-      activeSteps.push(allSteps[0]);
-      activeSteps.push(allSteps[1]);
+      activeSteps.push(getStep(0));
+      activeSteps.push(getStep(1));
     } else if (!userProfile.hasEpic) {
-      activeSteps.push(allSteps[1]);
+      activeSteps.push(getStep(1));
     }
 
-    activeSteps.push(allSteps[2]);
-    activeSteps.push(allSteps[3]);
-    activeSteps.push(allSteps[4]);
-    activeSteps.push(allSteps[5]);
+    activeSteps.push(getStep(2));
+    activeSteps.push(getStep(3));
+    activeSteps.push(getStep(4));
+    activeSteps.push(getStep(5));
 
     heroSection.classList.add('hidden');
     document.getElementById('about').classList.add('hidden');
@@ -345,22 +382,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!timelinesGrid) return;
     
     timelinesGrid.innerHTML = '';
-    const timelineData = translations[currentLang].timelines || translations['en'].timelines;
+    // English is the master list (complete data + id fields for region filtering)
+    const enTimelines = translations['en'].timelines;
+    // Build a lookup map of local language translations by id
+    const localTimelines = (translations[currentLang] && translations[currentLang].timelines) || [];
+    const localMap = {};
+    localTimelines.forEach(t => { if (t.id) localMap[t.id] = t; });
     
     let selectedRegion = regionSelect ? regionSelect.value : 'all';
     const filteredData = selectedRegion === 'all' 
-      ? timelineData 
-      : timelineData.filter(item => item.id === selectedRegion);
+      ? enTimelines 
+      : enTimelines.filter(item => item.id === selectedRegion);
 
     filteredData.forEach((item, idx) => {
       const card = document.createElement('div');
       card.className = 'glass-card timeline-card';
+      // Use local language title/content if available, otherwise English
+      const local = localMap[item.id];
+      const title = (local && local.title) || item.title;
+      const content = (local && local.content) || item.content;
       card.innerHTML = `
         <h3 style="display:flex; justify-content:space-between; align-items:center;">
-          ${item.title}
+          ${title}
           <button class="tts-btn" id="timeline-tts-${idx}" aria-label="Read aloud" title="Read aloud" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">🔊</button>
         </h3>
-        <div>${item.content}</div>
+        <div>${content}</div>
       `;
       timelinesGrid.appendChild(card);
       

@@ -9,32 +9,79 @@ Ballot Buddy is a formal, multilingual, and highly interactive web platform desi
 ### Chosen Vertical
 **Election Process Education**
 
+---
+
+### Features
+
+| Feature | Description |
+|---|---|
+| 🌐 **Multilingual Support** | Full UI in **English, Hindi, Bengali, Tamil, Telugu** with instant switching |
+| 🤖 **AI Chatbot (Ask Buddy)** | Powered by **Google Gemini API** via a secure Node.js backend proxy |
+| 📋 **Interactive Guide** | Personalized 6-step voter guide based on first-time/returning voter profile |
+| 🗳️ **My Ballot Preview** | Shows candidates, parties, and key ballot measures by state (WB, TN, MH, DL) |
+| 📅 **Regional Timelines** | Filterable election schedules by state with dates and counting day info |
+| 🔊 **Text-to-Speech** | Read-aloud toggle on all chatbot messages, guide steps, and timelines |
+| 📶 **Offline Mode** | Service Worker caches core assets for access in low-connectivity areas |
+| 🔗 **Share Feature** | Native Web Share API with clipboard fallback to share the app |
+| 🧠 **Knowledge Quiz** | Multilingual quiz to test understanding of the election process |
+
+---
+
 ### Approach and Logic
 The application was built with the following core principles in mind:
-1.  **Lightweight & Accessible:** The frontend is built entirely using vanilla HTML, CSS, and JavaScript. This ensures incredibly fast load times and seamless cross-platform compatibility across desktops, tablets, and small mobile devices, without the overhead of heavy web frameworks.
-2.  **Multilingual Architecture:** India's democratic strength lies in its diversity. A centralized, dynamic translation engine was built from scratch to support 5 major languages (**English, Hindi, Bengali, Tamil, and Telugu**), allowing the entire interface to toggle instantly.
-3.  **Institutional Aesthetics:** The design language strictly adheres to a clean, formal "Light Theme" using standard Saffron, White, and Green accents to invoke authority and trust.
-4.  **AI Integration for Edge Cases:** Instead of a rigid keyword system, a lightweight **Node.js/Express backend proxy** was implemented to securely route queries to the **Google Gemini API**. This empowers the "Ask Buddy" chatbot to dynamically answer hyper-specific user questions with formal accuracy, without exposing API keys to the frontend.
+
+1. **Lightweight & Accessible:** The frontend is built entirely using vanilla HTML, CSS, and JavaScript. No frameworks — ensuring fast load times and cross-platform compatibility. Text-to-Speech (via `SpeechSynthesis` API) ensures audio accessibility across all major content sections.
+2. **Multilingual Architecture:** A centralized translation engine supports **5 major languages** with full translations for all UI strings, guide steps (6 per language), and regional election timelines. Non-English content gracefully falls back to English for any missing keys.
+3. **Institutional Aesthetics:** The design uses a clean formal "Light Theme" with Indian tricolor accents (Saffron `#FF9933`, White, Green `#138808`, and Ashoka Blue `#000080`) to invoke authority and trust.
+4. **AI Integration:** A lightweight **Node.js/Express backend proxy** securely routes queries to the **Google Gemini API**, enabling the "Ask Buddy" chatbot to answer hyper-specific questions without exposing API keys.
+5. **Offline Resilience:** A Service Worker (`sw.js`) caches essential assets using a cache-first strategy with network fallback, keeping core features accessible without an internet connection.
+
+---
 
 ### How the solution works
-1.  **Installation:** 
-    - Ensure you have Node.js installed.
-    - Clone the repository and run `npm install` in the project directory.
-    - Create a `.env` file in the root directory and add your Gemini API key: `GEMINI_API_KEY=your_actual_key_here`.
-2.  **Starting the App Locally:**
-    - Run `node server.js` to boot the backend proxy and serve the static files.
-    - Open your browser to `http://localhost:8080/`.
-3.  **Cloud Deployment:**
-    - The application is containerized via `Dockerfile` and optimized for platforms like Google Cloud Run.
-    - The backend automatically detects the `PORT` environment variable provided by the host.
-4.  **Using Ballot Buddy:**
-    - **Language Switcher:** Select your preferred language from the top-right navigation bar. The entire interface, including AI chat, will adapt.
-    - **Interactive Guide:** Click "Start Guide". A modal will ask if you are a first-time voter and if you have an EPIC card to dynamically tailor the step-by-step guidance.
-    - **Ask Buddy:** Click the floating chat button in the bottom right to ask natural language questions (e.g., "What is the Model Code of Conduct?" or "I lost my ID card, what do I do?"). The AI will respond securely based on the selected language.
-    - **Knowledge Check:** Scroll to the Quiz section to test your understanding of the democratic process.
+
+1. **Installation:**
+   - Ensure you have Node.js installed.
+   - Clone the repository and run `npm install` in the project directory.
+   - Create a `.env` file in the root directory: `GEMINI_API_KEY=your_actual_key_here`
+
+2. **Starting the App Locally:**
+   - Run `node server.js` to boot the backend proxy and serve the static files.
+   - Open your browser to `http://localhost:8080/`
+
+3. **Cloud Deployment:**
+   - The application is containerized via `Dockerfile` and optimized for Google Cloud Run.
+   - The backend auto-detects the `PORT` environment variable provided by the host.
+
+4. **Using Ballot Buddy:**
+   - **Language Switcher:** Select your language from the top navigation bar. The entire interface — guide, timelines, quiz, and chat — adapts instantly.
+   - **My Ballot:** Click "🗳️ My Ballot" in the nav to preview candidates and key measures for your state.
+   - **Regional Timelines:** Use the "Select your Region" dropdown to filter election schedules by state.
+   - **Interactive Guide:** Click "Start Guide". Answer two quick questions to receive a personalized voter walkthrough.
+   - **Ask Buddy:** Click the floating chat button to ask natural language questions in your language.
+   - **Read Aloud:** Click 🔊 on any bot message, guide step, or timeline card. Click again to stop.
+   - **Share:** Click the saffron "Share" button in the nav to share the app via the native share dialog or clipboard.
+   - **Knowledge Check:** Scroll to the Timelines section and click "Take Quiz" in the nav.
+
+---
+
+### Key Files
+
+| File | Purpose |
+|---|---|
+| `index.html` | App shell, navbar, modals, and section layout |
+| `main.js` | All app logic — translations, guide, quiz, chatbot, TTS, ballot preview, share |
+| `style.css` | Complete design system — theme tokens, components, animations |
+| `sw.js` | Service Worker for offline caching |
+| `server.js` | Node.js/Express backend proxy for the Gemini API |
+| `Dockerfile` | Container config for Cloud Run deployment |
+
+---
 
 ### Assumptions made
-*   Assumed the user is looking for upcoming **2026 Assembly Election Data** (specifically incorporating placeholder timelines for West Bengal and Tamil Nadu).
-*   Assumed the user provides their own valid Gemini API key (via `.env` or environment variables).
-*   Assumed the target demographic includes a mix of first-time voters (requiring Form 6 assistance) and existing voters (requiring Form 8 or polling station assistance).
-*   Assumed modern browser support (ES Modules, Fetch API, CSS Grid/Flexbox) for the frontend architecture.
+
+- Assumed the user is looking for upcoming **2026 Assembly Election data** (West Bengal, Tamil Nadu, Maharashtra, Delhi).
+- Assumed the user provides their own valid Gemini API key (via `.env` or environment variables).
+- Assumed the target demographic includes a mix of first-time voters (Form 6) and existing voters (Form 8 or polling assistance).
+- Assumed modern browser support (ES Modules, Fetch API, CSS Grid/Flexbox, Web Share API, SpeechSynthesis).
+- Ballot data (candidates, measures) is illustrative/educational and should be verified against official ECI sources before elections.
