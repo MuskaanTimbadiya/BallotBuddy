@@ -30,9 +30,7 @@ app.post('/api/chat', async (req, res) => {
             return res.status(500).json({ error: "Gemini API Key is missing on the server." });
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
-
-        const systemPrompt = `You are Ballot Buddy, a formal, highly accurate, and helpful Indian Election Assistant. 
+        const systemInstruction = `You are Ballot Buddy, a formal, highly accurate, and helpful Indian Election Assistant. 
 Your goal is to help citizens understand the electoral process, voter registration, EVM/VVPAT machines, and their rights.
 
 Here is the current timeline data and site context you must use to answer specific questions:
@@ -42,31 +40,30 @@ CRITICAL RULES:
 1. You MUST respond in the following language: ${language}.
 2. Keep your answers concise, informative, and professional. 
 3. If the user asks something completely unrelated to elections, democracy, or civic duties in India, politely decline to answer and guide them back to election topics.
-4. Do not use markdown formatting like asterisks or hash symbols, just use plain text.`;
+4. Use clear formatting, but avoid excessive markdown. Use bullet points for lists.`;
 
-        const result = await model.generateContent({
-            contents: [
-                { role: "user", parts: [{ text: systemPrompt + "\n\nUser Question: " + message }] }
-            ],
-            generationConfig: {
-                maxOutputTokens: 250,
-                temperature: 0.2,
-            }
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-1.5-flash",
+            systemInstruction: systemInstruction 
         });
 
+        const result = await model.generateContent(message);
         const responseText = result.response.text();
+        
         res.json({ reply: responseText });
 
     } catch (error) {
         console.error("Error communicating with Gemini API:", error);
         
         let errorMessage = "Sorry, I am having trouble connecting to the election database right now.";
-        
+        let statusCode = 500;
+
         if (error.status === 429) {
             errorMessage = "The Election Database is currently very busy (Rate Limit Exceeded). Please wait a minute and try again.";
+            statusCode = 429;
         }
         
-        res.status(500).json({ error: errorMessage });
+        res.status(statusCode).json({ error: errorMessage });
     }
 });
 
