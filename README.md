@@ -1,5 +1,7 @@
 # Ballot Buddy | Indian Election Assistant 🇮🇳
 
+**Live Deployment:** [https://ballotbuddy-843080848499.asia-south1.run.app/](https://ballotbuddy-843080848499.asia-south1.run.app/)
+
 Ballot Buddy is a formal, multilingual, and highly interactive web platform designed to simplify the complex Indian electoral process for citizens. It provides authoritative, government-standard educational content regarding voter registration, EVM/VVPAT mechanics, and election hierarchy.
 
 ---
@@ -19,10 +21,13 @@ The application was built with the following core principles in mind:
     - Ensure you have Node.js installed.
     - Clone the repository and run `npm install` in the project directory.
     - Create a `.env` file in the root directory and add your Gemini API key: `GEMINI_API_KEY=your_actual_key_here`.
-2.  **Starting the App:**
+2.  **Starting the App Locally:**
     - Run `node server.js` to boot the backend proxy and serve the static files.
-    - Open your browser to `http://localhost:3000/`.
-3.  **Using Ballot Buddy:**
+    - Open your browser to `http://localhost:8080/`.
+3.  **Cloud Deployment:**
+    - The application is containerized via `Dockerfile` and optimized for platforms like Google Cloud Run.
+    - The backend automatically detects the `PORT` environment variable provided by the host.
+4.  **Using Ballot Buddy:**
     - **Language Switcher:** Select your preferred language from the top-right navigation bar. The entire interface, including AI chat, will adapt.
     - **Interactive Guide:** Click "Start Guide". A modal will ask if you are a first-time voter and if you have an EPIC card to dynamically tailor the step-by-step guidance.
     - **Ask Buddy:** Click the floating chat button in the bottom right to ask natural language questions (e.g., "What is the Model Code of Conduct?" or "I lost my ID card, what do I do?"). The AI will respond securely based on the selected language.
@@ -30,6 +35,6 @@ The application was built with the following core principles in mind:
 
 ### Assumptions made
 *   Assumed the user is looking for upcoming **2026 Assembly Election Data** (specifically incorporating placeholder timelines for West Bengal and Tamil Nadu).
-*   Assumed the user runs the application locally and provides their own valid Gemini API key (via `.env`).
+*   Assumed the user provides their own valid Gemini API key (via `.env` or environment variables).
 *   Assumed the target demographic includes a mix of first-time voters (requiring Form 6 assistance) and existing voters (requiring Form 8 or polling station assistance).
 *   Assumed modern browser support (ES Modules, Fetch API, CSS Grid/Flexbox) for the frontend architecture.
