@@ -31,6 +31,7 @@
           <a href="#timelines" data-i18n="navTimelines">Timelines</a>
           <button id="nav-quiz-btn" class="btn-secondary-sm" data-i18n="navQuiz">Take Quiz</button>
           <a href="#guide" data-i18n="navGuide">Start Guide</a>
+          <button id="share-btn" class="btn-share"><span data-i18n="navShare">Share</span> <svg style="display:inline; vertical-align:middle; margin-left:4px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
         </div>
       </nav>
 
@@ -73,6 +74,18 @@
 
         <section id="timelines" class="timelines-section">
           <h2 class="section-heading" data-i18n="timelinesHeading">Upcoming Election Timelines</h2>
+          
+          <div class="region-selector-container" style="text-align: center; margin-bottom: 20px;">
+            <label for="region-select" data-i18n="selectRegionLabel" style="font-weight: 600; margin-right: 10px; color: var(--text-primary);">Select your Region:</label>
+            <select id="region-select" class="lang-dropdown">
+              <option value="all" data-i18n="regionAll">All India</option>
+              <option value="wb" data-i18n="regionWB">West Bengal</option>
+              <option value="tn" data-i18n="regionTN">Tamil Nadu</option>
+              <option value="mh" data-i18n="regionMH">Maharashtra</option>
+              <option value="dl" data-i18n="regionDL">Delhi</option>
+            </select>
+          </div>
+
           <div class="timelines-grid" id="timelines-container">
             <!-- Timelines will be injected here by JS -->
           </div>
@@ -180,5 +193,16 @@
       </footer>
     </div>
     <script src="./main.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }).catch(err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    </script>
   </body>
 </html>

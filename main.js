@@ -6,6 +6,7 @@ const translations = {
     navTimelines: "Timelines",
     navQuiz: "Knowledge Quiz",
     navGuide: "Access Guide",
+    navShare: "Share",
     heroTitle: "A Guide to the <br/><span class='gradient-text'>Indian Elections</span>",
     heroSubtitle: "Navigate the world's largest democratic process with confidence. Learn how to register, verify your details, and cast your vote officially.",
     heroBtn: "Access the Guide",
@@ -36,16 +37,32 @@ const translations = {
     footerHome: "Home",
     footerResources: "Resources",
     alertFinish: "You are fully prepared to exercise your democratic right. Jai Hind! 🇮🇳",
+    selectRegionLabel: "Select your Region:",
+    regionAll: "All India",
+    regionWB: "West Bengal",
+    regionTN: "Tamil Nadu",
+    regionMH: "Maharashtra",
+    regionDL: "Delhi",
     timelines: [
       {
-        id: "kolkata",
+        id: "wb",
         title: "Kolkata Assembly Elections",
         content: `Official schedule for the West Bengal Assembly Elections 2026 (Kolkata Region):<ul><li>🗓️ <strong>Phase I (April 23, 2026):</strong> First phase of polling.</li><li>🗓️ <strong>Phase II (April 29, 2026):</strong> Second phase of polling.</li><li>⌚ <strong>Polling Hours:</strong> 7:00 AM to 6:00 PM.</li><li>📊 <strong>Counting of Votes:</strong> May 4, 2026.</li><li><small><em>Disclaimer: Please verify your specific constituency details on the ECI portal.</em></small></li></ul>`
       },
       {
-        id: "tamilnadu",
+        id: "tn",
         title: "Tamil Nadu Assembly Elections",
-        content: `Official schedule for the Tamil Nadu Legislative Assembly Election 2026:<ul><li>🗓️ <strong>Polling Date:</strong> April 23, 2026 (Single phase across 234 constituencies).</li><li>📍 <strong>Nomination Deadline:</strong> April 6, 2026.</li><li>⌚ <strong>Polling Hours:</strong> 7:00 AM to 6:00 PM.</li><li>📊 <strong>Counting of Votes:</strong> May 4, 2026.</li><li><small><em>Disclaimer: Refer to official notifications for binding information.</em></small></li></ul>`
+        content: `Official schedule for the Tamil Nadu Legislative Assembly Election 2026:<ul><li>🗓️ <strong>Polling Date:</strong> April 23, 2026 (Single phase across 234 constituencies).</li><li>📍 <strong>Nomination Deadline:</strong> April 6, 2026.</li><li>🏢 <strong>Authority:</strong> State Election Commission TN.</li><li>📝 <strong>Rules:</strong> Strict monitoring of cash-for-votes.</li><li><small><em>Disclaimer: Refer to official notifications.</em></small></li></ul>`
+      },
+      {
+        id: "mh",
+        title: "Maharashtra Local Body Elections",
+        content: `Official schedule for the Maharashtra Municipal Corporation Elections 2026:<ul><li>🗓️ <strong>Polling Date:</strong> October 15, 2026.</li><li>🏢 <strong>Authority:</strong> State Election Commission (SEC) Maharashtra.</li><li>📝 <strong>Rules:</strong> Ward-wise candidate system applies.</li></ul>`
+      },
+      {
+        id: "dl",
+        title: "Delhi Legislative Assembly",
+        content: `Official schedule for the Delhi Assembly Elections 2026:<ul><li>🗓️ <strong>Polling Date:</strong> February 8, 2026.</li><li>🏢 <strong>Authority:</strong> Chief Electoral Officer, Delhi.</li><li>📝 <strong>Rules:</strong> Full state model code of conduct enforcement.</li></ul>`
       }
     ],
     steps: [
@@ -102,6 +119,7 @@ const translations = {
     navTimelines: "समय सीमा",
     navQuiz: "ज्ञान प्रश्नोत्तरी",
     navGuide: "एक्सेस गाइड",
+    navShare: "शेयर करें",
     heroTitle: "भारतीय चुनावों के लिए <br/><span class='gradient-text'>एक गाइड</span>",
     heroSubtitle: "आत्मविश्वास के साथ दुनिया की सबसे बड़ी लोकतांत्रिक प्रक्रिया को समझें। पंजीकरण कैसे करें, अपने विवरणों को सत्यापित कैसे करें और आधिकारिक तौर पर अपना वोट कैसे डालें, यह जानें।",
     heroBtn: "गाइड देखें",
@@ -130,6 +148,7 @@ const translations = {
     navTimelines: "সময়সীমা",
     navQuiz: "জ্ঞান কুইজ",
     navGuide: "অ্যাক্সেস গাইড",
+    navShare: "শেয়ার করুন",
     heroTitle: "ভারতীয় নির্বাচনের জন্য <br/><span class='gradient-text'>একটি গাইড</span>",
     heroSubtitle: "বিশ্বের বৃহত্তম গণতান্ত্রিক প্রক্রিয়া আত্মবিশ্বাসের সাথে বুঝুন। কীভাবে নিবন্ধন করবেন, আপনার বিবরণ যাচাই করবেন এবং আনুষ্ঠানিকভাবে আপনার ভোট দেবেন তা জানুন।",
     heroBtn: "গাইড দেখুন",
@@ -155,6 +174,7 @@ const translations = {
     navTimelines: "காலக்கெடு",
     navQuiz: "அறிவு வினாடி வினா",
     navGuide: "வழிகாட்டி",
+    navShare: "பகிர்க",
     heroTitle: "இந்தியத் தேர்தல்களுக்கான <br/><span class='gradient-text'>ஒரு வழிகாட்டி</span>",
     heroSubtitle: "உலகின் மிகப்பெரிய ஜனநாயக செயல்முறையை நம்பிக்கையுடன் அணுகுங்கள்.",
     heroBtn: "வழிகாட்டியை அணுகவும்",
@@ -180,6 +200,7 @@ const translations = {
     navTimelines: "సమయపాలన",
     navQuiz: "జ్ఞాన క్విజ్",
     navGuide: "గైడ్",
+    navShare: "షేర్ చేయండి",
     heroTitle: "భారత ఎన్నికల కోసం <br/><span class='gradient-text'>ఒక గైడ్</span>",
     heroSubtitle: "ప్రపంచంలోని అతిపెద్ద ప్రజాస్వామ్య ప్రక్రియను నమ్మకంతో అర్థం చేసుకోండి.",
     heroBtn: "గైడ్ చూడండి",
@@ -203,6 +224,22 @@ const translations = {
 
 document.addEventListener('DOMContentLoaded', () => {
   let currentLang = 'en';
+  let currentSpokenText = "";
+
+  function toggleSpeech(textToRead) {
+    if (window.speechSynthesis.speaking && currentSpokenText === textToRead) {
+      window.speechSynthesis.cancel();
+      currentSpokenText = "";
+      return;
+    }
+    window.speechSynthesis.cancel();
+    currentSpokenText = textToRead;
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    const langMap = { "en": "en-IN", "hi": "hi-IN", "bn": "bn-IN", "ta": "ta-IN", "te": "te-IN" };
+    utterance.lang = langMap[currentLang] || "en-IN";
+    utterance.onend = () => { if (currentSpokenText === textToRead) currentSpokenText = ""; };
+    window.speechSynthesis.speak(utterance);
+  }
 
   // --- 1. Language Toggle Logic ---
   const langSelect = document.getElementById('lang-select');
@@ -291,17 +328,44 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- 3. Timeline Logic ---
+  const regionSelect = document.getElementById('region-select');
+  if (regionSelect) {
+    regionSelect.addEventListener('change', renderTimelines);
+  }
+
   function renderTimelines() {
     const timelinesGrid = document.getElementById('timelines-container');
     if (!timelinesGrid) return;
     
     timelinesGrid.innerHTML = '';
     const timelineData = translations[currentLang].timelines || translations['en'].timelines;
-    timelineData.forEach(item => {
+    
+    let selectedRegion = regionSelect ? regionSelect.value : 'all';
+    const filteredData = selectedRegion === 'all' 
+      ? timelineData 
+      : timelineData.filter(item => item.id === selectedRegion);
+
+    filteredData.forEach((item, idx) => {
       const card = document.createElement('div');
       card.className = 'glass-card timeline-card';
-      card.innerHTML = `<h3>${item.title}</h3><div>${item.content}</div>`;
+      card.innerHTML = `
+        <h3 style="display:flex; justify-content:space-between; align-items:center;">
+          ${item.title}
+          <button class="tts-btn" id="timeline-tts-${idx}" aria-label="Read aloud" title="Read aloud" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">🔊</button>
+        </h3>
+        <div>${item.content}</div>
+      `;
       timelinesGrid.appendChild(card);
+      
+      setTimeout(() => {
+        const btn = document.getElementById(`timeline-tts-${idx}`);
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const textToRead = item.title + ". " + item.content.replace(/<[^>]*>?/gm, '');
+            toggleSpeech(textToRead);
+          });
+        }
+      }, 0);
     });
   }
 
@@ -316,10 +380,23 @@ document.addEventListener('DOMContentLoaded', () => {
     stepContainer.innerHTML = `
       <div class="step-card glass-card active">
         <div class="step-number">${index + 1}</div>
-        <h2 class="step-title">${step.title}</h2>
+        <h2 class="step-title" style="display:flex; justify-content:space-between; align-items:center;">
+          ${step.title}
+          <button class="tts-btn" id="step-tts-btn" aria-label="Read aloud" title="Read aloud" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">🔊</button>
+        </h2>
         <div class="step-content">${step.content}</div>
       </div>
     `;
+
+    const ttsBtn = document.getElementById('step-tts-btn');
+    if (ttsBtn) {
+      ttsBtn.addEventListener('click', () => {
+        const titleText = step.title;
+        const contentText = step.content.replace(/<[^>]*>?/gm, ''); // Remove HTML tags
+        const fullText = titleText + ". " + contentText;
+        toggleSpeech(fullText);
+      });
+    }
 
     if (index === 0) prevBtn.classList.add('hidden');
     else prevBtn.classList.remove('hidden');
@@ -386,6 +463,24 @@ document.addEventListener('DOMContentLoaded', () => {
     msg.className = isBot ? 'bot-msg' : 'user-msg';
     if (isBot) {
       msg.innerHTML = text.replace(/\n/g, '<br/>');
+      
+      // Add TTS button for accessibility
+      const speakBtn = document.createElement('button');
+      speakBtn.innerHTML = '🔊';
+      speakBtn.className = 'tts-btn';
+      speakBtn.setAttribute('aria-label', 'Read aloud');
+      speakBtn.setAttribute('title', 'Read aloud');
+      speakBtn.style.marginLeft = '8px';
+      speakBtn.style.background = 'none';
+      speakBtn.style.border = 'none';
+      speakBtn.style.cursor = 'pointer';
+      
+      speakBtn.onclick = () => {
+        const plainText = text.replace(/<[^>]*>?/gm, '');
+        toggleSpeech(plainText);
+      };
+      
+      msg.appendChild(speakBtn);
     } else {
       msg.innerText = text;
     }
@@ -528,6 +623,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (closeQuizBtn) {
     closeQuizBtn.addEventListener('click', () => quizModal.classList.add('hidden'));
+  }
+
+  // Share Feature
+  const shareBtn = document.getElementById('share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Ballot Buddy | Indian Election Assistant',
+            text: 'Check out Ballot Buddy, your interactive guide to understanding the Indian election process!',
+            url: window.location.href,
+          });
+          console.log('Successfully shared');
+        } catch (error) {
+          console.error('Error sharing', error);
+        }
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(window.location.href);
+        const originalText = shareBtn.innerHTML;
+        shareBtn.innerHTML = 'Link Copied! ✅';
+        setTimeout(() => { shareBtn.innerHTML = originalText; }, 2000);
+      }
+    });
   }
 
   // Init
