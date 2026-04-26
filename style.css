@@ -49,7 +49,24 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
-  border-top: 4px solid var(--accent-saffron);
+}
+
+.tricolor-line {
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    var(--accent-saffron) 0%,
+    var(--accent-saffron) 33.33%,
+    var(--accent-white) 33.33%,
+    var(--accent-white) 66.66%,
+    var(--accent-green) 66.66%,
+    var(--accent-green) 100%
+  );
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
 }
 
 #app {
@@ -130,7 +147,7 @@ button:focus-visible {
   border-radius: 4px; /* Sharp corners for formal look */
   cursor: pointer;
   font-weight: 600;
-  transition: var(--transition-fast);
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -150,6 +167,8 @@ button:focus-visible {
 
 .btn-primary:hover, .btn-primary-sm:hover {
   background-color: #000066;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-secondary, .btn-secondary-sm {
@@ -159,7 +178,7 @@ button:focus-visible {
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
-  transition: var(--transition-fast);
+  transition: all 0.3s ease;
 }
 
 .btn-secondary {
@@ -174,6 +193,7 @@ button:focus-visible {
 
 .btn-secondary:hover, .btn-secondary-sm:hover {
   background-color: rgba(0, 0, 128, 0.05);
+  transform: translateY(-2px);
 }
 
 .btn-text {
@@ -245,6 +265,13 @@ button:focus-visible {
   border: 1px solid var(--border-color);
   border-radius: 4px;
   box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.decorative-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 
 .card-icon {
@@ -265,8 +292,16 @@ button:focus-visible {
 }
 
 .card-1 { top: 10%; left: 10%; }
+.card-1 .card-icon {
+  color: var(--accent-saffron);
+  background: rgba(255, 153, 51, 0.1);
+}
 .card-2 { top: 40%; right: 5%; }
 .card-3 { bottom: 10%; left: 20%; }
+.card-3 .card-icon {
+  color: var(--accent-green);
+  background: rgba(19, 136, 8, 0.1);
+}
 
 /* About Section */
 .about-section {
@@ -466,8 +501,8 @@ button:focus-visible {
 /* Chatbot */
 .chat-fab {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 20px;
   background-color: var(--accent-blue);
   color: white;
   border: none;
@@ -478,6 +513,7 @@ button:focus-visible {
   cursor: pointer;
   box-shadow: var(--shadow-md);
   z-index: 999;
+  transition: all 0.3s ease;
 }
 
 .chat-fab:hover {
@@ -486,8 +522,8 @@ button:focus-visible {
 
 .chat-window {
   position: fixed;
-  bottom: 100px;
-  right: 30px;
+  bottom: 90px;
+  right: 20px;
   width: 350px;
   height: 500px;
   background: var(--bg-secondary);

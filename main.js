@@ -584,10 +584,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- 2. Scenario-Based Onboarding ---
-  const startGuideBtns = [document.getElementById('start-guide-btn'), document.querySelector('a[href="#guide"]')];
-  startGuideBtns.forEach(btn => {
-    if(!btn) return;
-    btn.addEventListener('click', (e) => {
+  const startGuideElements = document.querySelectorAll('#start-guide-btn, a[href="#guide"]');
+  startGuideElements.forEach(el => {
+    el.addEventListener('click', (e) => {
       e.preventDefault();
       onboardingModal.classList.remove('hidden');
       qFirstTime.classList.remove('hidden');
