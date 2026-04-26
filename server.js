@@ -25,6 +25,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 app.post('/api/chat', async (req, res) => {
     try {
         const { message, language, context } = req.body;
+        console.log(`[Chat] Query: "${message}" | Lang: ${language}`);
 
         if (!process.env.GEMINI_API_KEY) {
             return res.status(500).json({ error: "Gemini API Key is missing on the server." });
@@ -43,24 +44,31 @@ CRITICAL RULES:
 4. Use clear formatting, but avoid excessive markdown. Use bullet points for lists.`;
 
         const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.5-flash-lite",
+            model: "gemini-2.0-flash",
             systemInstruction: systemInstruction 
         });
 
         const result = await model.generateContent(message);
-        const responseText = result.response.text();
-        
+        const response = await result.response;
+        if (!response || !response.candidates || response.candidates.length === 0) {
+            throw new Error("No response generated (possibly blocked by safety filters).");
+        }
+
+        const responseText = response.text();
         res.json({ reply: responseText });
 
     } catch (error) {
-        console.error("Error communicating with Gemini API:", error);
+        console.error("Error communicating with Gemini API:", error.message);
         
         let errorMessage = "Sorry, I am having trouble connecting to the election database right now.";
         let statusCode = 500;
 
-        if (error.status === 429) {
+        if (error.status === 429 || error.message?.includes('429')) {
             errorMessage = "The Election Database is currently very busy (Rate Limit Exceeded). Please wait a minute and try again.";
             statusCode = 429;
+        } else if (error.status === 401 || error.status === 403) {
+            errorMessage = "Authentication error with the Election Database. Please check server configuration.";
+            statusCode = error.status;
         }
         
         res.status(statusCode).json({ error: errorMessage });
