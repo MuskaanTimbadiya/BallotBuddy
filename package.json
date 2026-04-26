@@ -1,0 +1,19 @@
+{
+  "name": "ballot-buddy",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_ENV=test mocha test.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "mocha": "^11.7.5",
+    "supertest": "^7.2.2"
+  }
+}

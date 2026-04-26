@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Ballot Buddy - Your interactive guide to understanding the Indian election process." />
+    <title>Ballot Buddy | Indian Election Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div id="app">
+      <nav class="navbar">
+        <a href="#" class="logo" id="home-logo">
+          <span class="logo-icon">🇮🇳</span>
+          <span class="logo-text" data-i18n="logoText">Ballot<span class="highlight">Buddy</span></span>
+        </a>
+        <div class="nav-links">
+          <select id="lang-select" class="lang-dropdown">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="bn">বাংলা</option>
+            <option value="ta">தமிழ்</option>
+            <option value="te">తెలుగు</option>
+          </select>
+          <a href="#about" data-i18n="navAbout">About</a>
+          <a href="#timelines" data-i18n="navTimelines">Timelines</a>
+          <button id="nav-quiz-btn" class="btn-secondary-sm" data-i18n="navQuiz">Take Quiz</button>
+          <a href="#guide" class="btn-primary-sm" data-i18n="navGuide">Start Guide</a>
+        </div>
+      </nav>
+
+      <main>
+        <section class="hero">
+          <div class="hero-content">
+            <h1 class="hero-title" data-i18n="heroTitle">A Guide to the <br/><span class="gradient-text">Indian Elections</span></h1>
+            <p class="hero-subtitle" data-i18n="heroSubtitle">Navigate the world's largest democratic process with confidence. Learn how to register, verify your details, and cast your vote officially.</p>
+            <div class="hero-actions">
+              <button id="start-guide-btn" class="btn-primary"><span data-i18n="heroBtn">Access the Guide</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+            </div>
+          </div>
+          <div class="hero-graphic">
+             <div class="formal-card decorative-card card-1">
+               <div class="card-icon">🪪</div>
+               <div class="card-text" data-i18n="heroCard1">Voter ID</div>
+             </div>
+             <div class="formal-card decorative-card card-2">
+               <div class="card-icon">🗳️</div>
+               <div class="card-text" data-i18n="heroCard2">EVM System</div>
+             </div>
+             <div class="formal-card decorative-card card-3">
+               <div class="card-icon">✅</div>
+               <div class="card-text" data-i18n="heroCard3">Cast Vote</div>
+             </div>
+          </div>
+        </section>
+
+        <section id="about" class="about-section">
+          <div class="about-content formal-card">
+            <h2 class="about-title" data-i18n="aboutTitle">About Ballot Buddy</h2>
+            <p class="about-text" data-i18n="aboutText1">
+              Democracy thrives when its citizens are informed and engaged. Ballot Buddy is an initiative designed to simplify the complex election process in India. Whether you are a first-time voter learning how to register, or an experienced citizen verifying your polling booth, this guide provides clear, actionable, and official information.
+            </p>
+            <p class="about-text" data-i18n="aboutText2">
+              Our objective is to ensure electoral participation is accessible to all eligible citizens, reinforcing the foundation of the world's largest democracy.
+            </p>
+          </div>
+        </section>
+
+        <section id="timelines" class="timelines-section">
+          <h2 class="section-heading" data-i18n="timelinesHeading">Upcoming Election Timelines</h2>
+          <div class="timelines-grid" id="timelines-container">
+            <!-- Timelines will be injected here by JS -->
+          </div>
+        </section>
+
+        <section id="guide" class="guide-section hidden">
+          <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+          
+          <div class="steps-container" id="steps-container">
+            <!-- Steps will be injected here by JS -->
+          </div>
+          
+          <div class="guide-controls">
+            <button id="prev-btn" class="btn-secondary hidden" data-i18n="btnBack">Back</button>
+            <button id="next-btn" class="btn-primary" data-i18n="btnContinue">Continue</button>
+          </div>
+        </section>
+
+        <!-- Modals and Overlays -->
+        
+        <!-- Onboarding Modal -->
+        <div id="onboarding-modal" class="modal-overlay hidden">
+          <div class="modal-content glass-card">
+            <h2 data-i18n="onboardingTitle">Let's personalize your guide!</h2>
+            <div class="onboarding-question" id="q-first-time">
+              <p data-i18n="onboardingQ1">Are you a first-time voter?</p>
+              <div class="btn-group">
+                <button class="btn-secondary option-btn" data-answer="yes" data-i18n="btnYes">Yes</button>
+                <button class="btn-secondary option-btn" data-answer="no" data-i18n="btnNo">No</button>
+              </div>
+            </div>
+            <div class="onboarding-question hidden" id="q-has-id">
+              <p data-i18n="onboardingQ2">Do you already have a Voter ID (EPIC)?</p>
+              <div class="btn-group">
+                <button class="btn-secondary option-btn" data-answer="yes" data-i18n="btnYes">Yes</button>
+                <button class="btn-secondary option-btn" data-answer="no" data-i18n="btnNo">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Modal -->
+        <div id="quiz-modal" class="modal-overlay hidden">
+          <div class="modal-content glass-card">
+            <div class="modal-header">
+              <h2 data-i18n="quizTitle">Knowledge Check</h2>
+              <button class="close-btn" id="close-quiz">&times;</button>
+            </div>
+            <div id="quiz-container">
+              <!-- Quiz injected here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Chatbot -->
+        <button id="chat-fab" class="chat-fab">💬</button>
+        <div id="chat-window" class="chat-window hidden glass-card">
+          <div class="chat-header">
+            <h3 data-i18n="chatTitle">Ask Buddy</h3>
+            <button class="close-btn" id="close-chat">&times;</button>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <div class="bot-msg" data-i18n="chatGreeting">Hi! I'm Ballot Buddy. What do you want to know about voting?</div>
+          </div>
+          <div class="chat-suggestions" id="chat-suggestions">
+            <button class="suggestion-btn" data-i18n="chatSugg1">Lost ID?</button>
+            <button class="suggestion-btn" data-i18n="chatSugg2">Voting Age?</button>
+            <button class="suggestion-btn" data-i18n="chatSugg3">NRI voting?</button>
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type a question..." data-i18n-placeholder="chatPlaceholder">
+            <button id="chat-send" class="btn-primary-sm">Send</button>
+          </div>
+        </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <div class="footer-grid">
+          <div class="footer-col">
+             <a href="#" class="logo footer-logo">
+              <span class="logo-icon">🇮🇳</span>
+              <span class="logo-text" data-i18n="logoText">Ballot<span class="highlight">Buddy</span></span>
+             </a>
+             <p class="footer-desc" data-i18n="footerText">Created for informational purposes. For official details, visit the Election Commission of India website.</p>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerNavHead">Navigation</h4>
+            <a href="#" data-i18n="footerHome">Home</a>
+            <a href="#about" data-i18n="navAbout">About</a>
+            <a href="#timelines" data-i18n="navTimelines">Timelines</a>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerResources">Resources</h4>
+            <a href="#guide" data-i18n="navGuide">Start Guide</a>
+            <a href="#" onclick="document.getElementById('nav-quiz-btn').click();" data-i18n="navQuiz">Take Quiz</a>
+            <a href="https://eci.gov.in" target="_blank">ECI Official Portal</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Ballot Buddy. All Rights Reserved.</p>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
