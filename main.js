@@ -703,6 +703,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Logo → Home Navigation ---
+  const homeLogo = document.getElementById('home-logo');
+  if (homeLogo) {
+    homeLogo.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Hide guide, show all homepage sections
+      guideSection.classList.add('hidden');
+      heroSection.classList.remove('hidden');
+      document.getElementById('about').classList.remove('hidden');
+      document.getElementById('timelines').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // --- My Ballot Feature ---
   const ballotData = {
     wb: {
