@@ -43,6 +43,13 @@ const translations = {
     regionTN: "Tamil Nadu",
     regionMH: "Maharashtra",
     regionDL: "Delhi",
+    navMyBallot: "My Ballot",
+    ballotTitle: "🗳️ My Ballot Preview",
+    ballotSelectLabel: "Select your State:",
+    ballotCandidatesHeading: "Candidates on Your Ballot",
+    ballotMeasuresHeading: "Key Ballot Measures",
+    ballotParty: "Party",
+    ballotSymbol: "Symbol",
     timelines: [
       {
         id: "wb",
@@ -648,6 +655,125 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => { shareBtn.innerHTML = originalText; }, 2000);
       }
     });
+  }
+
+  // --- My Ballot Feature ---
+  const ballotData = {
+    wb: {
+      election: "West Bengal Assembly Election 2026",
+      constituency: "Kolkata South",
+      pollingDate: "April 23 & 29, 2026",
+      candidates: [
+        { name: "Mamata Banerjee",       party: "Trinamool Congress (TMC)", symbol: "🌺", info: "Incumbent CM, seeking re-election in Bhowanipore constituency." },
+        { name: "Suvendu Adhikari",     party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "Leader of Opposition, contesting from Nandigram." },
+        { name: "Adhir Ranjan Chowdhury", party: "Indian National Congress (INC)", symbol: "✒️", info: "Senior Congress leader, contesting from Behrampore." },
+      ],
+      measures: [
+        { title: "Kanyashree Expansion", desc: "Proposal to extend the girl-child welfare scheme benefits to include higher education grants." },
+        { title: "Rural Job Guarantee", desc: "Vote on increased MGNREGS allocations for West Bengal districts." },
+      ]
+    },
+    tn: {
+      election: "Tamil Nadu Assembly Election 2026",
+      constituency: "Chennai Central",
+      pollingDate: "April 23, 2026",
+      candidates: [
+        { name: "M.K. Stalin",       party: "Dravida Munnetra Kazhagam (DMK)", symbol: "☀️", info: "Incumbent CM, seeking a second term." },
+        { name: "Edappadi K. Palaniswami", party: "All India Anna DMK (AIADMK)", symbol: "🌊", info: "Leader of Opposition, contesting from Salem East." },
+        { name: "Vijayakanth (DMDK)",  party: "Desiya Murpokku Dravida Kazhagam", symbol: "⚡", info: "DMDK candidate challenging in key constituencies." },
+      ],
+      measures: [
+        { title: "Cauvery Water Sharing", desc: "Resolution on the inter-state river water sharing agreement with Karnataka." },
+        { title: "Neet Exemption Bill", desc: "Vote on the TN state bill seeking permanent exemption from NEET for medical admissions." },
+      ]
+    },
+    mh: {
+      election: "Maharashtra Municipal Corporation Election 2026",
+      constituency: "Mumbai Ward 42",
+      pollingDate: "October 15, 2026",
+      candidates: [
+        { name: "Devendra Fadnavis",   party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "Incumbent CM, MahaYuti alliance leader." },
+        { name: "Uddhav Thackeray",    party: "Shiv Sena (UBT)", symbol: "💠", info: "MVA alliance leader, former CM." },
+        { name: "Nana Patole",         party: "Indian National Congress (INC)", symbol: "✒️", info: "Maharashtra Congress president, key MVA leader." },
+      ],
+      measures: [
+        { title: "Mumbai Metro Expansion", desc: "Approval of Phase 3 metro expansion covering 35 new stations across suburban Mumbai." },
+        { title: "Coastal Road Project", desc: "Vote on environmental clearances for the Mumbai Coastal Road Phase 2." },
+      ]
+    },
+    dl: {
+      election: "Delhi Legislative Assembly Election 2026",
+      constituency: "New Delhi Constituency",
+      pollingDate: "February 8, 2026",
+      candidates: [
+        { name: "Atishi Marlena",   party: "Aam Aadmi Party (AAP)", symbol: "🎟️", info: "Former Education Minister, key AAP leader." },
+        { name: "Parvesh Verma",    party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "BJP's CM face for Delhi, contesting New Delhi seat." },
+        { name: "Sandeep Dikshit",  party: "Indian National Congress (INC)", symbol: "✒️", info: "Congress Delhi president, former MP." },
+      ],
+      measures: [
+        { title: "Free Electricity Subsidy", desc: "Vote on continuation of the 200-unit free electricity scheme for Delhi households." },
+        { title: "Yamuna Cleanup Bill", desc: "Approval of the Rs. 8,000 crore Yamuna river rejuvenation project." },
+      ]
+    }
+  };
+
+  function renderBallot(region) {
+    const data = ballotData[region];
+    if (!data) return;
+    const t = translations[currentLang] || translations['en'];
+    document.getElementById('ballot-content').innerHTML = `
+      <div class="ballot-meta">
+        <span class="ballot-tag">${data.election}</span>
+        <span class="ballot-tag ballot-tag-green">📍 ${data.constituency}</span>
+        <span class="ballot-tag ballot-tag-orange">🗓️ ${data.pollingDate}</span>
+      </div>
+
+      <h3 class="ballot-section-heading">${t.ballotCandidatesHeading || 'Candidates on Your Ballot'}</h3>
+      <div class="ballot-candidates">
+        ${data.candidates.map(c => `
+          <div class="ballot-candidate-card">
+            <div class="candidate-symbol">${c.symbol}</div>
+            <div class="candidate-info">
+              <strong>${c.name}</strong>
+              <span class="candidate-party">${c.party}</span>
+              <p class="candidate-desc">${c.info}</p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <h3 class="ballot-section-heading" style="margin-top: var(--spacing-lg);">${t.ballotMeasuresHeading || 'Key Ballot Measures'}</h3>
+      <div class="ballot-measures">
+        ${data.measures.map(m => `
+          <div class="ballot-measure-card">
+            <div class="measure-title">📜 ${m.title}</div>
+            <div class="measure-desc">${m.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  const myBallotBtn = document.getElementById('my-ballot-btn');
+  const ballotModal = document.getElementById('ballot-modal');
+  const closeBallotBtn = document.getElementById('close-ballot');
+  const ballotRegionSelect = document.getElementById('ballot-region-select');
+
+  if (myBallotBtn) {
+    myBallotBtn.addEventListener('click', () => {
+      ballotModal.classList.remove('hidden');
+      renderBallot(ballotRegionSelect ? ballotRegionSelect.value : 'wb');
+    });
+  }
+  if (closeBallotBtn) {
+    closeBallotBtn.addEventListener('click', () => ballotModal.classList.add('hidden'));
+  }
+  if (ballotRegionSelect) {
+    ballotRegionSelect.addEventListener('change', () => renderBallot(ballotRegionSelect.value));
+  }
+  // Close modal on overlay click
+  if (ballotModal) {
+    ballotModal.addEventListener('click', (e) => { if (e.target === ballotModal) ballotModal.classList.add('hidden'); });
   }
 
   // Init

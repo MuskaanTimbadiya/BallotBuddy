@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ballot-buddy-v6';
+const CACHE_NAME = 'ballot-buddy-v7';
 const urlsToCache = [
   '/',
   '/index.html',
