@@ -605,6 +605,32 @@ button:focus-visible {
   color: var(--text-primary);
 }
 
+/* Typing Indicator Animation */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px !important;
+}
+
+.typing-indicator span {
+  height: 8px;
+  width: 8px;
+  background: var(--text-secondary);
+  border-radius: 50%;
+  display: block;
+  opacity: 0.4;
+  animation: typing 1s infinite;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(-4px); opacity: 0.8; }
+}
+
 .chat-input-area {
   padding: var(--spacing-md);
   display: flex;
@@ -706,6 +732,22 @@ button:focus-visible {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-lg);
+}
+
+.timeline-card {
+  padding: var(--spacing-lg);
+  border-left: 4px solid var(--accent-orange);
+}
+
+.timeline-card h3 {
+  margin-top: 0;
+  color: var(--accent-blue);
+  font-size: 1.2rem;
+}
+
+.timeline-card ul {
+  padding-left: 1.2rem;
+  margin-bottom: 0;
 }
 
 /* Footer Navigation */

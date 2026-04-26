@@ -43,7 +43,7 @@ CRITICAL RULES:
 4. Use clear formatting, but avoid excessive markdown. Use bullet points for lists.`;
 
         const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
+            model: "gemini-2.5-flash-lite",
             systemInstruction: systemInstruction 
         });
 
