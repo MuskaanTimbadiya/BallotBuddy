@@ -15,29 +15,33 @@ Ballot Buddy is a formal, multilingual, and highly interactive web platform desi
 
 | Feature | Description |
 |---|---|
-| 🌐 **Multilingual Support** | Full UI in **English, Hindi, Bengali, Tamil, Telugu** with instant switching |
-| 🤖 **AI Chatbot (Ask Buddy)** | Powered by **Google Gemini API** via a secure Node.js backend proxy |
+| 🌐 **Multilingual Support** | Full UI in **English, Hindi, Bengali, Tamil, Telugu** with instant switching and regional font optimization |
+| 🤖 **AI Chatbot (Ask Buddy)** | Powered by **Google Gemini 1.5 Flash** with context-aware responses and local FAQ fallback |
 | 📋 **Interactive Guide** | Personalized 6-step voter guide based on first-time/returning voter profile |
-| 🗳️ **My Ballot Preview** | Shows candidates, parties, and key ballot measures by state (WB, TN, MH, DL) |
+| 🗳️ **Know Your Candidate** | **Interactive Leaflet Map** to explore candidates, their education, assets, and criminal records in key constituencies |
+| 🗳️ **My Ballot Preview** | Shows state-specific candidates, parties, and key ballot measures (WB, TN, MH, DL) |
+| ✨ **Manifesto Summarizer** | **AI-powered** side-by-side comparison of party promises on topics like Education, Healthcare, and Economy |
+| 🏅 **Democracy Badges** | **AI Vision (Multi-modal)** verification of inked fingers to unlock and share digital voter badges |
+| 🔊 **Multilingual TTS** | **Text-to-Speech** toggle for all chatbot messages, guide steps, and timelines in the selected language |
 | 📅 **Regional Timelines** | Filterable election schedules by state with dates and counting day info |
-| 🔊 **Text-to-Speech** | Read-aloud toggle on all chatbot messages, guide steps, and timelines |
-| 📶 **Offline Mode** | Service Worker caches core assets for access in low-connectivity areas |
-| 🔗 **Share Feature** | Native Web Share API with clipboard fallback to share the app |
-| 🧠 **Knowledge Quiz** | Multilingual quiz to test understanding of the election process |
-| ✨ **Manifesto Summarizer** | **AI-powered** side-by-side comparison of party promises on specific topics |
-| 🏅 **Democracy Badges** | **AI Vision** verification of inked fingers to unlock digital voter badges |
+| 📶 **Offline Mode** | Service Worker caches core assets and chat history for access in low-connectivity areas |
+| 🧠 **Knowledge Quiz** | Multilingual quiz with instant feedback to test understanding of the electoral process |
+| 🔗 **Share Feature** | Native Web Share API with clipboard fallback for easy app distribution |
 
 ---
 
 ### Approach and Logic
 The application was built with the following core principles in mind:
 
-1. **Lightweight & Accessible:** The frontend is built entirely using vanilla HTML, CSS, and JavaScript. No frameworks — ensuring fast load times and cross-platform compatibility. Text-to-Speech (via `SpeechSynthesis` API) ensures audio accessibility across all major content sections.
-2. **Multilingual Architecture:** A centralized translation engine supports **5 major languages** with full translations for all UI strings, guide steps (6 per language), and regional election timelines. Non-English content gracefully falls back to English for any missing keys.
-3. **Institutional Aesthetics:** The design uses a clean formal "Light Theme" with Indian tricolor accents (Saffron `#FF9933`, White, Green `#138808`, and Ashoka Blue `#000080`) to invoke authority and trust.
-4. **AI Integration:** A lightweight **Node.js/Express backend proxy** securely routes queries to the **Google Gemini API**, enabling the "Ask Buddy" chatbot, the Manifesto Summarizer, and the Ink Verification system.
-5. **Computer Vision:** Utilizes Gemini 1.5 Flash's multi-modal capabilities to analyze user-uploaded photos for official election marks.
-6. **Offline Resilience:** A Service Worker (`sw.js`) caches essential assets using a cache-first strategy with network fallback, keeping core features accessible without an internet connection.
+1. **Lightweight & Accessible:** The frontend is built using vanilla HTML, CSS, and JavaScript. No heavy frameworks ensure fast load times on low-bandwidth networks. **Multilingual Text-to-Speech** (via `SpeechSynthesis` API) ensures audio accessibility for diverse literacy levels.
+2. **Multilingual Architecture:** A centralized translation engine supports **5 major languages**. The system uses a master-fallback strategy where non-English content gracefully falls back to English for any missing keys, ensuring zero UI breakage.
+3. **AI-Driven Insights:** 
+   - **Ask Buddy:** Uses a **Node.js/Express backend proxy** to route queries to the **Google Gemini API**, providing real-time answers.
+   - **Manifesto Summarizer:** Leverages AI to distill complex party manifestos into comparable, topic-specific summaries.
+   - **Ink Verification:** Utilizes Gemini 1.5 Flash's **multi-modal capabilities** to analyze user-uploaded photos for official election marks (inked fingers).
+4. **Interactive Mapping:** Integrates **Leaflet.js** to provide a geographical interface for candidate discovery, making complex constituency data visually accessible.
+5. **Institutional Aesthetics:** The design follows a formal "Official White" theme with Indian tricolor accents. It uses high-contrast typography (Inter & Outfit) and subtle micro-animations to create a premium, trustworthy user experience.
+6. **Offline Resilience:** A Service Worker (`sw.js`) implements a cache-first strategy for static assets and handles offline UI states. Local/Session storage is used to persist user preferences (language, region) and chat history.
 
 ---
 
@@ -45,7 +49,7 @@ The application was built with the following core principles in mind:
 
 1. **Installation:**
    - Ensure you have Node.js installed.
-   - Clone the repository and run `npm install` in the project directory.
+   - Clone the repository and run `npm install`.
    - Create a `.env` file in the root directory: `GEMINI_API_KEY=your_actual_key_here`
 
 2. **Starting the App Locally:**
@@ -57,29 +61,28 @@ The application was built with the following core principles in mind:
    - The backend auto-detects the `PORT` environment variable provided by the host.
 
 4. **Using Ballot Buddy:**
-    - **Language Switcher:** Select your language from the top navigation bar. The entire interface — guide, timelines, quiz, and chat — adapts instantly.
-    - **Voter Tools:** Click the "Voter Tools ▾" dropdown in the nav to access:
-        - **Knowledge Quiz:** Test your understanding of the electoral process.
-        - **My Ballot:** Preview candidates and key measures for your state.
-        - **Democracy Badges:** Upload a photo of your inked finger to unlock and share your 2026 digital badge.
-    - **Manifesto Summarizer:** Scroll to the "Manifestos" section, select parties and a topic (e.g., Education), and click "Compare Manifestos" for AI-generated insights.
-    - **Regional Timelines:** Use the "Select your Region" dropdown to filter election schedules by state.
-    - **Interactive Guide:** Click "Start Guide". Answer two quick questions to receive a personalized voter walkthrough.
-    - **Ask Buddy:** Click the floating chat button to ask natural language questions in your language.
-    - **Read Aloud:** Click 🔊 on any bot message, guide step, or timeline card. Click again to stop.
-    - **Share:** Click the saffron circular icon in the nav to share the app.
+    - **Language Switcher:** Select your language from the top nav. The entire interface, including AI responses and TTS, adapts instantly.
+    - **Voter Tools Dropdown:** Access specialized tools:
+        - **Know Your Candidate:** Use the map to select a constituency (e.g., Varanasi) and view candidate affidavits.
+        - **Knowledge Quiz:** Test your electoral understanding with a multilingual quiz.
+        - **My Ballot:** See a preview of what your actual ballot will look like in your state.
+        - **Democracy Badges:** Upload a photo of your inked finger for AI verification.
+    - **Manifesto Summarizer:** Select parties and a focus topic to get an AI-generated comparison.
+    - **Interactive Guide:** Click "Access Guide" to get a walkthrough personalized to your voter status.
+    - **Ask Buddy:** Use the floating chat button for natural language assistance in any supported language.
+
 ---
 
 ### Key Files
 
 | File | Purpose |
 |---|---|
-| `index.html` | App shell, navbar, modals, and section layout |
-| `main.js` | All app logic — translations, guide, quiz, chatbot, TTS, ballot preview, share |
-| `style.css` | Complete design system — theme tokens, components, animations |
-| `sw.js` | Service Worker for offline caching |
-| `server.js` | Node.js/Express backend proxy for the Gemini API |
-| `Dockerfile` | Container config for Cloud Run deployment |
+| `index.html` | App shell, semantic layout, and component containers |
+| `main.js` | Core logic: Translations, Leaflet map, AI integrations, TTS, and state management |
+| `style.css` | Design system: Official theme tokens, responsive layouts, and animations |
+| `server.js` | Secure Node.js/Express backend proxy for Gemini API endpoints |
+| `sw.js` | PWA Service Worker for offline asset caching |
+| `Dockerfile` | Configuration for containerized cloud deployment |
 
 ---
 
@@ -87,6 +90,6 @@ The application was built with the following core principles in mind:
 
 - Assumed the user is looking for upcoming **2026 Assembly Election data** (West Bengal, Tamil Nadu, Maharashtra, Delhi).
 - Assumed the user provides their own valid Gemini API key (via `.env` or environment variables).
-- Assumed the target demographic includes a mix of first-time voters (Form 6) and existing voters (Form 8 or polling assistance).
-- Assumed modern browser support (ES Modules, Fetch API, CSS Grid/Flexbox, Web Share API, SpeechSynthesis).
-- Ballot data (candidates, measures) is illustrative/educational and should be verified against official ECI sources before elections.
+- Assumed the target demographic includes a mix of first-time voters and existing voters requiring polling assistance.
+- Ballot data (candidates, affidavits, manifestos) used in features like KYC and the Summarizer is illustrative/educational and based on provided mock datasets.
+- Modern browser support is required for features like Web Share API and Speech Synthesis.
