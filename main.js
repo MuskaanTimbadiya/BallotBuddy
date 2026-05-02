@@ -1,3 +1,24 @@
+/**
+ * @file main.js
+ * @description BallotBuddy — Core Application Logic
+ *
+ * Responsibilities:
+ *  - Multilingual i18n translation engine (EN, HI, BN, TA, TE)
+ *  - Section-based SPA navigation (hash routing + history API)
+ *  - AI Chatbot: sends queries to /api/chat (Google Gemini 1.5 Flash via server proxy)
+ *  - AI Manifesto Summarizer: fetches party comparisons via /api/summarize
+ *  - AI Badge Verification: multimodal ink-finger detection via /api/verify-badge
+ *  - Know Your Candidate: Leaflet.js interactive map + candidate affidavit display
+ *  - Voter Guide: personalized step-by-step flow based on onboarding responses
+ *  - Text-to-Speech (TTS): Web SpeechSynthesis API for accessibility
+ *  - Knowledge Quiz: multilingual quiz with scoring and feedback
+ *  - Booth Finder: PIN-code based polling station search
+ *  - Service Worker registration for PWA offline support
+ *
+ * All Gemini API calls are proxied through server.js — the API key is never
+ * exposed to the browser.
+ */
+
 // --- Translations (i18n) ---
 const translations = {
   en: {
@@ -887,10 +908,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
+        // Map language codes to full names required by the Gemini API prompt
         const langMap = { "en": "English", "hi": "Hindi", "bn": "Bengali", "ta": "Tamil", "te": "Telugu" };
+
+        // Inject current election timeline data as context so Gemini can answer specific questions
         const timelineData = translations[currentLang].timelines || translations['en'].timelines;
         const contextData = timelineData.map(t => `${t.title}: ${t.content.replace(/<[^>]*>?/gm, "")}`).join("\n\n");
         
+        // Sends user message to the server-side Gemini API proxy (API key never exposed to browser)
         const response = await fetch("/api/chat", { 
             method: "POST", 
             headers: { "Content-Type": "application/json" }, 
@@ -906,6 +931,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addMessage(data.reply, true);
         }
     } catch (error) {
+        // Graceful error handling — shows a localized offline message if the API is unreachable
         console.error("Chat error:", error);
         if (typingMsg.parentNode) chatMessages.removeChild(typingMsg);
         const errorMsgs = {

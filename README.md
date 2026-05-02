@@ -6,90 +6,174 @@ Ballot Buddy is a formal, multilingual, and highly interactive web platform desi
 
 ---
 
-### Chosen Vertical
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | Vanilla HTML5, CSS3, JavaScript (ES6+) |
+| **Backend** | Node.js + Express.js |
+| **AI / ML** | Google Gemini 1.5 Flash API (text + multimodal) |
+| **Cloud Platform** | Google Cloud Run (containerized, auto-scaling) |
+| **Containerization** | Docker |
+| **Maps** | Leaflet.js |
+| **Fonts** | Inter + Outfit (Google Fonts, async loaded) |
+| **PWA** | Service Worker (cache-first offline strategy) |
+| **Speech** | Web Speech API (SpeechSynthesis + SpeechRecognition) |
+
+---
+
+## Security
+
+All sensitive credentials are managed exclusively through **environment variables** and are **never hard-coded** into the source code.
+
+- **`GEMINI_API_KEY`** is stored in a `.env` file locally (excluded from version control via `.gitignore`) and injected at runtime via `process.env.GEMINI_API_KEY` in `server.js`.
+- **API calls to Google Gemini are proxied server-side** via a Node.js/Express backend. The frontend never holds or transmits the API key directly — all AI requests go through `/api/chat` and `/api/summarize` endpoints on the server.
+- On **Google Cloud Run**, the key is set as a [Secret Manager](https://cloud.google.com/secret-manager) environment variable — not stored in the container image.
+- The `.gitignore` explicitly excludes `.env` files to prevent accidental key exposure in the repository.
+
+```bash
+# .env (local development only — never committed)
+GEMINI_API_KEY=your_actual_key_here
+```
+
+---
+
+## Prompt Engineering Strategy
+
+BallotBuddy uses a carefully structured **system instruction** to keep the Gemini model on-topic and produce high-quality, neutral responses:
+
+```javascript
+const systemInstruction = `You are BallotBuddy, a neutral civic educator aligned with
+the Election Commission of India (ECI) guidelines.
+
+CRITICAL RULES:
+1. LANGUAGE: Respond exclusively in the user's selected language.
+2. TOPIC-LOCK: Only discuss Indian elections, voter registration, EVM/VVPAT,
+   election timelines, candidates, and civic rights. Refuse all off-topic queries.
+3. NEUTRALITY: Never favour or criticize any party, candidate, or ideology.
+4. ACCURACY: State clearly when a specific fact is unknown — never hallucinate.
+5. FORMAT: Keep answers under 150 words. Use bullet points for lists.`;
+```
+
+### Key techniques used:
+| Technique | Implementation |
+|---|---|
+| **Role Assignment** | Model is defined as a "neutral civic educator" aligned with ECI — sets the persona and authority |
+| **Topic-Locking** | Explicit `TOPIC-LOCK` rule enumerates permitted topics and mandates refusal of all others |
+| **Context Injection** | Live site data (timelines, constituency info) is appended to the system instruction each request |
+| **Language Enforcement** | Multilingual output is mandated in the same instruction — ensures responses match the user's UI language |
+| **Neutrality Guardrail** | Explicit rule prevents the model from expressing political opinions or bias |
+| **Format Control** | Word limit and bullet-point instructions prevent verbose or hallucinated responses |
+
+---
+
+## Chosen Vertical
 **Election Process Education**
 
 ---
 
-### Features
+## Features
 
 | Feature | Description |
 |---|---|
-| 🌐 **Multilingual Support** | Full UI in **English, Hindi, Bengali, Tamil, Telugu** with instant switching and regional font optimization |
+| 🌐 **Multilingual Support** | Full UI in **English, Hindi, Bengali, Tamil, Telugu** with instant switching |
 | 🤖 **AI Chatbot (Ask Buddy)** | Powered by **Google Gemini 1.5 Flash** with context-aware responses and local FAQ fallback |
+| 📍 **Find Your Booth** | PIN code search tool to locate designated polling stations |
 | 📋 **Interactive Guide** | Personalized 6-step voter guide based on first-time/returning voter profile |
-| 🗳️ **Know Your Candidate** | **Interactive Leaflet Map** to explore candidates, their education, assets, and criminal records in key constituencies |
-| 🗳️ **My Ballot Preview** | Shows state-specific candidates, parties, and key ballot measures (WB, TN, MH, DL) |
-| ✨ **Manifesto Summarizer** | **AI-powered** side-by-side comparison of party promises on topics like Education, Healthcare, and Economy |
-| 🏅 **Democracy Badges** | **AI Vision (Multi-modal)** verification of inked fingers to unlock and share digital voter badges |
-| 🔊 **Multilingual TTS** | **Text-to-Speech** toggle for all chatbot messages, guide steps, and timelines in the selected language |
-| 📅 **Regional Timelines** | Filterable election schedules by state with dates and counting day info |
-| 📶 **Offline Mode** | Service Worker caches core assets and chat history for access in low-connectivity areas |
-| 🧠 **Knowledge Quiz** | Multilingual quiz with instant feedback to test understanding of the electoral process |
-| 🔗 **Share Feature** | Native Web Share API with clipboard fallback for easy app distribution |
+| 🗳️ **Know Your Candidate** | **Interactive Leaflet Map** to explore candidates, assets, and criminal records |
+| 🗳️ **My Ballot Preview** | State-specific ballot preview for WB, TN, MH, DL |
+| ✨ **Manifesto Summarizer** | **AI-powered** side-by-side comparison of party promises |
+| 🏅 **Democracy Badges** | **AI Vision (Multimodal)** verification of inked fingers for voter badges |
+| 🔊 **Multilingual TTS** | Text-to-Speech for all chatbot messages, guide steps, and timelines |
+| 📅 **Regional Timelines** | Filterable election schedules by state |
+| 📖 **Why Your Vote Matters** | Interactive slideshow of real Indian elections decided by 1–44 votes |
+| 📶 **Offline Mode** | Service Worker caches core assets for low-connectivity areas |
+| 🧠 **Knowledge Quiz** | Multilingual quiz with instant feedback |
 
 ---
 
-### Approach and Logic
-The application was built with the following core principles in mind:
+## Code Quality
 
-1. **Lightweight & Accessible:** The frontend is built using vanilla HTML, CSS, and JavaScript. No heavy frameworks ensure fast load times on low-bandwidth networks. **Multilingual Text-to-Speech** (via `SpeechSynthesis` API) ensures audio accessibility for diverse literacy levels.
-2. **Multilingual Architecture:** A centralized translation engine supports **5 major languages**. The system uses a master-fallback strategy where non-English content gracefully falls back to English for any missing keys, ensuring zero UI breakage.
-3. **AI-Driven Insights:** 
-   - **Ask Buddy:** Uses a **Node.js/Express backend proxy** to route queries to the **Google Gemini API**, providing real-time answers.
-   - **Manifesto Summarizer:** Leverages AI to distill complex party manifestos into comparable, topic-specific summaries.
-   - **Ink Verification:** Utilizes Gemini 1.5 Flash's **multi-modal capabilities** to analyze user-uploaded photos for official election marks (inked fingers).
-4. **Interactive Mapping:** Integrates **Leaflet.js** to provide a geographical interface for candidate discovery, making complex constituency data visually accessible.
-5. **Institutional Aesthetics:** The design follows a formal "Official White" theme with Indian tricolor accents. It uses high-contrast typography (Inter & Outfit) and subtle micro-animations to create a premium, trustworthy user experience.
-6. **Offline Resilience:** A Service Worker (`sw.js`) implements a cache-first strategy for static assets and handles offline UI states. Local/Session storage is used to persist user preferences (language, region) and chat history.
+### Error Handling
+All API calls are wrapped in `try-catch` blocks with contextual error messages:
+
+```javascript
+try {
+  const result = await model.generateContent(message);
+  const response = await result.response;
+  res.json({ reply: response.text() });
+} catch (error) {
+  // Specific handling for rate limits (429), auth errors (401/403), and generic failures
+  console.error("Error communicating with Gemini API:", error.message);
+  res.status(statusCode).json({ error: errorMessage });
+}
+```
+
+### Code Comments
+Key functions are documented with JSDoc-style comments explaining their purpose:
+- **`/api/chat`** — Routes user queries through the Gemini API with topic-locked system instruction
+- **`/api/summarize`** — Fetches neutral manifesto comparisons from Gemini in structured JSON format
+- **`/api/verify-badge`** — Sends multimodal prompt to Gemini Vision to verify inked finger photos
 
 ---
 
-### How the solution works
+## Accessibility
+
+BallotBuddy implements WCAG 2.1 AA accessibility standards:
+
+- ✅ `<html lang="en">` declared on all pages
+- ✅ All icon buttons have descriptive `aria-label` attributes (menu, chat, close, send, navigation arrows)
+- ✅ All form inputs have `aria-label` or associated `<label>` elements
+- ✅ Dropdown menus use `aria-haspopup`, `aria-expanded`, and `role="menu"`
+- ✅ Offline status announced via `role="status"` and `aria-live="polite"`
+- ✅ Visually-hidden labels for screen-reader-only content
+- ✅ Text-to-Speech support for all dynamic content sections
+
+---
+
+## How It Works
 
 1. **Installation:**
    - Ensure you have Node.js installed.
    - Clone the repository and run `npm install`.
-   - Create a `.env` file in the root directory: `GEMINI_API_KEY=your_actual_key_here`
+   - Create a `.env` file: `GEMINI_API_KEY=your_actual_key_here`
 
-2. **Starting the App Locally:**
-   - Run `node server.js` to boot the backend proxy and serve the static files.
-   - Open your browser to `http://localhost:8080/`
+2. **Starting Locally:**
+   ```bash
+   node server.js
+   # Open http://localhost:8080/
+   ```
 
-3. **Cloud Deployment:**
-   - The application is containerized via `Dockerfile` and optimized for Google Cloud Run.
-   - The backend auto-detects the `PORT` environment variable provided by the host.
+3. **Build (CSS minification):**
+   ```bash
+   npm run build
+   # Generates style.min.css (served automatically by server.js)
+   ```
 
-4. **Using Ballot Buddy:**
-    - **Language Switcher:** Select your language from the top nav. The entire interface, including AI responses and TTS, adapts instantly.
-    - **Voter Tools Dropdown:** Access specialized tools:
-        - **Know Your Candidate:** Use the map to select a constituency (e.g., Varanasi) and view candidate affidavits.
-        - **Knowledge Quiz:** Test your electoral understanding with a multilingual quiz.
-        - **My Ballot:** See a preview of what your actual ballot will look like in your state.
-        - **Democracy Badges:** Upload a photo of your inked finger for AI verification.
-    - **Manifesto Summarizer:** Select parties and a focus topic to get an AI-generated comparison.
-    - **Interactive Guide:** Click "Access Guide" to get a walkthrough personalized to your voter status.
-    - **Ask Buddy:** Use the floating chat button for natural language assistance in any supported language.
+4. **Cloud Deployment:**
+   - Containerized via `Dockerfile` for **Google Cloud Run**.
+   - `PORT` environment variable is auto-detected from the Cloud Run runtime.
 
 ---
 
-### Key Files
+## Key Files
 
 | File | Purpose |
 |---|---|
-| `index.html` | App shell, semantic layout, and component containers |
-| `main.js` | Core logic: Translations, Leaflet map, AI integrations, TTS, and state management |
-| `style.css` | Design system: Official theme tokens, responsive layouts, and animations |
+| `index.html` | App shell, semantic layout, and accessible component containers |
+| `main.js` | Core logic: translations, Leaflet map, AI integrations, TTS, state management |
+| `style.css` | Design system: theme tokens, responsive layouts, animations (source) |
+| `style.min.css` | Minified CSS served in production (~22% smaller than source) |
 | `server.js` | Secure Node.js/Express backend proxy for Gemini API endpoints |
 | `sw.js` | PWA Service Worker for offline asset caching |
-| `Dockerfile` | Configuration for containerized cloud deployment |
+| `Dockerfile` | Configuration for containerized Google Cloud Run deployment |
 
 ---
 
-### Assumptions made
+## Assumptions
 
-- Assumed the user is looking for upcoming **2026 Assembly Election data** (West Bengal, Tamil Nadu, Maharashtra, Delhi).
-- Assumed the user provides their own valid Gemini API key (via `.env` or environment variables).
-- Assumed the target demographic includes a mix of first-time voters and existing voters requiring polling assistance.
-- Ballot data (candidates, affidavits, manifestos) used in features like KYC and the Summarizer is illustrative/educational and based on provided mock datasets.
-- Modern browser support is required for features like Web Share API and Speech Synthesis.
+- The app targets upcoming **2026 Assembly Elections** (West Bengal, Tamil Nadu, Maharashtra, Delhi).
+- Users provide their own valid Gemini API key via `.env`.
+- Target demographic includes first-time voters and returning citizens requiring polling assistance.
+- Ballot data (candidates, affidavits, manifestos) is illustrative/educational, based on mock datasets.
+- Modern browser support required for Web Share API and Speech Synthesis.

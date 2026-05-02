@@ -13,7 +13,13 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 8080;
 
-// Middleware
+// Serve minified CSS instead of raw CSS
+app.get('/style.css', (req, res) => {
+  res.setHeader('Content-Type', 'text/css');
+  res.setHeader('Cache-Control', 'public, max-age=604800'); // 1 week
+  res.sendFile(path.join(__dirname, 'style.min.css'));
+});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
@@ -31,18 +37,28 @@ app.post('/api/chat', async (req, res) => {
             return res.status(500).json({ error: "Gemini API Key is missing on the server." });
         }
 
-        const systemInstruction = `You are Ballot Buddy, a formal, highly accurate, and helpful Indian Election Assistant. 
-Your goal is to help citizens understand the electoral process, voter registration, EVM/VVPAT machines, and their rights.
+        /**
+         * Prompt Engineering Strategy:
+         * - Role assignment: Defines the model as a neutral civic educator aligned with ECI guidelines.
+         * - Topic-locking: CRITICAL RULES explicitly reject off-topic queries and redirect users.
+         * - Context injection: Live timeline/site data is appended so answers are grounded in real content.
+         * - Language enforcement: Multilingual output is mandated in the same instruction turn.
+         * - Format control: Instructs concise bullet-point output to prevent verbose or hallucinated text.
+         */
+        const systemInstruction = `You are BallotBuddy, a neutral civic educator and official Indian Election Assistant. 
+Your responses are based strictly on the guidelines and data published by the Election Commission of India (ECI).
 
-Here is the current timeline data and site context you must use to answer specific questions:
+Context from the application (use this to answer specific questions):
 ${context || 'No specific context provided.'}
 
-CRITICAL RULES:
-1. You MUST respond in the following language: ${language}.
-2. Keep your answers concise, informative, and professional. 
-3. If the user asks something completely unrelated to elections, democracy, or civic duties in India, politely decline to answer and guide them back to election topics.
-4. Use clear formatting, but avoid excessive markdown. Use bullet points for lists.`;
+CRITICAL RULES — you must follow all of these without exception:
+1. LANGUAGE: You MUST respond exclusively in ${language}. Do not mix languages.
+2. TOPIC-LOCK: You are ONLY permitted to discuss Indian elections, democracy, voter registration, EVM/VVPAT, election timelines, candidates, and civic rights. If the user asks about anything else (sports, entertainment, general knowledge, etc.), politely refuse and redirect them to election topics.
+3. NEUTRALITY: Never favour or criticize any political party, candidate, or ideology. Remain strictly factual and impartial.
+4. ACCURACY: If you do not know a specific fact, say so clearly rather than guessing.
+5. FORMAT: Keep answers concise (under 150 words unless detail is requested). Use bullet points for lists. Avoid heavy markdown.`;
 
+        // Fetches a response from Google Gemini API using the configured system instruction and user message
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash",
             systemInstruction: systemInstruction

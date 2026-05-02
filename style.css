@@ -1,113 +1,39 @@
-/* Government Theme - Light, Formal, High Contrast */
+/* ============================================================
+   BASE & CRITICAL STYLES are inlined in <style> in index.html
+   for zero render-blocking on first paint (FCP/LCP optimised).
+   Below: non-critical component styles, loaded async.
+   ============================================================ */
+
 :root {
-  /* Color Palette */
-  --bg-primary: #f8fafc; /* Very light gray/blue for body */
-  --bg-secondary: #ffffff; /* Pure white for cards/modals */
-  --text-primary: #1e293b; /* Dark slate for high contrast */
-  --text-secondary: #475569; /* Medium gray for supporting text */
-  
-  /* Indian Official Colors with Gen Z Vibrance */
-  --accent-saffron: #FF6B00; /* More vibrant saffron */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --accent-saffron: #FF6B00;
   --accent-white: #FFFFFF;
-  --accent-green: #00C853; /* More electric green */
-  --accent-blue: #2962FF; /* More vibrant blue */
+  --accent-green: #00C853;
+  --accent-blue: #2962FF;
   --accent-orange: #FF3D00;
-  
-  /* Modern Gradients */
   --grad-primary: linear-gradient(135deg, #2962FF 0%, #00C853 100%);
   --grad-saffron: linear-gradient(135deg, #FF6B00 0%, #FFB300 100%);
   --grad-glass: rgba(255, 255, 255, 0.7);
-  
-  /* UI Elements */
   --border-color: rgba(0, 0, 0, 0.08);
   --focus-ring: rgba(41, 98, 255, 0.3);
-  
-  /* Typography */
   --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Merriweather', 'Georgia', serif;
-  
-  /* Spacing */
+  --font-heading: 'Outfit', 'Georgia', serif;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 2rem;
   --spacing-xl: 4rem;
-  
-  /* Shadows (Subtle & Formal) */
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
-  
-  /* Transitions */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.25s ease-in-out;
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.hidden {
-  display: none !important;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: var(--font-main);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-.tricolor-line {
-  height: 6px;
-  width: 100%;
-  background: linear-gradient(
-    to right,
-    var(--accent-saffron) 0%,
-    var(--accent-saffron) 33.33%,
-    var(--accent-white) 33.33%,
-    var(--accent-white) 66.66%,
-    var(--accent-green) 66.66%,
-    var(--accent-green) 100%
-  );
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2000;
-}
-
-#app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
-
-/* Typography */
-h1, h2, h3, h4 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--accent-blue);
-  line-height: 1.3;
-}
-
-.gradient-text {
-  color: var(--accent-blue);
-}
+.gradient-text { color: var(--accent-blue); }
 
 /* Navbar */
 .navbar {

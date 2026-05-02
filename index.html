@@ -8,11 +8,70 @@
     <meta name="description" content="Ballot Buddy - Your interactive guide to understanding the Indian election process." />
     <title>Ballot Buddy | Indian Election Assistant</title>
     <link rel="manifest" href="/manifest.json" />
+    <!-- DNS prefetch for any deferred external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
 
+    <!-- Non-blocking CSS (deferred, non-render-blocking) -->
+    <link rel="preload" href="./style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./style.css"></noscript>
+
+    <!-- Critical CSS (above-the-fold — zero network round-trip) -->
+    <style>
+      /* === Reset & Base === */
+      *{margin:0;padding:0;box-sizing:border-box}
+      :root{
+        --bg-primary:#f8fafc;--bg-secondary:#fff;
+        --text-primary:#1e293b;--text-secondary:#475569;
+        --accent-saffron:#FF6B00;--accent-white:#fff;
+        --accent-green:#00C853;--accent-blue:#2962FF;
+        --grad-primary:linear-gradient(135deg,#2962FF 0%,#00C853 100%);
+        --border-color:rgba(0,0,0,.08);
+        --font-main:system-ui,-apple-system,'Segoe UI',sans-serif;
+        --font-heading:'Outfit',system-ui,sans-serif;
+        --spacing-sm:.5rem;--spacing-md:1rem;
+        --spacing-lg:2rem;--spacing-xl:4rem;
+        --shadow-md:0 8px 24px rgba(0,0,0,.08);
+        --transition-fast:.2s cubic-bezier(.4,0,.2,1);
+      }
+      /* System font stack renders instantly — webfont loads after, no CLS */
+      body{font-family:var(--font-main);background:var(--bg-primary);color:var(--text-primary);line-height:1.6;min-height:100vh;overflow-x:hidden}
+      .hidden{display:none!important}
+      .tricolor-line{height:6px;width:100%;background:linear-gradient(to right,#FF6B00 0%,#FF6B00 33.33%,#fff 33.33%,#fff 66.66%,#00C853 66.66%,#00C853 100%);position:fixed;top:0;left:0;z-index:2000}
+      #app{max-width:1200px;margin:0 auto;padding:0 var(--spacing-md)}
+      h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;color:var(--accent-blue);line-height:1.3}
+      .navbar{display:flex;justify-content:space-between;align-items:center;padding:var(--spacing-md) 0;border-bottom:1px solid var(--border-color);margin-bottom:var(--spacing-lg)}
+      .logo{display:flex;align-items:center;gap:var(--spacing-sm);font-size:1.5rem;font-weight:800;font-family:var(--font-heading);text-decoration:none;color:var(--accent-blue)}
+      .logo-text .highlight{color:#FF6B00}
+      .menu-toggle{display:none;background:none;border:none;font-size:1.8rem;color:var(--accent-blue);cursor:pointer}
+      .nav-links{display:flex;gap:var(--spacing-lg);align-items:center}
+      .nav-links a{color:var(--text-secondary);text-decoration:none;font-weight:500}
+      .btn-primary{background:var(--grad-primary);color:#fff;border:none;border-radius:50px;cursor:pointer;font-weight:700;font-size:1.1rem;display:inline-flex;align-items:center;gap:.5rem;justify-content:center;box-shadow:0 10px 20px rgba(41,98,255,.3);padding:1rem 2.5rem}
+      .hero{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-xl);align-items:center;min-height:70vh;padding:var(--spacing-xl) 0}
+      .hero-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:var(--text-primary);line-height:1.1;margin-bottom:var(--spacing-md)}
+      .hero-subtitle{color:var(--text-secondary);font-size:1.1rem;margin-bottom:var(--spacing-lg);line-height:1.7}
+      .hero-btns{display:flex;gap:var(--spacing-md);flex-wrap:wrap}
+      .reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+      .reveal.active{opacity:1;transform:translateY(0)}
+      .offline-banner{background:#EF4444;color:#fff;text-align:center;padding:.75rem;font-weight:600;font-size:.9rem;position:sticky;top:6px;z-index:100}
+      @media(max-width:768px){
+        .hero{grid-template-columns:1fr;gap:var(--spacing-lg);min-height:auto;padding:var(--spacing-lg) 0}
+        .hero-title{font-size:2rem}
+        .menu-toggle{display:block}
+        .nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;width:100%;background:#fff;padding:var(--spacing-md);box-shadow:var(--shadow-md);z-index:100;gap:var(--spacing-sm)}
+        .nav-links.active{display:flex}
+      }
+      /* Load web fonts async — font-display:swap avoids FOIT */
+      @font-face{
+        font-family:'Outfit';
+        font-display:swap;
+        src:local('Outfit'),url('https://fonts.gstatic.com/s/outfit/v11/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXBiAJoI3ZKyHaQQ.woff2') format('woff2');
+        font-weight:400 800;
+        unicode-range:U+0000-00FF;
+      }
+    </style>
   </head>
   <body>
     <div class="tricolor-line"></div>
@@ -145,8 +204,8 @@
             <h2 class="section-heading">Find Your Polling Station</h2>
             <p class="section-subheading">Enter your 6-digit PIN code to locate your designated booth.</p>
             <div class="booth-search-container">
-              <input type="text" id="booth-zip-input" maxlength="6" placeholder="Enter PIN code (e.g. 110001)" class="booth-input">
-              <button id="find-booth-btn" class="btn-primary">Search Booths 🔍</button>
+              <input type="text" id="booth-zip-input" maxlength="6" placeholder="Enter PIN code (e.g. 110001)" class="booth-input" aria-label="Enter your 6-digit PIN code to find polling booths">
+              <button id="find-booth-btn" class="btn-primary" aria-label="Search polling booths by PIN code">Search Booths 🔍</button>
             </div>
             <div id="booth-results" class="booth-results hidden">
               <!-- Results will be injected here -->
@@ -281,7 +340,7 @@
                 </select>
               </div>
               
-              <button id="compare-manifesto-btn" class="btn-primary full-width">
+              <button id="compare-manifesto-btn" class="btn-primary full-width" aria-label="Compare party manifestos using AI">
                 <span data-i18n="btnCompare">Compare Manifestos</span>
                 <span class="btn-icon">✨</span>
               </button>
@@ -303,8 +362,8 @@
           </div>
           
           <div class="guide-controls">
-            <button id="prev-btn" class="btn-secondary hidden" data-i18n="btnBack">Back</button>
-            <button id="next-btn" class="btn-primary" data-i18n="btnContinue">Continue</button>
+            <button id="prev-btn" class="btn-secondary hidden" data-i18n="btnBack" aria-label="Go to previous step">Back</button>
+            <button id="next-btn" class="btn-primary" data-i18n="btnContinue" aria-label="Go to next step">Continue</button>
           </div>
         </section>
 
@@ -455,15 +514,12 @@
         </div>
       </footer>
     </div>
-    <script src="./main.js"></script>
-    <script>
+    <script src="./main.js" defer></script>
+    <script type="module">
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          }).catch(err => {
-            console.log('ServiceWorker registration failed: ', err);
-          });
+          navigator.serviceWorker.register('/sw.js')
+            .catch(() => {});  // silent fail — non-critical
         });
       }
     </script>
