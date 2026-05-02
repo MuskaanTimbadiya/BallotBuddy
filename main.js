@@ -115,11 +115,16 @@ const translations = {
       { q: "Which document conclusively verifies your right to vote at a specific booth?", options: ["Aadhaar Card", "Passport", "The Electoral Roll"], ans: 2 },
       { q: "What is the function of the VVPAT system?", options: ["Voter Registration", "Prints a verifiable paper audit trail slip", "Electronic Vote Tabulation"], ans: 1 },
     ],
-    quizResultScore: "Score:",
-    quizResultPerfect: "Excellent. You demonstrate a thorough understanding of the electoral process.",
-    quizResultGood: "Satisfactory. Please refer to the guide for comprehensive details.",
     quizBtnClose: "Close Quiz",
     navManifesto: "Manifestos",
+    navBadges: "Badges",
+    badgeTitle: "Democracy Badge Center",
+    badgeInstruction: "Upload a photo of your inked finger to unlock your 2026 Democracy Badge!",
+    btnUploadInk: "Click to Upload Photo",
+    verifyingInk: "AI is verifying your ink mark...",
+    badge2026Name: "2026 Voter",
+    btnShareBadge: "Share My Badge",
+    badgeShareText: "I just unlocked my 2026 Democracy Badge on Ballot Buddy! 🇮🇳",
     manifestoHeading: "AI Manifesto Summarizer",
     manifestoSubheading: "Compare party promises side-by-side using AI-powered insights.",
     labelSelectParties: "Select Parties to Compare:",
@@ -1081,6 +1086,110 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // --- 7. Democracy Badge Logic ---
+  const navBadgeBtn = document.getElementById('nav-badge-btn');
+  const badgeModal = document.getElementById('badge-modal');
+  const closeBadgeBtn = document.getElementById('close-badge');
+  const inkInput = document.getElementById('ink-input');
+  const verificationStatus = document.getElementById('badge-verification-status');
+  const uploadBox = document.getElementById('ink-upload-box');
+  const badge2026 = document.getElementById('badge-2026');
+  const badgeShareArea = document.getElementById('badge-share-area');
+  const shareBadgeBtn = document.getElementById('share-badge-btn');
+
+  if (navBadgeBtn) {
+    navBadgeBtn.addEventListener('click', () => {
+      badgeModal.classList.remove('hidden');
+    });
+  }
+
+  if (closeBadgeBtn) {
+    closeBadgeBtn.addEventListener('click', () => badgeModal.classList.add('hidden'));
+  }
+
+  if (inkInput) {
+    inkInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      uploadBox.classList.add('hidden');
+      verificationStatus.classList.remove('hidden');
+
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const base64Image = event.target.result.split(',')[1];
+        
+        try {
+          const response = await fetch("/api/verify-ink", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ image: base64Image })
+          });
+
+          const data = await response.json();
+          verificationStatus.classList.add('hidden');
+
+          if (data.verified) {
+            badge2026.classList.remove('locked');
+            badge2026.classList.add('unlocked');
+            badge2026.querySelector('.badge-icon').innerText = '🏅';
+            badgeShareArea.classList.remove('hidden');
+            safeSetItem('ballotBuddyBadge2026', 'unlocked');
+          } else {
+            uploadBox.classList.remove('hidden');
+            alert(data.reason || "AI could not detect an inked finger. Please try another photo.");
+          }
+        } catch (error) {
+          console.error("Verification error:", error);
+          verificationStatus.classList.add('hidden');
+          uploadBox.classList.remove('hidden');
+          alert("Error connecting to verification server.");
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  if (shareBadgeBtn) {
+    shareBadgeBtn.addEventListener('click', () => {
+      const shareText = translations[currentLang].badgeShareText || "I voted!";
+      if (navigator.share) {
+        navigator.share({
+          title: 'Democracy Badge',
+          text: shareText,
+          url: window.location.href
+        });
+      } else {
+        alert("Sharing not supported, but your badge is saved! 🎉");
+      }
+    });
+  }
+
+  // Load badge state
+  if (window.localStorage.getItem('ballotBuddyBadge2026') === 'unlocked') {
+    badge2026.classList.remove('locked');
+    badge2026.classList.add('unlocked');
+    badge2026.querySelector('.badge-icon').innerText = '🏅';
+  }
+
+  // --- 8. Tools Dropdown Logic ---
+  const toolsBtn = document.getElementById('tools-dropdown-btn');
+  const toolsMenu = document.getElementById('tools-dropdown');
+
+  if (toolsBtn) {
+    toolsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toolsMenu.classList.toggle('hidden');
+    });
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (toolsMenu && !toolsMenu.classList.contains('hidden') && !toolsBtn.contains(e.target)) {
+      toolsMenu.classList.add('hidden');
+    }
+  });
 
   // Init
   updateI18n();

@@ -24,6 +24,8 @@ Ballot Buddy is a formal, multilingual, and highly interactive web platform desi
 | 📶 **Offline Mode** | Service Worker caches core assets for access in low-connectivity areas |
 | 🔗 **Share Feature** | Native Web Share API with clipboard fallback to share the app |
 | 🧠 **Knowledge Quiz** | Multilingual quiz to test understanding of the election process |
+| ✨ **Manifesto Summarizer** | **AI-powered** side-by-side comparison of party promises on specific topics |
+| 🏅 **Democracy Badges** | **AI Vision** verification of inked fingers to unlock digital voter badges |
 
 ---
 
@@ -33,8 +35,9 @@ The application was built with the following core principles in mind:
 1. **Lightweight & Accessible:** The frontend is built entirely using vanilla HTML, CSS, and JavaScript. No frameworks — ensuring fast load times and cross-platform compatibility. Text-to-Speech (via `SpeechSynthesis` API) ensures audio accessibility across all major content sections.
 2. **Multilingual Architecture:** A centralized translation engine supports **5 major languages** with full translations for all UI strings, guide steps (6 per language), and regional election timelines. Non-English content gracefully falls back to English for any missing keys.
 3. **Institutional Aesthetics:** The design uses a clean formal "Light Theme" with Indian tricolor accents (Saffron `#FF9933`, White, Green `#138808`, and Ashoka Blue `#000080`) to invoke authority and trust.
-4. **AI Integration:** A lightweight **Node.js/Express backend proxy** securely routes queries to the **Google Gemini API**, enabling the "Ask Buddy" chatbot to answer hyper-specific questions without exposing API keys.
-5. **Offline Resilience:** A Service Worker (`sw.js`) caches essential assets using a cache-first strategy with network fallback, keeping core features accessible without an internet connection.
+4. **AI Integration:** A lightweight **Node.js/Express backend proxy** securely routes queries to the **Google Gemini API**, enabling the "Ask Buddy" chatbot, the Manifesto Summarizer, and the Ink Verification system.
+5. **Computer Vision:** Utilizes Gemini 1.5 Flash's multi-modal capabilities to analyze user-uploaded photos for official election marks.
+6. **Offline Resilience:** A Service Worker (`sw.js`) caches essential assets using a cache-first strategy with network fallback, keeping core features accessible without an internet connection.
 
 ---
 
@@ -54,15 +57,17 @@ The application was built with the following core principles in mind:
    - The backend auto-detects the `PORT` environment variable provided by the host.
 
 4. **Using Ballot Buddy:**
-   - **Language Switcher:** Select your language from the top navigation bar. The entire interface — guide, timelines, quiz, and chat — adapts instantly.
-   - **My Ballot:** Click "🗳️ My Ballot" in the nav to preview candidates and key measures for your state.
-   - **Regional Timelines:** Use the "Select your Region" dropdown to filter election schedules by state.
-   - **Interactive Guide:** Click "Start Guide". Answer two quick questions to receive a personalized voter walkthrough.
-   - **Ask Buddy:** Click the floating chat button to ask natural language questions in your language.
-   - **Read Aloud:** Click 🔊 on any bot message, guide step, or timeline card. Click again to stop.
-   - **Share:** Click the saffron "Share" button in the nav to share the app via the native share dialog or clipboard.
-   - **Knowledge Check:** Scroll to the Timelines section and click "Take Quiz" in the nav.
-
+    - **Language Switcher:** Select your language from the top navigation bar. The entire interface — guide, timelines, quiz, and chat — adapts instantly.
+    - **Voter Tools:** Click the "Voter Tools ▾" dropdown in the nav to access:
+        - **Knowledge Quiz:** Test your understanding of the electoral process.
+        - **My Ballot:** Preview candidates and key measures for your state.
+        - **Democracy Badges:** Upload a photo of your inked finger to unlock and share your 2026 digital badge.
+    - **Manifesto Summarizer:** Scroll to the "Manifestos" section, select parties and a topic (e.g., Education), and click "Compare Manifestos" for AI-generated insights.
+    - **Regional Timelines:** Use the "Select your Region" dropdown to filter election schedules by state.
+    - **Interactive Guide:** Click "Start Guide". Answer two quick questions to receive a personalized voter walkthrough.
+    - **Ask Buddy:** Click the floating chat button to ask natural language questions in your language.
+    - **Read Aloud:** Click 🔊 on any bot message, guide step, or timeline card. Click again to stop.
+    - **Share:** Click the saffron circular icon in the nav to share the app.
 ---
 
 ### Key Files

@@ -32,10 +32,28 @@
           <a href="#about" data-i18n="navAbout">About</a>
           <a href="#timelines" data-i18n="navTimelines">Timelines</a>
           <a href="#manifesto" data-i18n="navManifesto">Manifestos</a>
-          <button id="nav-quiz-btn" class="btn-secondary-sm" data-i18n="navQuiz">Take Quiz</button>
           <a href="#guide" data-i18n="navGuide">Start Guide</a>
-          <button id="my-ballot-btn" class="btn-secondary-sm" style="border-color: var(--accent-green); color: var(--accent-green);">🗳️ <span data-i18n="navMyBallot">My Ballot</span></button>
-          <button id="share-btn" class="btn-share"><span data-i18n="navShare">Share</span> <svg style="display:inline; vertical-align:middle; margin-left:4px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
+          
+          <div class="nav-dropdown">
+            <button class="btn-secondary-sm dropdown-trigger" id="tools-dropdown-btn">
+              <span data-i18n="navTools">Voter Tools</span> ▾
+            </button>
+            <div class="dropdown-content formal-card hidden" id="tools-dropdown">
+              <button id="nav-quiz-btn" class="dropdown-item">
+                <span class="icon">❓</span> <span data-i18n="navQuiz">Knowledge Quiz</span>
+              </button>
+              <button id="my-ballot-btn" class="dropdown-item">
+                <span class="icon">🗳️</span> <span data-i18n="navMyBallot">My Ballot</span>
+              </button>
+              <button id="nav-badge-btn" class="dropdown-item">
+                <span class="icon">🏅</span> <span data-i18n="navBadges">Democracy Badges</span>
+              </button>
+            </div>
+          </div>
+
+          <button id="share-btn" class="btn-share" title="Share Ballot Buddy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          </button>
         </div>
       </nav>
       <div id="offline-banner" class="offline-banner hidden" role="status" aria-live="polite">You are currently offline. Some features may be limited.</div>
@@ -194,6 +212,42 @@
             </div>
             <div id="ballot-content">
               <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Democracy Badge Modal -->
+        <div id="badge-modal" class="modal-overlay hidden">
+          <div class="modal-content glass-card">
+            <div class="modal-header">
+              <h2 data-i18n="badgeTitle">🏅 Democracy Badge Center</h2>
+              <button class="close-btn" id="close-badge">&times;</button>
+            </div>
+            <div class="badge-upload-container">
+              <p data-i18n="badgeInstruction">Upload a photo of your inked finger to unlock your 2026 Democracy Badge!</p>
+              <div class="upload-box" id="ink-upload-box">
+                <input type="file" id="ink-input" accept="image/*" class="hidden">
+                <label for="ink-input" class="upload-label">
+                  <span class="upload-icon">📸</span>
+                  <span data-i18n="btnUploadInk">Click to Upload Photo</span>
+                </label>
+              </div>
+              <div id="badge-verification-status" class="verification-status hidden">
+                <div class="typing-indicator"><span></span><span></span><span></span></div>
+                <p data-i18n="verifyingInk">AI is verifying your ink mark...</p>
+              </div>
+            </div>
+            <div class="badge-gallery" id="badge-gallery">
+              <!-- Badges will appear here -->
+              <div class="badge-slot locked" id="badge-2026">
+                <div class="badge-icon">🔒</div>
+                <div class="badge-name" data-i18n="badge2026Name">2026 Voter</div>
+              </div>
+            </div>
+            <div id="badge-share-area" class="badge-share hidden">
+              <button id="share-badge-btn" class="btn-primary-sm">
+                <span data-i18n="btnShareBadge">Share My Badge</span> 📤
+              </button>
             </div>
           </div>
         </div>

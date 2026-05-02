@@ -711,6 +711,86 @@ button:focus-visible {
 }
 
 /* Language Dropdown */
+.btn-share {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--accent-blue);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-share:hover {
+  background: var(--accent-blue);
+  color: white;
+}
+
+.dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Dropdown Navigation */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 10px;
+  min-width: 200px;
+  z-index: 1000;
+  padding: var(--spacing-sm) 0;
+  border-top: 3px solid var(--accent-blue);
+  box-shadow: var(--shadow-lg);
+  animation: dropdownFade 0.2s ease-out;
+}
+
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: none;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+  background: rgba(0, 0, 128, 0.05);
+  color: var(--accent-blue);
+}
+
+.dropdown-item .icon {
+  font-size: 1.2rem;
+  width: 24px;
+}
+
+/* Hero Section */
+.hero-section {
+  padding: var(--spacing-xl) 0;
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing-lg);
+}
+
 .lang-dropdown {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -869,6 +949,103 @@ button:focus-visible {
 .party-card p {
   font-size: 0.95rem;
   color: var(--text-secondary);
+}
+
+/* Democracy Badge System */
+.badge-upload-container {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background: var(--bg-primary);
+  border-radius: 8px;
+}
+
+.upload-box {
+  border: 2px dashed var(--border-color);
+  padding: var(--spacing-xl);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: var(--spacing-md);
+}
+
+.upload-box:hover {
+  border-color: var(--accent-blue);
+  background: rgba(0, 0, 128, 0.05);
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.upload-icon {
+  font-size: 3rem;
+}
+
+.verification-status {
+  margin-top: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.badge-gallery {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.badge-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  width: 120px;
+  transition: all 0.3s ease;
+}
+
+.badge-slot.locked {
+  opacity: 0.6;
+  filter: grayscale(1);
+}
+
+.badge-slot.unlocked {
+  border-color: var(--accent-saffron);
+  box-shadow: 0 0 15px rgba(255, 153, 51, 0.3);
+  animation: unlockPulse 1s ease-out;
+}
+
+@keyframes unlockPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(255, 153, 51, 0.6); }
+  100% { transform: scale(1); }
+}
+
+.badge-icon {
+  font-size: 3rem;
+}
+
+.badge-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.badge-share {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
 }
 
 /* Footer Navigation and rest... */

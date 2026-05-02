@@ -115,6 +115,36 @@ CRITICAL RULES:
     }
 });
 
+// Ink Verification Endpoint
+app.post('/api/verify-ink', async (req, res) => {
+    try {
+        const { image } = req.body;
+        if (!image) return res.status(400).json({ error: "Image data is required" });
+
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        const prompt = "Analyze this image. Does it show a human finger with the purple indelible ink mark used in Indian elections? Reply ONLY with a JSON object: {\"verified\": true/false, \"reason\": \"brief explanation\"}. If the image is not clear or doesn't show a finger, set verified to false.";
+
+        const result = await model.generateContent([
+            prompt,
+            { inlineData: { data: image, mimeType: "image/jpeg" } }
+        ]);
+
+        const response = await result.response;
+        const text = response.text();
+        
+        // Clean markdown if AI includes it
+        const cleanedText = text.replace(/```json|```/g, "").trim();
+        const jsonResponse = JSON.parse(cleanedText);
+        
+        res.json(jsonResponse);
+
+    } catch (error) {
+        console.error("Verification Error:", error);
+        res.status(500).json({ error: "Failed to verify ink mark" });
+    }
+});
+
 // Start Server
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => {
