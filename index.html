@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000080" />
     <meta name="description" content="Ballot Buddy - Your interactive guide to understanding the Indian election process." />
@@ -12,19 +12,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   </head>
   <body>
     <div class="tricolor-line"></div>
     <div id="app">
-      <nav class="navbar">
+      <nav class="navbar container">
         <a href="#" class="logo" id="home-logo">
           <span class="logo-icon">🇮🇳</span>
           <span class="logo-text" data-i18n="logoText">Ballot<span class="highlight">Buddy</span></span>
         </a>
-        <div class="nav-links">
-          <select id="lang-select" class="lang-dropdown">
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+        <div class="nav-links" id="nav-menu">
+          <label for="lang-select" class="visually-hidden">Select Language</label>
+          <select id="lang-select" class="lang-dropdown" aria-label="Language selection">
             <option value="en">English</option>
             <option value="hi">हिन्दी</option>
             <option value="bn">বাংলা</option>
@@ -37,55 +38,46 @@
           <a href="#guide" data-i18n="navGuide">Start Guide</a>
           
           <div class="nav-dropdown">
-            <button class="btn-secondary-sm dropdown-trigger" id="tools-dropdown-btn">
+            <button class="btn-secondary-sm dropdown-trigger" id="tools-dropdown-btn" aria-haspopup="true" aria-expanded="false" aria-label="Open Voter Tools Menu">
               <span data-i18n="navTools">Voter Tools</span> ▾
             </button>
-            <div class="dropdown-content formal-card hidden" id="tools-dropdown">
-              <button id="nav-quiz-btn" class="dropdown-item">
+            <div class="dropdown-content formal-card hidden" id="tools-dropdown" role="menu">
+              <button id="nav-quiz-btn" class="dropdown-item" role="menuitem">
                 <span class="icon">❓</span> <span data-i18n="navQuiz">Knowledge Quiz</span>
               </button>
-              <button id="my-ballot-btn" class="dropdown-item">
+              <button id="my-ballot-btn" class="dropdown-item" role="menuitem">
                 <span class="icon">🗳️</span> <span data-i18n="navMyBallot">My Ballot</span>
               </button>
-              <button id="nav-badge-btn" class="dropdown-item">
+              <button id="nav-badge-btn" class="dropdown-item" role="menuitem">
                 <span class="icon">🏅</span> <span data-i18n="navBadges">Democracy Badges</span>
               </button>
             </div>
           </div>
 
-          <button id="share-btn" class="btn-share" title="Share Ballot Buddy">
+          <button id="share-btn" class="btn-share" title="Share Ballot Buddy" aria-label="Share this page">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
           </button>
         </div>
       </nav>
       <div id="offline-banner" class="offline-banner hidden" role="status" aria-live="polite">You are currently offline. Some features may be limited.</div>
 
-      <main>
-        <section class="hero">
+        <section class="hero reveal" id="home">
           <div class="hero-content">
-            <h1 class="hero-title" data-i18n="heroTitle">A Guide to the <br/><span class="gradient-text">Indian Elections</span></h1>
+            <h1 class="hero-title" data-i18n="heroTitle">A Guide to the <br/><span class="highlight">Indian Elections</span></h1>
             <p class="hero-subtitle" data-i18n="heroSubtitle">Navigate the world's largest democratic process with confidence. Learn how to register, verify your details, and cast your vote officially.</p>
-            <div class="hero-actions">
-              <button id="start-guide-btn" class="btn-primary"><span data-i18n="heroBtn">Access the Guide</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+            <div class="hero-btns">
+              <button class="btn-primary" id="start-guide-btn" data-i18n="heroCTA">Start Voting Guide</button>
             </div>
           </div>
-          <div class="hero-graphic">
-             <div class="formal-card decorative-card card-1">
-               <div class="card-icon">🪪</div>
-               <div class="card-text" data-i18n="heroCard1">Voter ID</div>
-             </div>
-             <div class="formal-card decorative-card card-2">
-               <div class="card-icon">🗳️</div>
-               <div class="card-text" data-i18n="heroCard2">EVM System</div>
-             </div>
-             <div class="formal-card decorative-card card-3">
-               <div class="card-icon">✅</div>
-               <div class="card-text" data-i18n="heroCard3">Cast Vote</div>
-             </div>
+          <div class="hero-visual">
+            <div class="floating-card c1"><span>🗳️</span> Vote 2026</div>
+            <div class="floating-card c2"><span>🇮🇳</span> Democracy</div>
+            <div class="floating-card c3"><span>✅</span> Verified</div>
+            <div class="hero-circle"></div>
           </div>
         </section>
 
-        <section id="about" class="about-section">
+        <section class="about-section reveal" id="about">
           <div class="about-content formal-card">
             <h2 class="about-title" data-i18n="aboutTitle">About Ballot Buddy</h2>
             <p class="about-text" data-i18n="aboutText1">
@@ -102,7 +94,7 @@
           
           <div class="region-selector-container" style="text-align: center; margin-bottom: 20px;">
             <label for="region-select" data-i18n="selectRegionLabel" style="font-weight: 600; margin-right: 10px; color: var(--text-primary);">Select your Region:</label>
-            <select id="region-select" class="lang-dropdown">
+            <select id="region-select" class="lang-dropdown" aria-label="Select Region">
               <option value="all" data-i18n="regionAll">All India</option>
               <option value="wb" data-i18n="regionWB">West Bengal</option>
               <option value="tn" data-i18n="regionTN">Tamil Nadu</option>
@@ -111,12 +103,11 @@
             </select>
           </div>
 
-          <div class="timelines-grid" id="timelines-container">
+          <section class="timelines-section reveal" id="timelines-container">
             <!-- Timelines will be injected here by JS -->
-          </div>
-        </section>
+          </section>
 
-        <section id="kyc" class="kyc-section">
+        <section class="kyc-section reveal" id="kyc">
           <div class="section-header">
             <h2 class="section-heading" data-i18n="kycHeading">Know Your Candidate</h2>
             <p class="section-subheading" data-i18n="kycSubheading">Explore candidates in your constituency and view their official affidavits.</p>
@@ -124,7 +115,19 @@
           
           <div class="kyc-container formal-card">
             <div class="kyc-layout">
-              <div id="kyc-map" class="kyc-map-container"></div>
+              <div class="kyc-controls-panel">
+                <label for="constituency-select" data-i18n="labelSelectConstituency" style="font-weight: 600; display: block; margin-bottom: 10px;">Select Constituency:</label>
+                <select id="constituency-select" class="lang-dropdown full-width" style="margin-bottom: 20px;">
+                  <option value="" disabled selected data-i18n="selectConstituencyOption">-- Choose a constituency --</option>
+                  <option value="Varanasi">Varanasi</option>
+                  <option value="Wayanad">Wayanad</option>
+                  <option value="New Delhi">New Delhi</option>
+                  <option value="Kolkata South">Kolkata South</option>
+                  <option value="Chennai Central">Chennai Central</option>
+                  <option value="Mumbai Ward 42">Mumbai Ward 42</option>
+                </select>
+                <div class="kyc-help-text" data-i18n="kycHelpText">Select a constituency from the dropdown to view the list of candidates and their official affidavits.</div>
+              </div>
               <div id="kyc-info" class="kyc-info-panel">
                 <div class="info-placeholder">
                   <div class="placeholder-icon">🗳️</div>
@@ -136,7 +139,7 @@
           </div>
         </section>
 
-        <section id="manifesto" class="manifesto-section">
+        <section class="manifesto-section reveal" id="manifesto">
           <div class="section-header">
             <h2 class="section-heading" data-i18n="manifestoHeading">AI Manifesto Summarizer</h2>
             <p class="section-subheading" data-i18n="manifestoSubheading">Compare party promises side-by-side using AI-powered insights.</p>
@@ -221,7 +224,7 @@
           <div class="modal-content glass-card ballot-modal-content">
             <div class="modal-header">
               <h2 data-i18n="ballotTitle">🗳️ My Ballot Preview</h2>
-              <button class="close-btn" id="close-ballot">&times;</button>
+              <button class="close-btn" id="close-ballot" aria-label="Close Ballot Preview">&times;</button>
             </div>
             <div class="ballot-region-selector">
               <label for="ballot-region-select" data-i18n="ballotSelectLabel">Select your State:</label>
@@ -243,7 +246,7 @@
           <div class="modal-content glass-card">
             <div class="modal-header">
               <h2 data-i18n="badgeTitle">🏅 Democracy Badge Center</h2>
-              <button class="close-btn" id="close-badge">&times;</button>
+              <button class="close-btn" id="close-badge" aria-label="Close Badge Center">&times;</button>
             </div>
             <div class="badge-upload-container">
               <p data-i18n="badgeInstruction">Upload a photo of your inked finger to unlock your 2026 Democracy Badge!</p>
@@ -279,7 +282,7 @@
           <div class="modal-content glass-card">
             <div class="modal-header">
               <h2 data-i18n="quizTitle">Knowledge Check</h2>
-              <button class="close-btn" id="close-quiz">&times;</button>
+              <button class="close-btn" id="close-quiz" aria-label="Close Quiz">&times;</button>
             </div>
             <div id="quiz-container">
               <!-- Quiz injected here -->
@@ -288,11 +291,11 @@
         </div>
 
         <!-- Chatbot -->
-        <button id="chat-fab" class="chat-fab">💬</button>
+        <button id="chat-fab" class="chat-fab" aria-label="Open Chat Assistant">💬</button>
         <div id="chat-window" class="chat-window hidden glass-card">
           <div class="chat-header">
             <h3 data-i18n="chatTitle">Ask Buddy</h3>
-            <button class="close-btn" id="close-chat">&times;</button>
+            <button class="close-btn" id="close-chat" aria-label="Close Chat">&times;</button>
           </div>
           <div class="chat-messages" id="chat-messages">
             <div class="bot-msg" data-i18n="chatGreeting">Hi! I'm Ballot Buddy. What do you want to know about voting?</div>
@@ -303,8 +306,8 @@
             <button class="suggestion-btn" data-i18n="chatSugg3">NRI voting?</button>
           </div>
           <div class="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Type a question..." data-i18n-placeholder="chatPlaceholder">
-            <button id="chat-send" class="btn-primary-sm">Send</button>
+            <input type="text" id="chat-input" placeholder="Type a question..." data-i18n-placeholder="chatPlaceholder" aria-label="Ask a question about elections">
+            <button id="chat-send" class="btn-primary-sm" aria-label="Send message">Send</button>
           </div>
         </div>
 
@@ -320,14 +323,14 @@
              <p class="footer-desc" data-i18n="footerText">Created for informational purposes. For official details, visit the Election Commission of India website.</p>
           </div>
           <div class="footer-col">
-            <h4 data-i18n="footerNavHead">Navigation</h4>
+            <h3 data-i18n="footerNavHead">Navigation</h3>
             <a href="#" data-i18n="footerHome">Home</a>
             <a href="#about" data-i18n="navAbout">About</a>
             <a href="#timelines" data-i18n="navTimelines">Timelines</a>
             <a href="#manifesto" data-i18n="navManifesto">Manifestos</a>
           </div>
           <div class="footer-col">
-            <h4 data-i18n="footerResources">Resources</h4>
+            <h3 data-i18n="footerResources">Resources</h3>
             <a href="#guide" data-i18n="navGuide">Start Guide</a>
             <a href="#" onclick="document.getElementById('nav-quiz-btn').click();" data-i18n="navQuiz">Take Quiz</a>
             <a href="https://eci.gov.in" target="_blank">ECI Official Portal</a>

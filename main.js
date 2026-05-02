@@ -13,6 +13,18 @@ const translations = {
     "New Delhi": [
       { name: "Bansuri Swaraj", party: "BJP", education: "Barrister-at-Law", assets: "₹19 Cr", criminal: "0 Cases", partyClass: "party-bjp" },
       { name: "Somnath Bharti", party: "AAP", education: "Post Graduate", assets: "₹1.5 Cr", criminal: "7 Cases", partyClass: "party-inc" }
+    ],
+    "Kolkata South": [
+      { name: "Mala Roy", party: "TMC", education: "Graduate", assets: "₹4.5 Cr", criminal: "0 Cases", partyClass: "party-tmc" },
+      { name: "Debasree Chaudhuri", party: "BJP", education: "Post Graduate", assets: "₹1.2 Cr", criminal: "2 Cases", partyClass: "party-bjp" }
+    ],
+    "Chennai Central": [
+      { name: "Dayanidhi Maran", party: "DMK", education: "Graduate", assets: "₹35 Cr", criminal: "1 Case", partyClass: "party-inc" },
+      { name: "Vinojh P Selvam", party: "BJP", education: "Graduate", assets: "₹2.8 Cr", criminal: "0 Cases", partyClass: "party-bjp" }
+    ],
+    "Mumbai Ward 42": [
+      { name: "Amol Kirtikar", party: "Shiv Sena (UBT)", education: "Graduate", assets: "₹8.2 Cr", criminal: "0 Cases", partyClass: "party-inc" },
+      { name: "Ravindra Waikar", party: "Shiv Sena (Eknath Shinde)", education: "Graduate", assets: "₹12 Cr", criminal: "3 Cases", partyClass: "party-bjp" }
     ]
   },
     ballotData: {
@@ -133,6 +145,9 @@ const translations = {
     criminalRecord: "Criminal Record",
     assets: "Assets",
     education: "Education",
+    labelSelectConstituency: "Select Constituency:",
+    selectConstituencyOption: "-- Choose a constituency --",
+    kycHelpText: "Select a constituency from the dropdown to view candidate details and affidavits.",
     timelines: [
       {
         id: "wb",
@@ -256,9 +271,13 @@ const translations = {
     kycPlaceholderText: "उम्मीदवारों का विवरण और उनके आधिकारिक हलफनामे यहां दिखाई देंगे।",
     mapHint: "उम्मीदवारों को देखने के लिए निर्वाचन क्षेत्र पर क्लिक करें",
     viewAffidavit: "पूरा हलफनामा देखें",
-    criminalRecord: " criminal record",
+    criminalRecord: "criminal record",
     assets: "संपत्ति",
-    education: "शिक्षा",steps: [
+    education: "शिक्षा",
+    labelSelectConstituency: "निर्वाचन क्षेत्र चुनें:",
+    selectConstituencyOption: "-- निर्वाचन क्षेत्र चुनें --",
+    kycHelpText: "उम्मीदवारों के विवरण और हलफनामे देखने के लिए ड्रॉपडाउन से एक निर्वाचन क्षेत्र चुनें।",
+    steps: [
       { title: "चरण 1: पात्रता सत्यापित करें", content: "आप भारत के नागरिक होने चाहिए और 18 वर्ष या उससे अधिक आयु के होने चाहिए।" },
       { title: "चरण 2: मतदाता पंजीकरण (EPIC)", content: "फॉर्म 6 (नए मतदाता) या फॉर्म 8 (विवरण सुधार) के माध्यम से voters.eci.gov.in पर पंजीकरण करें।" },
       { title: "चरण 3: निर्वाचक नामावली सत्यापन", content: "electoralsearch.eci.gov.in पर अपना नाम जांचें और अपना मतदान केंद्र नोट करें।" },
@@ -532,8 +551,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (regionSelect) regionSelect.value = currentRegion;
     if (ballotRegionSelect) ballotRegionSelect.value = currentBallotRegion;
 
+    const constituencySelect = document.getElementById('constituency-select');
+    if (constituencySelect && constituencySelect.value) {
+        updateKYCInfo(constituencySelect.value);
+    }
+
     // Trigger re-renders for dynamic sections
-    if (!document.getElementById('timelines').classList.contains('hidden')) renderTimelines();
+    if (!document.getElementById('timelines-container').classList.contains('hidden')) renderTimelines();
     
     // KYC section panel refresh
     const kycInfo = document.getElementById('kyc-info');
@@ -614,13 +638,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     heroSection.classList.add('hidden');
     document.getElementById('about').classList.add('hidden');
-    document.getElementById('timelines').classList.add('hidden');
+    document.getElementById('timelines-container').classList.add('hidden');
     document.getElementById('kyc').classList.add('hidden');
     document.getElementById('manifesto').classList.add('hidden');
     guideSection.classList.remove('hidden');
     
     currentStepIndex = 0;
     goToStep(0);
+    guideSection.scrollIntoView({ behavior: 'smooth' });
   }
 
   // --- 3. Timeline Logic ---
@@ -728,7 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
         guideSection.classList.add('hidden');
         heroSection.classList.remove('hidden');
         document.getElementById('about').classList.remove('hidden');
-        document.getElementById('timelines').classList.remove('hidden');
+        document.getElementById('timelines-container').classList.remove('hidden');
         document.getElementById('kyc').classList.remove('hidden');
         document.getElementById('manifesto').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -758,7 +783,7 @@ document.addEventListener('DOMContentLoaded', () => {
       guideSection.classList.add('hidden');
       heroSection.classList.remove('hidden');
       document.getElementById('about').classList.remove('hidden');
-      document.getElementById('timelines').classList.remove('hidden');
+      document.getElementById('timelines-container').classList.remove('hidden');
       document.getElementById('kyc').classList.remove('hidden');
       document.getElementById('manifesto').classList.remove('hidden');
 
@@ -1037,7 +1062,7 @@ document.addEventListener('DOMContentLoaded', () => {
       guideSection.classList.add('hidden');
       heroSection.classList.remove('hidden');
       document.getElementById('about').classList.remove('hidden');
-      document.getElementById('timelines').classList.remove('hidden');
+      document.getElementById('timelines-container').classList.remove('hidden');
       document.getElementById('kyc').classList.remove('hidden');
       document.getElementById('manifesto').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1270,6 +1295,7 @@ document.addEventListener('DOMContentLoaded', () => {
     toolsBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       toolsMenu.classList.toggle('hidden');
+      toolsBtn.setAttribute('aria-expanded', !toolsMenu.classList.contains('hidden'));
     });
   }
 
@@ -1277,106 +1303,123 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', (e) => {
     if (toolsMenu && !toolsMenu.classList.contains('hidden') && !toolsBtn.contains(e.target)) {
       toolsMenu.classList.add('hidden');
+      toolsBtn.setAttribute('aria-expanded', 'false');
     }
   });
 
+  // --- 8b. Mobile Menu Toggle ---
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
 
-  // --- 9. Know Your Candidate (KYC) Logic ---
-  
-
-  const kycMapContainer = document.getElementById("kyc-map");
-  if (kycMapContainer) {
-    const map = L.map("kyc-map").setView([20.5937, 78.9629], 5);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(map);
-
-    const constituencies = [
-      { name: "Varanasi", coords: [25.3176, 82.9739] },
-      { name: "Wayanad", coords: [11.6854, 76.1320] },
-      { name: "New Delhi", coords: [28.6139, 77.2090] }
-    ];
-
-    const updateKYCInfo = (name) => {
-      const infoPanel = document.getElementById("kyc-info");
-      const candidates = (translations[currentLang].mockCandidateData || translations['en'].mockCandidateData)[name];
-      
-      if (!candidates) return;
-
-      let html = `<h3 style="margin-bottom: var(--spacing-lg)">${name} Constituency</h3>`;
-      
-      candidates.forEach(c => {
-        html += `
-          <div class="candidate-card">
-            <div class="candidate-header">
-              <div class="candidate-img"></div>
-              <div class="candidate-info">
-                <h4>${c.name}</h4>
-                <span class="party-badge ${c.partyClass}">${c.party}</span>
-              </div>
-            </div>
-            <div class="affidavit-summary">
-              <div class="affidavit-item">
-                <span class="affidavit-label" data-i18n="criminalRecord">Criminal Record</span>
-                <span class="affidavit-value ${c.criminal === "0 Cases" ? "criminal-tag clean" : "criminal-tag"}">${c.criminal}</span>
-              </div>
-              <div class="affidavit-item">
-                <span class="affidavit-label" data-i18n="assets">Assets</span>
-                <span class="affidavit-value">${c.assets}</span>
-              </div>
-              <div class="affidavit-item">
-                <span class="affidavit-label" data-i18n="education">Education</span>
-                <span class="affidavit-value">${c.education}</span>
-              </div>
-            </div>
-            <button class="btn-affidavit" data-i18n="viewAffidavit">View Full Affidavit</button>
-          </div>
-        `;
-      });
-
-      infoPanel.innerHTML = html;
-      if (typeof updateI18n === "function") updateI18n();
-      // Add event listeners to the buttons after rendering
-      infoPanel.querySelectorAll(".btn-affidavit").forEach(btn => {
-        btn.addEventListener("click", () => {
-          window.open("https://affidavit.eci.gov.in/", "_blank");
-        });
-      });
-
-    };
-
-    const constituencyIcon = L.divIcon({
-      className: "custom-div-icon",
-      html: "<div style=\"background-color:#000080; width:12px; height:12px; border-radius:50%; border:2px solid white;\"></div>",
-      iconSize: [12, 12],
-      iconAnchor: [6, 6]
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuToggle.innerText = navMenu.classList.contains('active') ? '✕' : '☰';
     });
 
-    const geojsonData = {
-      "type": "FeatureCollection",
-      "features": constituencies.map(c => ({
-        "type": "Feature",
-        "properties": { "name": c.name },
-        "geometry": { "type": "Point", "coordinates": [c.coords[1], c.coords[0]] }
-      }))
-    };
+    // Close menu when clicking links
+    navMenu.querySelectorAll('a, .dropdown-item').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        menuToggle.innerText = '☰';
+      });
+    });
 
-    L.geoJSON(geojsonData, {
-      pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: constituencyIcon });
-      },
-      onEachFeature: function (feature, layer) {
-        layer.on("click", () => {
-          updateKYCInfo(feature.properties.name);
-          map.setView(layer.getLatLng(), 8);
-        });
-        layer.bindTooltip(feature.properties.name);
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !menuToggle.contains(e.target) && navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        menuToggle.innerText = '☰';
       }
-    }).addTo(map);
-
-    const bounds = L.latLngBounds(constituencies.map(c => c.coords));
-    map.fitBounds(bounds, { padding: [50, 50] });
+    });
   }
+
+
+  // --- 9. Know Your Candidate (KYC) Logic (Dropdown Replacement) ---
+  const constituencySelect = document.getElementById('constituency-select');
+
+  function updateKYCInfo(name) {
+    const infoPanel = document.getElementById("kyc-info");
+    if (!infoPanel) return;
+    
+    const candidates = (translations[currentLang].mockCandidateData || translations['en'].mockCandidateData)[name];
+    
+    if (!candidates) return;
+
+    let html = `
+      <h3 style="margin-bottom: var(--spacing-lg); grid-column: 1 / -1;">${name} Constituency</h3>
+      <div class="candidates-grid">
+    `;
+    
+    candidates.forEach(c => {
+      html += `
+        <div class="candidate-card">
+          <div class="candidate-header">
+            <div class="candidate-img"></div>
+            <div class="candidate-info">
+              <h4>${c.name}</h4>
+              <span class="party-badge ${c.partyClass}">${c.party}</span>
+            </div>
+          </div>
+          <div class="affidavit-summary">
+            <div class="affidavit-item">
+              <span class="affidavit-label" data-i18n="criminalRecord">Criminal Record</span>
+              <span class="affidavit-value ${c.criminal === "0 Cases" ? "criminal-tag clean" : "criminal-tag"}">${c.criminal}</span>
+            </div>
+            <div class="affidavit-item">
+              <span class="affidavit-label" data-i18n="assets">Assets</span>
+              <span class="affidavit-value">${c.assets}</span>
+            </div>
+            <div class="affidavit-item">
+              <span class="affidavit-label" data-i18n="education">Education</span>
+              <span class="affidavit-value">${c.education}</span>
+            </div>
+          </div>
+          <button class="btn-affidavit" data-i18n="viewAffidavit">View Full Affidavit</button>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+
+    infoPanel.innerHTML = html;
+    
+    // Manually trigger for injected content labels
+    infoPanel.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const value = (translations[currentLang] && translations[currentLang][key])
+                      || translations['en'][key];
+        if (value) el.innerHTML = value;
+    });
+
+    infoPanel.querySelectorAll(".btn-affidavit").forEach(btn => {
+      btn.addEventListener("click", () => {
+        window.open("https://affidavit.eci.gov.in/", "_blank");
+      });
+    });
+  }
+
+  if (constituencySelect) {
+    constituencySelect.addEventListener('change', (e) => {
+      updateKYCInfo(e.target.value);
+    });
+  }
+
+  // --- 10. Scroll Reveal Animation ---
+  const reveal = () => {
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(el => {
+      const windowHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top;
+      const elementVisible = 150;
+      if (elementTop < windowHeight - elementVisible) {
+        el.classList.add('active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', reveal);
+  reveal(); // Initial check
 
   // Init
   updateI18n();

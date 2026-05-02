@@ -44,7 +44,7 @@ CRITICAL RULES:
 4. Use clear formatting, but avoid excessive markdown. Use bullet points for lists.`;
 
         const model = genAI.getGenerativeModel({
-            model: "gemini-3-flash-preview",
+            model: "gemini-1.5-flash",
             systemInstruction: systemInstruction
         });
 
@@ -96,7 +96,7 @@ CRITICAL RULES:
 5. Do not include any markdown formatting or text outside the JSON.`;
 
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.5-flash",
+            model: "gemini-1.5-flash",
             systemInstruction: systemInstruction,
             generationConfig: { responseMimeType: "application/json" }
         });
