@@ -1421,6 +1421,106 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', reveal);
   reveal(); // Initial check
 
+  // --- Why Your Vote Matters Slideshow ---
+  (function initSlideshow() {
+    const track = document.getElementById('slides-track');
+    const prevBtn = document.getElementById('slide-prev');
+    const nextBtn = document.getElementById('slide-next');
+    const dots = document.querySelectorAll('.dot');
+    const slides = document.querySelectorAll('.slide');
+    if (!track || !slides.length) return;
+
+    let current = 0;
+    let autoTimer = null;
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+      track.style.transform = `translateX(-${current * 100}%)`;
+    }
+
+    function startAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => goTo(current + 1), 5000);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { goTo(current - 1); startAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { goTo(current + 1); startAuto(); });
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => { goTo(parseInt(dot.dataset.idx)); startAuto(); });
+    });
+
+    // Touch / swipe support
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) { goTo(dx < 0 ? current + 1 : current - 1); startAuto(); }
+    });
+
+    startAuto();
+  })();
+
+  // --- Booth Finder Logic ---
+  const boothZipInput = document.getElementById('booth-zip-input');
+  const findBoothBtn = document.getElementById('find-booth-btn');
+  const boothResults = document.getElementById('booth-results');
+
+  const mockBooths = {
+    "110001": [
+      { name: "N.P. Boys Sr. Sec. School", address: "Mandir Marg, New Delhi", room: "Room 1 (Ground Floor)" },
+      { name: "New Delhi Municipal Council School", address: "Gole Market, New Delhi", room: "Hall A" }
+    ],
+    "700001": [
+      { name: "Writers' Building", address: "B.B.D. Bagh, Kolkata", room: "Room 101" },
+      { name: "St. John's Church School", address: "Council House St, Kolkata", room: "Main Hall" }
+    ],
+    "400001": [
+      { name: "Fort Convent School", address: "Azad Maidan, Fort, Mumbai", room: "Room 3" },
+      { name: "Alexandra Girls High School", address: "Hazarimal Somani Marg, Mumbai", room: "Auditorium" }
+    ],
+    "600001": [
+      { name: "St. Mary's Higher Sec School", address: "Parrys, Chennai", room: "Room 5" },
+      { name: "Armenian Church School", address: "Armenian St, Chennai", room: "Main Entrance Hall" }
+    ]
+  };
+
+  if (findBoothBtn) {
+    findBoothBtn.addEventListener('click', () => {
+      const zip = boothZipInput.value.trim();
+      if (!zip || zip.length !== 6) {
+        alert("Please enter a valid 6-digit PIN code.");
+        return;
+      }
+
+      boothResults.innerHTML = '';
+      boothResults.classList.remove('hidden');
+
+      const booths = mockBooths[zip];
+      if (booths) {
+        booths.forEach(booth => {
+          const card = document.createElement('div');
+          card.className = 'booth-card reveal active';
+          card.innerHTML = `
+            <h4>📍 ${booth.name}</h4>
+            <p><strong>Address:</strong> ${booth.address}</p>
+            <p><strong>Location:</strong> ${booth.room}</p>
+          `;
+          boothResults.appendChild(card);
+        });
+      } else {
+        boothResults.innerHTML = `
+          <div class="booth-card" style="grid-column: 1/-1; text-align: center;">
+            <p>No booths found for this PIN code in our current database. Please try 110001, 700001, 400001, or 600001.</p>
+          </div>
+        `;
+      }
+    });
+  }
+
   // Init
   updateI18n();
 });

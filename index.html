@@ -34,6 +34,7 @@
           </select>
           <a href="#about" data-i18n="navAbout">About</a>
           <a href="#timelines" data-i18n="navTimelines">Timelines</a>
+          <a href="#booth-finder">Find Booth</a>
           <a href="#manifesto" data-i18n="navManifesto">Manifestos</a>
           <a href="#guide" data-i18n="navGuide">Start Guide</a>
           
@@ -138,6 +139,117 @@
             </div>
           </div>
         </section>
+
+        <section id="booth-finder" class="booth-section reveal">
+          <div class="formal-card">
+            <h2 class="section-heading">Find Your Polling Station</h2>
+            <p class="section-subheading">Enter your 6-digit PIN code to locate your designated booth.</p>
+            <div class="booth-search-container">
+              <input type="text" id="booth-zip-input" maxlength="6" placeholder="Enter PIN code (e.g. 110001)" class="booth-input">
+              <button id="find-booth-btn" class="btn-primary">Search Booths 🔍</button>
+            </div>
+            <div id="booth-results" class="booth-results hidden">
+              <!-- Results will be injected here -->
+            </div>
+          </div>
+        </section>
+
+        <section id="why-vote" class="impact-section reveal">
+          <div class="impact-header">
+            <div class="impact-badge">Why Your Vote Matters</div>
+            <h2 class="impact-title">Cases Where One Vote Changed History</h2>
+            <p class="impact-subtitle">Real stories. Real elections. Real consequences.</p>
+          </div>
+
+          <div class="slideshow-container">
+            <div class="slides-track" id="slides-track">
+
+              <!-- Slide 1 -->
+              <div class="slide active">
+                <div class="slide-inner">
+                  <span class="slide-number-tag">01 / 04</span>
+                  <div class="story-highlight">"My own wife couldn't vote."</div>
+                  <h3 class="slide-title">Nathdwara, Rajasthan — 2008</h3>
+                  <div class="impact-stats">
+                    <div class="impact-stat-item">
+                      <span class="v-count">62,216</span>
+                      <span class="v-label">Winner</span>
+                    </div>
+                    <div class="impact-stat-item vs">VS</div>
+                    <div class="impact-stat-item">
+                      <span class="v-count">62,215</span>
+                      <span class="v-label">C.P. Joshi (INC)</span>
+                    </div>
+                  </div>
+                  <p class="story-conclusion">C.P. Joshi, then-President of the Rajasthan Pradesh Congress Committee, lost by exactly <strong>1 vote</strong>. His own wife and driver failed to cast their ballots that day.</p>
+                </div>
+              </div>
+
+              <!-- Slide 2 -->
+              <div class="slide">
+                <div class="slide-inner">
+                  <span class="slide-number-tag">02 / 04</span>
+                  <div class="story-highlight">"The future of a state, decided by a handful."</div>
+                  <h3 class="slide-title">Arunachal Pradesh — 2009</h3>
+                  <div class="impact-stats">
+                    <div class="impact-stat-item">
+                      <span class="v-count">44</span>
+                      <span class="v-label">Votes separated 2 candidates</span>
+                    </div>
+                  </div>
+                  <p class="story-conclusion">In Daporijo constituency, a state assembly seat was decided by just 44 votes. In a constituency with thousands of eligible voters, over half did not show up — any one of them could have swung the result.</p>
+                </div>
+              </div>
+
+              <!-- Slide 3 -->
+              <div class="slide">
+                <div class="slide-inner">
+                  <span class="slide-number-tag">03 / 04</span>
+                  <div class="story-highlight">"One seat changed who runs the country."</div>
+                  <h3 class="slide-title">Bihar — 1999 General Elections</h3>
+                  <div class="impact-stats">
+                    <div class="impact-stat-item">
+                      <span class="v-count">7</span>
+                      <span class="v-label">Seats majority margin</span>
+                    </div>
+                  </div>
+                  <p class="story-conclusion">The Vajpayee government fell by a single-seat margin in 1999 — triggering snap elections. Multiple constituencies in Bihar were won or lost by fewer than 500 votes, which collectively tipped the national balance of power.</p>
+                </div>
+              </div>
+
+              <!-- Slide 4 -->
+              <div class="slide">
+                <div class="slide-inner">
+                  <span class="slide-number-tag">04 / 04</span>
+                  <div class="story-highlight">"A tie broken by a coin toss."</div>
+                  <h3 class="slide-title">Himachal Pradesh — 2017</h3>
+                  <div class="impact-stats">
+                    <div class="impact-stat-item">
+                      <span class="v-count">0</span>
+                      <span class="v-label">Votes difference</span>
+                    </div>
+                  </div>
+                  <p class="story-conclusion">In Lahaul & Spiti, the election resulted in a perfect tie. The winner was decided by a draw of lots. An entire constituency's fate was left to chance — because enough voters stayed home.</p>
+                </div>
+              </div>
+
+            </div><!-- end .slides-track -->
+
+            <!-- Arrows -->
+            <button class="slide-arrow prev" id="slide-prev" aria-label="Previous slide">&#8592;</button>
+            <button class="slide-arrow next" id="slide-next" aria-label="Next slide">&#8594;</button>
+
+            <!-- Dots -->
+            <div class="slide-dots" id="slide-dots">
+              <span class="dot active" data-idx="0"></span>
+              <span class="dot" data-idx="1"></span>
+              <span class="dot" data-idx="2"></span>
+              <span class="dot" data-idx="3"></span>
+            </div>
+
+          </div><!-- end .slideshow-container -->
+        </section>
+
 
         <section class="manifesto-section reveal" id="manifesto">
           <div class="section-header">
