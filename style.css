@@ -1433,3 +1433,156 @@ button:focus-visible {
   line-height: 1.5;
 }
 
+
+/* Know Your Candidate (KYC) Section */
+.kyc-section {
+  padding: var(--spacing-xl) 0;
+}
+
+.kyc-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  height: 600px;
+  overflow: hidden;
+}
+
+.kyc-map-container {
+  background: #f1f5f9;
+  position: relative;
+  border-right: 1px solid var(--border-color);
+  z-index: 1;
+}
+
+.kyc-info-panel {
+  padding: var(--spacing-lg);
+  background: var(--bg-secondary);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-secondary);
+  gap: var(--spacing-md);
+}
+
+.placeholder-icon {
+  font-size: 3rem;
+  opacity: 0.3;
+}
+
+.candidate-card {
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-md);
+  transition: transform 0.2s;
+  background: white;
+}
+
+.candidate-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.candidate-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.candidate-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e2e8f0;
+  border: 2px solid var(--accent-blue);
+}
+
+.candidate-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.party-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.party-bjp { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+.party-inc { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+.party-tmc { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+
+.affidavit-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+  font-size: 0.85rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.affidavit-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.affidavit-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.affidavit-value {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.criminal-tag {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.criminal-tag.clean {
+  color: var(--accent-green);
+}
+
+.btn-affidavit {
+  width: 100%;
+  padding: 8px;
+  font-size: 0.85rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.btn-affidavit:hover {
+  background: var(--border-color);
+}
+
+@media (max-width: 992px) {
+  .kyc-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .kyc-map-container {
+    height: 400px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+}

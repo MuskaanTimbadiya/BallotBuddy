@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   </head>
   <body>
     <div class="tricolor-line"></div>
@@ -111,6 +113,26 @@
 
           <div class="timelines-grid" id="timelines-container">
             <!-- Timelines will be injected here by JS -->
+          </div>
+        </section>
+
+        <section id="kyc" class="kyc-section">
+          <div class="section-header">
+            <h2 class="section-heading" data-i18n="kycHeading">Know Your Candidate</h2>
+            <p class="section-subheading" data-i18n="kycSubheading">Explore candidates in your constituency and view their official affidavits.</p>
+          </div>
+          
+          <div class="kyc-container formal-card">
+            <div class="kyc-layout">
+              <div id="kyc-map" class="kyc-map-container"></div>
+              <div id="kyc-info" class="kyc-info-panel">
+                <div class="info-placeholder">
+                  <div class="placeholder-icon">🗳️</div>
+                  <h3 data-i18n="kycPlaceholderTitle">Select a Constituency</h3>
+                  <p data-i18n="kycPlaceholderText">Details of candidates and their official affidavits will appear here.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

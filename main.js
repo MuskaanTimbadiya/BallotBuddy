@@ -1,6 +1,80 @@
 // --- Translations (i18n) ---
 const translations = {
   en: {
+    mockCandidateData: {
+    "Varanasi": [
+      { name: "Narendra Modi", party: "BJP", education: "Post Graduate", assets: "₹3.02 Cr", criminal: "0 Cases", partyClass: "party-bjp" },
+      { name: "Ajay Rai", party: "INC", education: "Graduate", assets: "₹2.5 Cr", criminal: "18 Cases", partyClass: "party-inc" }
+    ],
+    "Wayanad": [
+      { name: "Rahul Gandhi", party: "INC", education: "M.Phil", assets: "₹15.8 Cr", criminal: "18 Cases", partyClass: "party-inc" },
+      { name: "Annie Raja", party: "CPI", education: "Graduate", assets: "₹1.2 Cr", criminal: "0 Cases", partyClass: "party-tmc" }
+    ],
+    "New Delhi": [
+      { name: "Bansuri Swaraj", party: "BJP", education: "Barrister-at-Law", assets: "₹19 Cr", criminal: "0 Cases", partyClass: "party-bjp" },
+      { name: "Somnath Bharti", party: "AAP", education: "Post Graduate", assets: "₹1.5 Cr", criminal: "7 Cases", partyClass: "party-inc" }
+    ]
+  },
+    ballotData: {
+    wb: {
+      election: "West Bengal Assembly Election 2026",
+      constituency: "Kolkata South",
+      pollingDate: "April 23 & 29, 2026",
+      candidates: [
+        { name: "Mamata Banerjee",       party: "Trinamool Congress (TMC)", symbol: "🌺", info: "Incumbent CM, seeking re-election in Bhowanipore constituency." },
+        { name: "Suvendu Adhikari",     party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "Leader of Opposition, contesting from Nandigram." },
+        { name: "Adhir Ranjan Chowdhury", party: "Indian National Congress (INC)", symbol: "✒️", info: "Senior Congress leader, contesting from Behrampore." },
+      ],
+      measures: [
+        { title: "Kanyashree Expansion", desc: "Proposal to extend the girl-child welfare scheme benefits to include higher education grants." },
+        { title: "Rural Job Guarantee", desc: "Vote on increased MGNREGS allocations for West Bengal districts." },
+      ]
+    },
+    tn: {
+      election: "Tamil Nadu Assembly Election 2026",
+      constituency: "Chennai Central",
+      pollingDate: "April 23, 2026",
+      candidates: [
+        { name: "M.K. Stalin",       party: "Dravida Munnetra Kazhagam (DMK)", symbol: "☀️", info: "Incumbent CM, seeking a second term." },
+        { name: "Edappadi K. Palaniswami", party: "All India Anna DMK (AIADMK)", symbol: "🌊", info: "Leader of Opposition, contesting from Salem East." },
+        { name: "Vijayakanth (DMDK)",  party: "Desiya Murpokku Dravida Kazhagam", symbol: "⚡", info: "DMDK candidate challenging in key constituencies." },
+      ],
+      measures: [
+        { title: "Cauvery Water Sharing", desc: "Resolution on the inter-state river water sharing agreement with Karnataka." },
+        { title: "Neet Exemption Bill", desc: "Vote on the TN state bill seeking permanent exemption from NEET for medical admissions." },
+      ]
+    },
+    mh: {
+      election: "Maharashtra Municipal Corporation Election 2026",
+      constituency: "Mumbai Ward 42",
+      pollingDate: "October 15, 2026",
+      candidates: [
+        { name: "Devendra Fadnavis",   party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "Incumbent CM, MahaYuti alliance leader." },
+        { name: "Uddhav Thackeray",    party: "Shiv Sena (UBT)", symbol: "💠", info: "MVA alliance leader, former CM." },
+        { name: "Nana Patole",         party: "Indian National Congress (INC)", symbol: "✒️", info: "Maharashtra Congress president, key MVA leader." },
+      ],
+      measures: [
+        { title: "Mumbai Metro Expansion", desc: "Approval of Phase 3 metro expansion covering 35 new stations across suburban Mumbai." },
+        { title: "Coastal Road Project", desc: "Vote on environmental clearances for the Mumbai Coastal Road Phase 2." },
+      ]
+    },
+    dl: {
+      election: "Delhi Legislative Assembly Election 2026",
+      constituency: "New Delhi Constituency",
+      pollingDate: "February 8, 2026",
+      candidates: [
+        { name: "Atishi Marlena",   party: "Aam Aadmi Party (AAP)", symbol: "🎟️", info: "Former Education Minister, key AAP leader." },
+        { name: "Parvesh Verma",    party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "BJP's CM face for Delhi, contesting New Delhi seat." },
+        { name: "Sandeep Dikshit",  party: "Indian National Congress (INC)", symbol: "✒️", info: "Congress Delhi president, former MP." },
+      ],
+      measures: [
+        { title: "Free Electricity Subsidy", desc: "Vote on continuation of the 200-unit free electricity scheme for Delhi households." },
+        { title: "Yamuna Cleanup Bill", desc: "Approval of the Rs. 8,000 crore Yamuna river rejuvenation project." },
+      ]
+    }
+  },
+    quizResultPoor: "You might want to review the guide to improve your knowledge.",
+    quizResultScore: "Score:",
     logoText: "Ballot<span class='highlight'>Buddy</span>",
     navAbout: "About",
     navTimelines: "Timelines",
@@ -50,6 +124,15 @@ const translations = {
     ballotMeasuresHeading: "Key Ballot Measures",
     ballotParty: "Party",
     ballotSymbol: "Symbol",
+    kycHeading: "Know Your Candidate",
+    kycSubheading: "Explore candidates in your constituency and view their official affidavits.",
+    kycPlaceholderTitle: "Select a Constituency",
+    kycPlaceholderText: "Details of candidates and their official affidavits will appear here.",
+    mapHint: "Click on a constituency to view candidates",
+    viewAffidavit: "View Full Affidavit",
+    criminalRecord: "Criminal Record",
+    assets: "Assets",
+    education: "Education",
     timelines: [
       {
         id: "wb",
@@ -137,6 +220,14 @@ const translations = {
     btnCompare: "Compare Manifestos"
   },
   hi: {
+    ballotMeasuresHeading: "Key Ballot Measures",
+    ballotCandidatesHeading: "Candidates on Your Ballot",
+    kycHeading: "Know Your Candidate",
+    manifestoHeading: "AI Manifesto Summarizer",
+    navMyBallot: "My Ballot",
+    navBadges: "Badges",
+    navManifesto: "Manifestos",
+    quizResultPoor: "अपनी जानकारी सुधारने के लिए आपको गाइड को फिर से देखना चाहिए।",
     logoText: "बैलेट<span class='highlight'>बडी</span>",
     navAbout: "परिचय",
     navTimelines: "समय सीमा",
@@ -158,7 +249,16 @@ const translations = {
       { id: "mh", title: "महाराष्ट्र नगर निगम चुनाव", content: "महाराष्ट्र नगर निगम चुनाव 2026: 15 अक्टूबर।" },
       { id: "dl", title: "दिल्ली विधानसभा चुनाव", content: "दिल्ली विधानसभा चुनाव 2026: 8 फरवरी।" }
     ],
-    steps: [
+    
+    kycHeading: "अपने उम्मीदवार को जानें",
+    kycSubheading: "अपने निर्वाचन क्षेत्र के उम्मीदवारों का पता लगाएं और उनके आधिकारिक हलफनामे देखें।",
+    kycPlaceholderTitle: "एक निर्वाचन क्षेत्र चुनें",
+    kycPlaceholderText: "उम्मीदवारों का विवरण और उनके आधिकारिक हलफनामे यहां दिखाई देंगे।",
+    mapHint: "उम्मीदवारों को देखने के लिए निर्वाचन क्षेत्र पर क्लिक करें",
+    viewAffidavit: "पूरा हलफनामा देखें",
+    criminalRecord: " criminal record",
+    assets: "संपत्ति",
+    education: "शिक्षा",steps: [
       { title: "चरण 1: पात्रता सत्यापित करें", content: "आप भारत के नागरिक होने चाहिए और 18 वर्ष या उससे अधिक आयु के होने चाहिए।" },
       { title: "चरण 2: मतदाता पंजीकरण (EPIC)", content: "फॉर्म 6 (नए मतदाता) या फॉर्म 8 (विवरण सुधार) के माध्यम से voters.eci.gov.in पर पंजीकरण करें।" },
       { title: "चरण 3: निर्वाचक नामावली सत्यापन", content: "electoralsearch.eci.gov.in पर अपना नाम जांचें और अपना मतदान केंद्र नोट करें।" },
@@ -177,6 +277,14 @@ const translations = {
     ]
   },
   bn: {
+    ballotMeasuresHeading: "Key Ballot Measures",
+    ballotCandidatesHeading: "Candidates on Your Ballot",
+    kycHeading: "Know Your Candidate",
+    manifestoHeading: "AI Manifesto Summarizer",
+    navMyBallot: "My Ballot",
+    navBadges: "Badges",
+    navManifesto: "Manifestos",
+    quizResultPoor: "আপনার জ্ঞান উন্নত করার জন্য আপনার গাইডটি পর্যালোচনা করা উচিত।",
     logoText: "ব্যালট<span class='highlight'>বাডি</span>",
     navAbout: "সম্পর্কে",
     navTimelines: "সময়সীমা",
@@ -216,6 +324,14 @@ const translations = {
     ]
   },
   ta: {
+    ballotMeasuresHeading: "Key Ballot Measures",
+    ballotCandidatesHeading: "Candidates on Your Ballot",
+    kycHeading: "Know Your Candidate",
+    manifestoHeading: "AI Manifesto Summarizer",
+    navMyBallot: "My Ballot",
+    navBadges: "Badges",
+    navManifesto: "Manifestos",
+    quizResultPoor: "உங்கள் அறிவை மேம்படுத்த வழிகாட்டியை மீண்டும் பார்க்கவும்.",
     logoText: "பேலட்<span class='highlight'>பட்யீ</span>",
     navAbout: "பற்றி",
     navTimelines: "காலக்கெடு",
@@ -255,6 +371,14 @@ const translations = {
     ]
   },
   te: {
+    ballotMeasuresHeading: "Key Ballot Measures",
+    ballotCandidatesHeading: "Candidates on Your Ballot",
+    kycHeading: "Know Your Candidate",
+    manifestoHeading: "AI Manifesto Summarizer",
+    navMyBallot: "My Ballot",
+    navBadges: "Badges",
+    navManifesto: "Manifestos",
+    quizResultPoor: "మీ జ్ఞానాన్ని మెరుగుపరచుకోవడానికి మీరు గైడ్‌ను మళ్లీ చూడాలి.",
     logoText: "బ్యాలెట్<span class='highlight'>బడ్డీ</span>",
     navAbout: "గురించి",
     navTimelines: "సమయపాలన",
@@ -308,6 +432,10 @@ const translations = {
 
 document.addEventListener('DOMContentLoaded', () => {
   let currentLang = 'en';
+  const t = (key) => {
+    return (translations[currentLang] && translations[currentLang][key]) || translations["en"][key] || key;
+  };
+
   let currentRegion = 'all';
   let currentBallotRegion = 'wb';
   let currentSpokenText = "";
@@ -384,26 +512,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const langSelect = document.getElementById('lang-select');
 
   function updateI18n() {
+    // Update static elements
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const value = (translations[currentLang] && translations[currentLang][key])
                       || translations['en'][key];
-        if (value) {
-            el.innerHTML = value;
-        }
+        if (value) el.innerHTML = value;
     });
 
-    const chatInput = document.getElementById('chat-input');
-    if (chatInput) chatInput.placeholder = (translations[currentLang] && translations[currentLang].chatPlaceholder) || translations['en'].chatPlaceholder || "Enter your query...";
-    
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        const value = (translations[currentLang] && translations[currentLang][key])
+                      || translations['en'][key];
+        if (value) el.placeholder = value;
+    });
+
     if (langSelect) langSelect.value = currentLang;
     if (regionSelect) regionSelect.value = currentRegion;
     if (ballotRegionSelect) ballotRegionSelect.value = currentBallotRegion;
+
+    // Trigger re-renders for dynamic sections
+    if (!document.getElementById('timelines').classList.contains('hidden')) renderTimelines();
     
-    // Only render timelines if the section is visible to avoid scroll jumps
-    if (!document.getElementById('timelines').classList.contains('hidden')) {
-      renderTimelines();
+    // KYC section panel refresh
+    const kycInfo = document.getElementById('kyc-info');
+    if (kycInfo && !kycInfo.querySelector('.info-placeholder')) {
+        // If a candidate is already selected, this is a bit complex without tracking selection.
+        // But the kyc-info panel content itself has data-i18n labels which are updated above.
     }
+
+    if (!document.getElementById('ballot-modal').classList.contains('hidden')) renderBallot(currentBallotRegion);
+    if (!document.getElementById('guide').classList.contains('hidden')) goToStep(currentStepIndex);
   }
 
   if (langSelect) {
@@ -811,9 +951,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentQuizQ >= currentQuizData.length) {
       quizContainer.innerHTML = `
         <div class="quiz-result">
-          <h3>🎉 ${translations[currentLang].quizResultScore} ${score}/${currentQuizData.length}</h3>
-          <p>${score === currentQuizData.length ? translations[currentLang].quizResultPerfect : translations[currentLang].quizResultGood}</p>
-          <button class="btn-primary" style="margin-top:20px" onclick="document.getElementById('quiz-modal').classList.add('hidden')">${translations[currentLang].quizBtnClose}</button>
+          <h3>🎉 ${t("quizResultScore")} ${score}/${currentQuizData.length}</h3>
+          <p>${score === currentQuizData.length ? t("quizResultPerfect") : (score < currentQuizData.length / 2 ? t("quizResultPoor") : t("quizResultGood"))}</p>
+          <button class="btn-primary" style="margin-top:20px" onclick="document.getElementById('quiz-modal').classList.add('hidden')">${t("quizBtnClose")}</button>
         </div>
       `;
       return;
@@ -899,67 +1039,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- My Ballot Feature ---
-  const ballotData = {
-    wb: {
-      election: "West Bengal Assembly Election 2026",
-      constituency: "Kolkata South",
-      pollingDate: "April 23 & 29, 2026",
-      candidates: [
-        { name: "Mamata Banerjee",       party: "Trinamool Congress (TMC)", symbol: "🌺", info: "Incumbent CM, seeking re-election in Bhowanipore constituency." },
-        { name: "Suvendu Adhikari",     party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "Leader of Opposition, contesting from Nandigram." },
-        { name: "Adhir Ranjan Chowdhury", party: "Indian National Congress (INC)", symbol: "✒️", info: "Senior Congress leader, contesting from Behrampore." },
-      ],
-      measures: [
-        { title: "Kanyashree Expansion", desc: "Proposal to extend the girl-child welfare scheme benefits to include higher education grants." },
-        { title: "Rural Job Guarantee", desc: "Vote on increased MGNREGS allocations for West Bengal districts." },
-      ]
-    },
-    tn: {
-      election: "Tamil Nadu Assembly Election 2026",
-      constituency: "Chennai Central",
-      pollingDate: "April 23, 2026",
-      candidates: [
-        { name: "M.K. Stalin",       party: "Dravida Munnetra Kazhagam (DMK)", symbol: "☀️", info: "Incumbent CM, seeking a second term." },
-        { name: "Edappadi K. Palaniswami", party: "All India Anna DMK (AIADMK)", symbol: "🌊", info: "Leader of Opposition, contesting from Salem East." },
-        { name: "Vijayakanth (DMDK)",  party: "Desiya Murpokku Dravida Kazhagam", symbol: "⚡", info: "DMDK candidate challenging in key constituencies." },
-      ],
-      measures: [
-        { title: "Cauvery Water Sharing", desc: "Resolution on the inter-state river water sharing agreement with Karnataka." },
-        { title: "Neet Exemption Bill", desc: "Vote on the TN state bill seeking permanent exemption from NEET for medical admissions." },
-      ]
-    },
-    mh: {
-      election: "Maharashtra Municipal Corporation Election 2026",
-      constituency: "Mumbai Ward 42",
-      pollingDate: "October 15, 2026",
-      candidates: [
-        { name: "Devendra Fadnavis",   party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "Incumbent CM, MahaYuti alliance leader." },
-        { name: "Uddhav Thackeray",    party: "Shiv Sena (UBT)", symbol: "💠", info: "MVA alliance leader, former CM." },
-        { name: "Nana Patole",         party: "Indian National Congress (INC)", symbol: "✒️", info: "Maharashtra Congress president, key MVA leader." },
-      ],
-      measures: [
-        { title: "Mumbai Metro Expansion", desc: "Approval of Phase 3 metro expansion covering 35 new stations across suburban Mumbai." },
-        { title: "Coastal Road Project", desc: "Vote on environmental clearances for the Mumbai Coastal Road Phase 2." },
-      ]
-    },
-    dl: {
-      election: "Delhi Legislative Assembly Election 2026",
-      constituency: "New Delhi Constituency",
-      pollingDate: "February 8, 2026",
-      candidates: [
-        { name: "Atishi Marlena",   party: "Aam Aadmi Party (AAP)", symbol: "🎟️", info: "Former Education Minister, key AAP leader." },
-        { name: "Parvesh Verma",    party: "Bharatiya Janata Party (BJP)", symbol: "💮", info: "BJP's CM face for Delhi, contesting New Delhi seat." },
-        { name: "Sandeep Dikshit",  party: "Indian National Congress (INC)", symbol: "✒️", info: "Congress Delhi president, former MP." },
-      ],
-      measures: [
-        { title: "Free Electricity Subsidy", desc: "Vote on continuation of the 200-unit free electricity scheme for Delhi households." },
-        { title: "Yamuna Cleanup Bill", desc: "Approval of the Rs. 8,000 crore Yamuna river rejuvenation project." },
-      ]
-    }
-  };
+  
 
   function renderBallot(region) {
-    const data = ballotData[region];
+    const data = (translations[currentLang].ballotData || translations['en'].ballotData)[region];
     if (!data) return;
     const t = translations[currentLang] || translations['en'];
     document.getElementById('ballot-content').innerHTML = `
@@ -1190,6 +1273,104 @@ document.addEventListener('DOMContentLoaded', () => {
       toolsMenu.classList.add('hidden');
     }
   });
+
+
+  // --- 9. Know Your Candidate (KYC) Logic ---
+  
+
+  const kycMapContainer = document.getElementById("kyc-map");
+  if (kycMapContainer) {
+    const map = L.map("kyc-map").setView([20.5937, 78.9629], 5);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+
+    const constituencies = [
+      { name: "Varanasi", coords: [25.3176, 82.9739] },
+      { name: "Wayanad", coords: [11.6854, 76.1320] },
+      { name: "New Delhi", coords: [28.6139, 77.2090] }
+    ];
+
+    const updateKYCInfo = (name) => {
+      const infoPanel = document.getElementById("kyc-info");
+      const candidates = (translations[currentLang].mockCandidateData || translations['en'].mockCandidateData)[name];
+      
+      if (!candidates) return;
+
+      let html = `<h3 style="margin-bottom: var(--spacing-lg)">${name} Constituency</h3>`;
+      
+      candidates.forEach(c => {
+        html += `
+          <div class="candidate-card">
+            <div class="candidate-header">
+              <div class="candidate-img"></div>
+              <div class="candidate-info">
+                <h4>${c.name}</h4>
+                <span class="party-badge ${c.partyClass}">${c.party}</span>
+              </div>
+            </div>
+            <div class="affidavit-summary">
+              <div class="affidavit-item">
+                <span class="affidavit-label" data-i18n="criminalRecord">Criminal Record</span>
+                <span class="affidavit-value ${c.criminal === "0 Cases" ? "criminal-tag clean" : "criminal-tag"}">${c.criminal}</span>
+              </div>
+              <div class="affidavit-item">
+                <span class="affidavit-label" data-i18n="assets">Assets</span>
+                <span class="affidavit-value">${c.assets}</span>
+              </div>
+              <div class="affidavit-item">
+                <span class="affidavit-label" data-i18n="education">Education</span>
+                <span class="affidavit-value">${c.education}</span>
+              </div>
+            </div>
+            <button class="btn-affidavit" data-i18n="viewAffidavit">View Full Affidavit</button>
+          </div>
+        `;
+      });
+
+      infoPanel.innerHTML = html;
+      if (typeof updateI18n === "function") updateI18n();
+      // Add event listeners to the buttons after rendering
+      infoPanel.querySelectorAll(".btn-affidavit").forEach(btn => {
+        btn.addEventListener("click", () => {
+          window.open("https://affidavit.eci.gov.in/", "_blank");
+        });
+      });
+
+    };
+
+    const constituencyIcon = L.divIcon({
+      className: "custom-div-icon",
+      html: "<div style=\"background-color:#000080; width:12px; height:12px; border-radius:50%; border:2px solid white;\"></div>",
+      iconSize: [12, 12],
+      iconAnchor: [6, 6]
+    });
+
+    const geojsonData = {
+      "type": "FeatureCollection",
+      "features": constituencies.map(c => ({
+        "type": "Feature",
+        "properties": { "name": c.name },
+        "geometry": { "type": "Point", "coordinates": [c.coords[1], c.coords[0]] }
+      }))
+    };
+
+    L.geoJSON(geojsonData, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: constituencyIcon });
+      },
+      onEachFeature: function (feature, layer) {
+        layer.on("click", () => {
+          updateKYCInfo(feature.properties.name);
+          map.setView(layer.getLatLng(), 8);
+        });
+        layer.bindTooltip(feature.properties.name);
+      }
+    }).addTo(map);
+
+    const bounds = L.latLngBounds(constituencies.map(c => c.coords));
+    map.fitBounds(bounds, { padding: [50, 50] });
+  }
 
   // Init
   updateI18n();
