@@ -31,6 +31,7 @@
           </select>
           <a href="#about" data-i18n="navAbout">About</a>
           <a href="#timelines" data-i18n="navTimelines">Timelines</a>
+          <a href="#manifesto" data-i18n="navManifesto">Manifestos</a>
           <button id="nav-quiz-btn" class="btn-secondary-sm" data-i18n="navQuiz">Take Quiz</button>
           <a href="#guide" data-i18n="navGuide">Start Guide</a>
           <button id="my-ballot-btn" class="btn-secondary-sm" style="border-color: var(--accent-green); color: var(--accent-green);">🗳️ <span data-i18n="navMyBallot">My Ballot</span></button>
@@ -92,6 +93,48 @@
 
           <div class="timelines-grid" id="timelines-container">
             <!-- Timelines will be injected here by JS -->
+          </div>
+        </section>
+
+        <section id="manifesto" class="manifesto-section">
+          <div class="section-header">
+            <h2 class="section-heading" data-i18n="manifestoHeading">AI Manifesto Summarizer</h2>
+            <p class="section-subheading" data-i18n="manifestoSubheading">Compare party promises side-by-side using AI-powered insights.</p>
+          </div>
+          
+          <div class="manifesto-container formal-card">
+            <div class="comparator-controls">
+              <div class="control-group">
+                <label data-i18n="labelSelectParties">Select Parties to Compare:</label>
+                <div class="party-chips" id="party-chips">
+                  <button class="chip active" data-party="bjp">BJP</button>
+                  <button class="chip active" data-party="inc">INC</button>
+                  <button class="chip" data-party="tmc">TMC</button>
+                  <button class="chip" data-party="aap">AAP</button>
+                  <button class="chip" data-party="dmk">DMK</button>
+                </div>
+              </div>
+              
+              <div class="control-group">
+                <label for="topic-select" data-i18n="labelSelectTopic">Focus Topic:</label>
+                <select id="topic-select" class="lang-dropdown full-width">
+                  <option value="education" data-i18n="topicEducation">Education & Skills</option>
+                  <option value="healthcare" data-i18n="topicHealthcare">Healthcare & Wellness</option>
+                  <option value="taxation" data-i18n="topicTaxation">Taxation & Economy</option>
+                  <option value="employment" data-i18n="topicEmployment">Employment & Jobs</option>
+                  <option value="digital" data-i18n="topicDigital">Digital India & Tech</option>
+                </select>
+              </div>
+              
+              <button id="compare-manifesto-btn" class="btn-primary full-width">
+                <span data-i18n="btnCompare">Compare Manifestos</span>
+                <span class="btn-icon">✨</span>
+              </button>
+            </div>
+            
+            <div id="manifesto-result" class="manifesto-result hidden">
+              <!-- AI Result will be injected here -->
+            </div>
           </div>
         </section>
 
@@ -205,6 +248,7 @@
             <a href="#" data-i18n="footerHome">Home</a>
             <a href="#about" data-i18n="navAbout">About</a>
             <a href="#timelines" data-i18n="navTimelines">Timelines</a>
+            <a href="#manifesto" data-i18n="navManifesto">Manifestos</a>
           </div>
           <div class="footer-col">
             <h4 data-i18n="footerResources">Resources</h4>

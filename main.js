@@ -118,7 +118,18 @@ const translations = {
     quizResultScore: "Score:",
     quizResultPerfect: "Excellent. You demonstrate a thorough understanding of the electoral process.",
     quizResultGood: "Satisfactory. Please refer to the guide for comprehensive details.",
-    quizBtnClose: "Close Quiz"
+    quizBtnClose: "Close Quiz",
+    navManifesto: "Manifestos",
+    manifestoHeading: "AI Manifesto Summarizer",
+    manifestoSubheading: "Compare party promises side-by-side using AI-powered insights.",
+    labelSelectParties: "Select Parties to Compare:",
+    labelSelectTopic: "Focus Topic:",
+    topicEducation: "Education & Skills",
+    topicHealthcare: "Healthcare & Wellness",
+    topicTaxation: "Taxation & Economy",
+    topicEmployment: "Employment & Jobs",
+    topicDigital: "Digital India & Tech",
+    btnCompare: "Compare Manifestos"
   },
   hi: {
     logoText: "बैलेट<span class='highlight'>बडी</span>",
@@ -275,7 +286,18 @@ const translations = {
       { q: ["నియమావళి", "నియమాలు", "ఎన్నికల నియమాలు"], a: "ఎన్నికల సమయంలో అభ్యర్థులు మరియు పార్టీల కోసం జారీ చేయబడిన మార్గదర్శకాలను ఎన్నికల నియమావళి (MCC) అంటారు." },
       { q: ["లోక్ సభ", "విధాన సభ", "పంచాయతీ", "తేడా"], a: "భారతదేశంలో మూడు స్థాయిల ఎన్నికలు ఉన్నాయి: లోక్ సభ (జాతీయ), విధాన సభ (రాష్ట్ర) మరియు స్థానిక సంస్థలు." },
       { q: ["పోయింది", "ఐడీ లేదు", "గుర్తింపు కార్డు", "పత్రాలు"], a: "ఓటరు ఐడీ పోయినా, ఓటరు జాబితాలో పేరు ఉంటే ఆధార్ లేదా పాస్‌పోర్ట్ చూపి ఓటు వేయవచ్చు." }
-    ]
+    ],
+    navManifesto: "Manifestos",
+    manifestoHeading: "AI Manifesto Summarizer",
+    manifestoSubheading: "పార్టీల వాగ్దానాలను AI-ఆధారిత అంతర్దృష్టులతో పోల్చండి.",
+    labelSelectParties: "పోల్చడానికి పార్టీలను ఎంచుకోండి:",
+    labelSelectTopic: "ఫోకస్ టాపిక్:",
+    topicEducation: "విద్య & నైపుణ్యాలు",
+    topicHealthcare: "ఆరోగ్య సంరక్షణ & శ్రేయస్సు",
+    topicTaxation: "పన్నులు & ఆర్థిక వ్యవస్థ",
+    topicEmployment: "ఉపాధి & ఉద్యోగాలు",
+    topicDigital: "డిజిటల్ ఇండియా & టెక్",
+    btnCompare: "మేనిఫెస్టోలను పోల్చండి"
   }
 };
 
@@ -372,7 +394,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (langSelect) langSelect.value = currentLang;
     if (regionSelect) regionSelect.value = currentRegion;
     if (ballotRegionSelect) ballotRegionSelect.value = currentBallotRegion;
-    renderTimelines();
+    
+    // Only render timelines if the section is visible to avoid scroll jumps
+    if (!document.getElementById('timelines').classList.contains('hidden')) {
+      renderTimelines();
+    }
   }
 
   if (langSelect) {
@@ -444,6 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
     heroSection.classList.add('hidden');
     document.getElementById('about').classList.add('hidden');
     document.getElementById('timelines').classList.add('hidden');
+    document.getElementById('manifesto').classList.add('hidden');
     guideSection.classList.remove('hidden');
     
     currentStepIndex = 0;
@@ -571,13 +598,20 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       const targetId = link.getAttribute('href');
-      if (targetId === '#guide' || targetId === '#') return;
+      if (targetId === '#') return;
+
+      if (targetId === '#guide') {
+        e.preventDefault();
+        onboardingModal.classList.remove('hidden');
+        return;
+      }
 
       e.preventDefault();
       guideSection.classList.add('hidden');
       heroSection.classList.remove('hidden');
       document.getElementById('about').classList.remove('hidden');
       document.getElementById('timelines').classList.remove('hidden');
+      document.getElementById('manifesto').classList.remove('hidden');
 
       const targetElement = document.querySelector(targetId);
       if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
@@ -980,6 +1014,72 @@ document.addEventListener('DOMContentLoaded', () => {
   // Close modal on overlay click
   if (ballotModal) {
     ballotModal.addEventListener('click', (e) => { if (e.target === ballotModal) ballotModal.classList.add('hidden'); });
+  }
+
+  // --- 6. Manifesto Summarizer Logic ---
+  const partyChips = document.querySelectorAll('.party-chips .chip');
+  const compareBtn = document.getElementById('compare-manifesto-btn');
+  const topicSelect = document.getElementById('topic-select');
+  const manifestoResult = document.getElementById('manifesto-result');
+
+  partyChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('active');
+    });
+  });
+
+  if (compareBtn) {
+    compareBtn.addEventListener('click', async () => {
+      const selectedParties = Array.from(document.querySelectorAll('.party-chips .chip.active'))
+                                   .map(c => c.getAttribute('data-party').toUpperCase());
+      const topic = topicSelect.value;
+
+      if (selectedParties.length < 1) {
+        alert("Please select at least one party to analyze.");
+        return;
+      }
+
+      compareBtn.disabled = true;
+      const originalText = compareBtn.innerHTML;
+      compareBtn.innerHTML = '<span>Analyzing...</span>';
+      manifestoResult.classList.remove('hidden');
+      manifestoResult.innerHTML = '<div class="typing-indicator" style="margin: 20px auto; width: fit-content;"><span></span><span></span><span></span></div>';
+      
+      try {
+        const langMap = { "en": "English", "hi": "Hindi", "bn": "Bengali", "ta": "Tamil", "te": "Telugu" };
+        const response = await fetch("/api/summarize", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            parties: selectedParties,
+            topic: topic,
+            language: langMap[currentLang]
+          })
+        });
+
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+
+        // Render cards
+        let html = `<div class="comparison-grid">`;
+        data.comparisons.forEach(item => {
+          html += `
+            <div class="party-card formal-card">
+              <h4>${item.party}</h4>
+              <p>${item.summary}</p>
+            </div>
+          `;
+        });
+        html += `</div>`;
+        manifestoResult.innerHTML = html;
+      } catch (error) {
+        console.error("Summarizer error:", error);
+        manifestoResult.innerHTML = `<p style="color:red; text-align:center;">Failed to generate summary. Please check your connection.</p>`;
+      } finally {
+        compareBtn.disabled = false;
+        compareBtn.innerHTML = originalText;
+      }
+    });
   }
 
   // Init

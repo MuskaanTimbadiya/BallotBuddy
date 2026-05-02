@@ -43,9 +43,9 @@ CRITICAL RULES:
 3. If the user asks something completely unrelated to elections, democracy, or civic duties in India, politely decline to answer and guide them back to election topics.
 4. Use clear formatting, but avoid excessive markdown. Use bullet points for lists.`;
 
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.0-flash",
-            systemInstruction: systemInstruction 
+        const model = genAI.getGenerativeModel({
+            model: "gemini-3-flash-preview",
+            systemInstruction: systemInstruction
         });
 
         const result = await model.generateContent(message);
@@ -59,7 +59,7 @@ CRITICAL RULES:
 
     } catch (error) {
         console.error("Error communicating with Gemini API:", error.message);
-        
+
         let errorMessage = "Sorry, I am having trouble connecting to the election database right now.";
         let statusCode = 500;
 
@@ -70,8 +70,48 @@ CRITICAL RULES:
             errorMessage = "Authentication error with the Election Database. Please check server configuration.";
             statusCode = error.status;
         }
-        
+
         res.status(statusCode).json({ error: errorMessage });
+    }
+});
+
+// Manifesto Summarizer Endpoint
+app.post('/api/summarize', async (req, res) => {
+    try {
+        const { parties, topic, language } = req.body;
+        console.log(`[Summarize] Parties: ${parties} | Topic: ${topic} | Lang: ${language}`);
+
+        if (!process.env.GEMINI_API_KEY) {
+            return res.status(500).json({ error: "Gemini API Key is missing on the server." });
+        }
+
+        const systemInstruction = `You are a neutral political analyst for the Indian Elections 2026. 
+Your task is to provide a concise, factual summary of the political platforms for the requested parties on a specific topic.
+
+CRITICAL RULES:
+1. Respond ONLY in a valid JSON format: {"comparisons": [{"party": "NAME", "summary": "3-sentence summary"}]}.
+2. Use the language: ${language}.
+3. Be strictly neutral. Do not favor any party.
+4. If a party's specific stance on a future 2026 topic is unknown, provide a summary based on their historical platform and general policy direction.
+5. Do not include any markdown formatting or text outside the JSON.`;
+
+        const model = genAI.getGenerativeModel({
+            model: "gemini-2.5-flash",
+            systemInstruction: systemInstruction,
+            generationConfig: { responseMimeType: "application/json" }
+        });
+
+        const prompt = `Compare the following parties: ${parties.join(', ')} on the topic: ${topic}.`;
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+
+        const responseText = response.text();
+        const jsonResponse = JSON.parse(responseText);
+        res.json(jsonResponse);
+
+    } catch (error) {
+        console.error("Error with Manifesto Summarizer:", error.message);
+        res.status(500).json({ error: "Failed to generate comparison. Please try again later." });
     }
 });
 

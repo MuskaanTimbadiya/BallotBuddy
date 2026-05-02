@@ -9,7 +9,8 @@
     "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "lucide-static": "^1.14.0"
   },
   "devDependencies": {
     "chai": "^6.2.2",
