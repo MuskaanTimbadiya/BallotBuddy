@@ -615,6 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
     heroSection.classList.add('hidden');
     document.getElementById('about').classList.add('hidden');
     document.getElementById('timelines').classList.add('hidden');
+    document.getElementById('kyc').classList.add('hidden');
     document.getElementById('manifesto').classList.add('hidden');
     guideSection.classList.remove('hidden');
     
@@ -728,6 +729,8 @@ document.addEventListener('DOMContentLoaded', () => {
         heroSection.classList.remove('hidden');
         document.getElementById('about').classList.remove('hidden');
         document.getElementById('timelines').classList.remove('hidden');
+        document.getElementById('kyc').classList.remove('hidden');
+        document.getElementById('manifesto').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
@@ -756,6 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
       heroSection.classList.remove('hidden');
       document.getElementById('about').classList.remove('hidden');
       document.getElementById('timelines').classList.remove('hidden');
+      document.getElementById('kyc').classList.remove('hidden');
       document.getElementById('manifesto').classList.remove('hidden');
 
       const targetElement = document.querySelector(targetId);
@@ -1034,6 +1038,8 @@ document.addEventListener('DOMContentLoaded', () => {
       heroSection.classList.remove('hidden');
       document.getElementById('about').classList.remove('hidden');
       document.getElementById('timelines').classList.remove('hidden');
+      document.getElementById('kyc').classList.remove('hidden');
+      document.getElementById('manifesto').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
