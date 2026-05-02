@@ -215,6 +215,18 @@ button:focus-visible {
   display: none !important;
 }
 
+.offline-banner {
+  background: #fff7d9;
+  color: #6f4f00;
+  border: 1px solid #f4d35e;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  font-weight: 700;
+  border-radius: 0 0 8px 8px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-md);
+}
+
 /* Hero Section */
 .hero {
   display: grid;
@@ -782,6 +794,8 @@ button:focus-visible {
   color: var(--text-secondary);
   text-decoration: none;
   transition: var(--transition-fast);
+  display: block;
+  margin-top: 0.45rem;
 }
 
 .footer-col a:hover {

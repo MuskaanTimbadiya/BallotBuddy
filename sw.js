@@ -2,6 +2,7 @@ const CACHE_NAME = 'ballot-buddy-v11';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/manifest.json',
   '/style.css',
   '/main.js',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap'

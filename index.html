@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000080" />
     <meta name="description" content="Ballot Buddy - Your interactive guide to understanding the Indian election process." />
     <title>Ballot Buddy | Indian Election Assistant</title>
+    <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -35,6 +37,7 @@
           <button id="share-btn" class="btn-share"><span data-i18n="navShare">Share</span> <svg style="display:inline; vertical-align:middle; margin-left:4px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
         </div>
       </nav>
+      <div id="offline-banner" class="offline-banner hidden" role="status" aria-live="polite">You are currently offline. Some features may be limited.</div>
 
       <main>
         <section class="hero">
@@ -208,6 +211,8 @@
             <a href="#guide" data-i18n="navGuide">Start Guide</a>
             <a href="#" onclick="document.getElementById('nav-quiz-btn').click();" data-i18n="navQuiz">Take Quiz</a>
             <a href="https://eci.gov.in" target="_blank">ECI Official Portal</a>
+            <a href="https://voters.eci.gov.in" target="_blank">ECI Voter Services</a>
+            <a href="https://eci.gov.in/faqs" target="_blank">ECI FAQs</a>
           </div>
         </div>
         <div class="footer-bottom">

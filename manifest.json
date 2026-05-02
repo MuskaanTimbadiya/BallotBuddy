@@ -1,0 +1,9 @@
+{
+  "name": "Ballot Buddy",
+  "short_name": "BallotBuddy",
+  "description": "An interactive guide to the Indian electoral process with timelines, multilingual support, and voter readiness tools.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000080"
+}

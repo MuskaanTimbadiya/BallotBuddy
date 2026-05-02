@@ -281,7 +281,18 @@ const translations = {
 
 document.addEventListener('DOMContentLoaded', () => {
   let currentLang = 'en';
+  let currentRegion = 'all';
+  let currentBallotRegion = 'wb';
   let currentSpokenText = "";
+  const offlineBanner = document.getElementById('offline-banner');
+
+  function safeSetItem(key, value) {
+    try {
+      window.localStorage.setItem(key, value);
+    } catch (error) {
+      console.warn('Unable to save localStorage item', key, error);
+    }
+  }
 
   function toggleSpeech(textToRead) {
     if (window.speechSynthesis.speaking && currentSpokenText === textToRead) {
@@ -297,6 +308,50 @@ document.addEventListener('DOMContentLoaded', () => {
     utterance.onend = () => { if (currentSpokenText === textToRead) currentSpokenText = ""; };
     window.speechSynthesis.speak(utterance);
   }
+
+  function updateNetworkStatus() {
+    if (!offlineBanner) return;
+    if (!navigator.onLine) {
+      offlineBanner.classList.remove('hidden');
+      offlineBanner.textContent = 'You are currently offline. Some interactive features may be limited.';
+    } else {
+      offlineBanner.classList.add('hidden');
+    }
+  }
+
+  function loadAppState() {
+    try {
+      const storedLang = window.localStorage.getItem('ballotBuddyLang');
+      const storedRegion = window.localStorage.getItem('ballotBuddyRegion');
+      const storedBallotRegion = window.localStorage.getItem('ballotBuddyBallotRegion');
+      if (storedLang) currentLang = storedLang;
+      if (storedRegion) currentRegion = storedRegion;
+      if (storedBallotRegion) currentBallotRegion = storedBallotRegion;
+    } catch (error) {
+      console.warn('Unable to load saved app state', error);
+    }
+  }
+
+  function saveChatHistory(messages) {
+    try {
+      window.sessionStorage.setItem('ballotBuddyChatHistory', JSON.stringify(messages));
+    } catch (error) {
+      console.warn('Unable to save chat history', error);
+    }
+  }
+
+  function getChatHistory() {
+    try {
+      const stored = window.sessionStorage.getItem('ballotBuddyChatHistory');
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.warn('Unable to load chat history', error);
+      return [];
+    }
+  }
+
+  loadAppState();
+  updateNetworkStatus();
 
   // --- 1. Language Toggle Logic ---
   const langSelect = document.getElementById('lang-select');
@@ -314,12 +369,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInput = document.getElementById('chat-input');
     if (chatInput) chatInput.placeholder = (translations[currentLang] && translations[currentLang].chatPlaceholder) || translations['en'].chatPlaceholder || "Enter your query...";
     
+    if (langSelect) langSelect.value = currentLang;
+    if (regionSelect) regionSelect.value = currentRegion;
+    if (ballotRegionSelect) ballotRegionSelect.value = currentBallotRegion;
     renderTimelines();
   }
 
   if (langSelect) {
     langSelect.addEventListener('change', (e) => {
       currentLang = e.target.value;
+      safeSetItem('ballotBuddyLang', currentLang);
       updateI18n();
     });
   }
@@ -394,7 +453,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 3. Timeline Logic ---
   const regionSelect = document.getElementById('region-select');
   if (regionSelect) {
-    regionSelect.addEventListener('change', renderTimelines);
+    regionSelect.addEventListener('change', () => {
+      currentRegion = regionSelect.value;
+      safeSetItem('ballotBuddyRegion', currentRegion);
+      renderTimelines();
+    });
   }
 
   function renderTimelines() {
@@ -559,6 +622,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     chatMessages.appendChild(msg);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    const visibleMessages = Array.from(chatMessages.querySelectorAll('.bot-msg, .user-msg')).map(node => ({
+      text: node.innerText.replace(/\n/g, ' '),
+      isBot: node.classList.contains('bot-msg')
+    }));
+    saveChatHistory(visibleMessages);
+  }
+
+  function restoreChatHistory() {
+    const history = getChatHistory();
+    if (!history.length) return;
+    chatMessages.innerHTML = '';
+    history.forEach(item => {
+      const msg = document.createElement('div');
+      msg.className = item.isBot ? 'bot-msg' : 'user-msg';
+      msg.innerText = item.text;
+      chatMessages.appendChild(msg);
+    });
+    chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
   async function handleChat() {
@@ -587,6 +669,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typingMsg.parentNode) chatMessages.removeChild(typingMsg);
         addMessage(localMatch.a, true);
       }, 600); // Simulate "thinking" for better UX
+      return;
+    }
+
+    if (!navigator.onLine) {
+      if (typingMsg.parentNode) chatMessages.removeChild(typingMsg);
+      addMessage(translations[currentLang].chatGreeting + '\n\n' + (translations[currentLang].offlineSuggestion || 'The assistant is offline. Please use the guide or check official ECI resources.'), true);
       return;
     }
 
@@ -627,8 +715,13 @@ document.addEventListener('DOMContentLoaded', () => {
     chatFab.addEventListener('click', () => {
       chatWindow.classList.toggle('hidden');
       if (!chatWindow.classList.contains('hidden') && !chatInitialized) {
-          chatMessages.innerHTML = '';
-          addMessage(translations[currentLang].chatGreeting, true);
+          const history = getChatHistory();
+          if (history.length) {
+            restoreChatHistory();
+          } else {
+            chatMessages.innerHTML = '';
+            addMessage(translations[currentLang].chatGreeting, true);
+          }
           chatInitialized = true;
       }
     });
@@ -645,6 +738,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (chatInput) {
     chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleChat(); });
   }
+
+  window.addEventListener('online', updateNetworkStatus);
+  window.addEventListener('offline', updateNetworkStatus);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (!chatWindow.classList.contains('hidden')) chatWindow.classList.add('hidden');
+      if (!quizModal.classList.contains('hidden')) quizModal.classList.add('hidden');
+      if (!ballotModal.classList.contains('hidden')) ballotModal.classList.add('hidden');
+      if (!onboardingModal.classList.contains('hidden')) onboardingModal.classList.add('hidden');
+    }
+  });
 
   document.querySelectorAll('.suggestion-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -866,7 +971,11 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBallotBtn.addEventListener('click', () => ballotModal.classList.add('hidden'));
   }
   if (ballotRegionSelect) {
-    ballotRegionSelect.addEventListener('change', () => renderBallot(ballotRegionSelect.value));
+    ballotRegionSelect.addEventListener('change', () => {
+      currentBallotRegion = ballotRegionSelect.value;
+      safeSetItem('ballotBuddyBallotRegion', currentBallotRegion);
+      renderBallot(ballotRegionSelect.value);
+    });
   }
   // Close modal on overlay click
   if (ballotModal) {
