@@ -1949,3 +1949,24 @@ button:focus-visible {
     border-bottom: 1px solid var(--border-color);
   }
 }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--text-primary);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  font-size: 1rem;
+  z-index: 3000;
+  transition: transform 0.3s ease;
+  opacity: 0;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

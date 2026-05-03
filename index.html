@@ -71,6 +71,18 @@
         font-weight:400 800;
         unicode-range:U+0000-00FF;
       }
+      .search-container { position: relative; margin-left: 1.5rem; margin-right: 0.5rem; }
+      .search-input { padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; width: 200px; }
+      .search-input:focus { border-color: var(--accent-blue); }
+      .glossary-results { position: absolute; top: 100%; left: 0; right: 0; margin-top: 5px; background: #fff; z-index: 2000; max-height: 300px; overflow-y: auto; padding: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; box-shadow: var(--shadow-md); }
+      .glossary-item { padding: 0.5rem; border-bottom: 1px solid var(--border-color); }
+      .glossary-item:last-child { border-bottom: none; }
+      .glossary-term { font-weight: bold; color: var(--accent-blue); margin-bottom: 0.2rem; }
+      .glossary-def { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; }
+      @media(max-width:768px){
+        .search-input { width: 100%; }
+        .search-container { margin-left: 0; margin-right: 0; width: 100%; }
+      }
     </style>
   </head>
   <body>
@@ -83,6 +95,10 @@
         </a>
         <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
         <div class="nav-links" id="nav-menu">
+          <div class="search-container">
+            <input type="text" id="glossary-search" placeholder="Search glossary..." class="search-input" aria-label="Search election glossary">
+            <div id="glossary-results" class="glossary-results hidden formal-card"></div>
+          </div>
           <label for="lang-select" class="visually-hidden">Select Language</label>
           <select id="lang-select" class="lang-dropdown" aria-label="Language selection">
             <option value="en">English</option>
@@ -123,30 +139,31 @@
 
         <section class="hero reveal" id="home">
           <div class="hero-content">
-            <h1 class="hero-title" data-i18n="heroTitle">A Guide to the <br/><span class="highlight">Indian Elections</span></h1>
-            <p class="hero-subtitle" data-i18n="heroSubtitle">Navigate the world's largest democratic process with confidence. Learn how to register, verify your details, and cast your vote officially.</p>
-            <div class="hero-btns">
-              <button class="btn-primary" id="start-guide-btn" data-i18n="heroCTA">Start Voting Guide</button>
+              <h1 class="hero-title" data-i18n="heroTitle">A Guide to the <br/><span class="highlight">Indian Elections</span></h1>
+              <p class="hero-subtitle" data-i18n="heroSubtitle">Navigate the world's largest democratic process with confidence. Learn how to register, verify your details, and cast your vote officially.</p>
+              <div class="hero-btns" style="display:flex; gap:1rem;">
+                <button class="btn-primary" id="start-guide-btn" data-i18n="heroCTA">Start Voting Guide</button>
+                <button class="btn-secondary" id="remind-btn" data-i18n="btnRemind">⏰ Set Reminder</button>
+              </div>
             </div>
-          </div>
-          <div class="hero-visual">
-            <div class="floating-card c1"><span>🗳️</span> Vote 2026</div>
-            <div class="floating-card c2"><span>🇮🇳</span> Democracy</div>
-            <div class="floating-card c3"><span>✅</span> Verified</div>
-            <div class="hero-circle"></div>
-          </div>
+            <div class="hero-visual">
+              <div class="floating-card c1"><span>🗳️</span> Vote 2026</div>
+              <div class="floating-card c2"><span>🇮🇳</span> Democracy</div>
+              <div class="floating-card c3"><span>✅</span> Verified</div>
+              <div class="hero-circle"></div>
+            </div>
         </section>
 
         <section class="about-section reveal" id="about">
-          <div class="about-content formal-card">
-            <h2 class="about-title" data-i18n="aboutTitle">About Ballot Buddy</h2>
-            <p class="about-text" data-i18n="aboutText1">
-              Democracy thrives when its citizens are informed and engaged. Ballot Buddy is an initiative designed to simplify the complex election process in India. Whether you are a first-time voter learning how to register, or an experienced citizen verifying your polling booth, this guide provides clear, actionable, and official information.
-            </p>
-            <p class="about-text" data-i18n="aboutText2">
-              Our objective is to ensure electoral participation is accessible to all eligible citizens, reinforcing the foundation of the world's largest democracy.
-            </p>
-          </div>
+            <div class="about-content formal-card">
+              <h2 class="about-title" data-i18n="aboutTitle">About Ballot Buddy</h2>
+              <p class="about-text" data-i18n="aboutText1">
+                Democracy thrives when its citizens are informed and engaged. Ballot Buddy is an initiative designed to simplify the complex election process in India. Whether you are a first-time voter learning how to register, or an experienced citizen verifying your polling booth, this guide provides clear, actionable, and official information.
+              </p>
+              <p class="about-text" data-i18n="aboutText2">
+                Our objective is to ensure electoral participation is accessible to all eligible citizens, reinforcing the foundation of the world's largest democracy.
+              </p>
+            </div>
         </section>
 
         <section id="timelines" class="timelines-section">
@@ -166,6 +183,7 @@
           <section class="timelines-section reveal" id="timelines-container">
             <!-- Timelines will be injected here by JS -->
           </section>
+        </section>
 
         <section class="kyc-section reveal" id="kyc">
           <div class="section-header">
@@ -523,5 +541,6 @@
         });
       }
     </script>
+  <div id="toast" class="toast"></div>
   </body>
 </html>

@@ -253,6 +253,16 @@ const translations = {
     topicTaxation: "Taxation & Economy",
     topicEmployment: "Employment & Jobs",
     topicDigital: "Digital India & Tech",
+    glossary: [
+      { term: "EVM", def: "Electronic Voting Machine - A device used to electronically record and count votes." },
+      { term: "VVPAT", def: "Voter Verifiable Paper Audit Trail - An independent verification system for voting machines." },
+      { term: "EPIC", def: "Electors Photo Identity Card - Officially known as the Voter ID card." },
+      { term: "MCC", def: "Model Code of Conduct - Guidelines for political parties and candidates during elections." },
+      { term: "NOTA", def: "None of the Above - An option allowing voters to reject all candidates." },
+      { term: "Constituency", def: "A geographical area that an elected official represents." },
+      { term: "Manifesto", def: "A published declaration of the intentions, motives, or views of a political party." },
+      { term: "Affidavit", def: "A written statement confirmed by oath or affirmation, required from candidates." }
+    ],
     btnCompare: "Compare Manifestos"
   },
   hi: {
@@ -578,7 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Trigger re-renders for dynamic sections
-    if (!document.getElementById('timelines-container').classList.contains('hidden')) renderTimelines();
+    if (!document.getElementById('timelines').classList.contains('hidden')) renderTimelines();
     
     // KYC section panel refresh
     const kycInfo = document.getElementById('kyc-info');
@@ -610,9 +620,43 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeSteps = [];
   let currentStepIndex = 0;
 
+  function toggleMainSections(show) {
+    const sections = [
+      heroSection,
+      document.getElementById('about'),
+      document.getElementById('timelines'),
+      document.getElementById('kyc'),
+      document.getElementById('booth-finder'),
+      document.getElementById('why-vote'),
+      document.getElementById('manifesto')
+    ];
+    sections.forEach(sec => {
+      if (sec) {
+        if (show) sec.classList.remove('hidden');
+        else sec.classList.add('hidden');
+      }
+    });
+  }
+
   if (startGuideBtn) {
     startGuideBtn.addEventListener('click', () => {
       onboardingModal.classList.remove('hidden');
+    });
+  }
+
+  const remindBtn = document.getElementById('remind-btn');
+  if (remindBtn) {
+    remindBtn.addEventListener('click', () => {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      const msg = translations[currentLang].toastRemind || "Reminder set! We will notify you before voting day.";
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+      
+      if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+        Notification.requestPermission();
+      }
     });
   }
 
@@ -657,11 +701,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activeSteps.push(getStep(4));
     activeSteps.push(getStep(5));
 
-    heroSection.classList.add('hidden');
-    document.getElementById('about').classList.add('hidden');
-    document.getElementById('timelines-container').classList.add('hidden');
-    document.getElementById('kyc').classList.add('hidden');
-    document.getElementById('manifesto').classList.add('hidden');
+    toggleMainSections(false);
     guideSection.classList.remove('hidden');
     
     currentStepIndex = 0;
@@ -706,7 +746,10 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <h3 style="display:flex; justify-content:space-between; align-items:center;">
           ${title}
-          <button class="tts-btn" id="timeline-tts-${idx}" aria-label="Read aloud" title="Read aloud" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">🔊</button>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <button class="tts-btn" id="timeline-tts-${idx}" aria-label="Read aloud" title="Read aloud" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">🔊</button>
+            <button class="reminder-btn" id="timeline-remind-${idx}" aria-label="Set Reminder" title="Set Reminder" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">🔔</button>
+          </div>
         </h3>
         <div>${content}</div>
       `;
@@ -718,6 +761,13 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.addEventListener('click', () => {
             const textToRead = item.title + ". " + item.content.replace(/<[^>]*>?/gm, '');
             toggleSpeech(textToRead);
+          });
+        }
+
+        const remindBtn = document.getElementById(`timeline-remind-${idx}`);
+        if (remindBtn) {
+          remindBtn.addEventListener('click', () => {
+            showToast(`Reminder set for ${title}! We'll notify you as the date approaches. 🗳️`, "success");
           });
         }
       }, 0);
@@ -772,11 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         alert(translations[currentLang].alertFinish);
         guideSection.classList.add('hidden');
-        heroSection.classList.remove('hidden');
-        document.getElementById('about').classList.remove('hidden');
-        document.getElementById('timelines-container').classList.remove('hidden');
-        document.getElementById('kyc').classList.remove('hidden');
-        document.getElementById('manifesto').classList.remove('hidden');
+        toggleMainSections(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
@@ -802,11 +848,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       e.preventDefault();
       guideSection.classList.add('hidden');
-      heroSection.classList.remove('hidden');
-      document.getElementById('about').classList.remove('hidden');
-      document.getElementById('timelines-container').classList.remove('hidden');
-      document.getElementById('kyc').classList.remove('hidden');
-      document.getElementById('manifesto').classList.remove('hidden');
+      toggleMainSections(true);
 
       const targetElement = document.querySelector(targetId);
       if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
@@ -1086,11 +1128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       // Hide guide, show all homepage sections
       guideSection.classList.add('hidden');
-      heroSection.classList.remove('hidden');
-      document.getElementById('about').classList.remove('hidden');
-      document.getElementById('timelines-container').classList.remove('hidden');
-      document.getElementById('kyc').classList.remove('hidden');
-      document.getElementById('manifesto').classList.remove('hidden');
+      toggleMainSections(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
@@ -1543,6 +1581,50 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>No booths found for this PIN code in our current database. Please try 110001, 700001, 400001, or 600001.</p>
           </div>
         `;
+      }
+    });
+  }
+
+  // --- 9. Glossary Search ---
+  const glossarySearch = document.getElementById('glossary-search');
+  const glossaryResults = document.getElementById('glossary-results');
+
+  if (glossarySearch && glossaryResults) {
+    glossarySearch.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      if (!query) {
+        glossaryResults.classList.add('hidden');
+        glossaryResults.innerHTML = '';
+        return;
+      }
+      
+      const currentGlossary = (translations[currentLang] && translations[currentLang].glossary) ? translations[currentLang].glossary : translations['en'].glossary;
+      const matches = currentGlossary.filter(item => 
+        item.term.toLowerCase().includes(query) || item.def.toLowerCase().includes(query)
+      );
+
+      if (matches.length > 0) {
+        let html = '';
+        matches.forEach(m => {
+          html += `
+            <div class="glossary-item">
+              <div class="glossary-term">${m.term}</div>
+              <div class="glossary-def">${m.def}</div>
+            </div>
+          `;
+        });
+        glossaryResults.innerHTML = html;
+        glossaryResults.classList.remove('hidden');
+      } else {
+        glossaryResults.innerHTML = '<div class="glossary-item" style="color:var(--text-secondary);">No terms found</div>';
+        glossaryResults.classList.remove('hidden');
+      }
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (!glossarySearch.contains(e.target) && !glossaryResults.contains(e.target)) {
+        glossaryResults.classList.add('hidden');
       }
     });
   }

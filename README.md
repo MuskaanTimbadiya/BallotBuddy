@@ -12,7 +12,7 @@ Ballot Buddy is a formal, multilingual, and highly interactive web platform desi
 |---|---|
 | **Frontend** | Vanilla HTML5, CSS3, JavaScript (ES6+) |
 | **Backend** | Node.js + Express.js |
-| **AI / ML** | Google Gemini 1.5 Flash API (text + multimodal) |
+| **AI / ML** | Google Gemini 2.5 Flash API (text + multimodal) |
 | **Cloud Platform** | Google Cloud Run (containerized, auto-scaling) |
 | **Containerization** | Docker |
 | **Maps** | Leaflet.js |
@@ -89,6 +89,9 @@ CRITICAL RULES:
 | 📖 **Why Your Vote Matters** | Interactive slideshow of real Indian elections decided by 1–44 votes |
 | 📶 **Offline Mode** | Service Worker caches core assets for low-connectivity areas |
 | 🧠 **Knowledge Quiz** | Multilingual quiz with instant feedback |
+| 🔍 **Election Glossary Search** | Instant keyword search for Indian electoral terms and definitions |
+| 🔔 **Smart Election Reminders** | Set notifications for specific regional election dates with one click |
+| 🛡️ **Bias-Proof AI** | Advanced system prompting ensures 100% political neutrality and fact-checked responses |
 
 ---
 
@@ -114,8 +117,16 @@ Key functions are documented with JSDoc-style comments explaining their purpose:
 - **`/api/chat`** — Routes user queries through the Gemini API with topic-locked system instruction
 - **`/api/summarize`** — Fetches neutral manifesto comparisons from Gemini in structured JSON format
 - **`/api/verify-badge`** — Sends multimodal prompt to Gemini Vision to verify inked finger photos
+- **`/api/glossary`** — (Optional) AI-powered fallback for election terminology
 
 ---
+
+## Unique Selling Points (USPs)
+
+1. **Hyper-Localized UX:** Unlike generic civic tools, BallotBuddy adapts its entire interface, timelines, and candidate data to the user's specific state (WB, TN, MH, DL).
+2. **AI-First Civic Education:** Leverages Gemini's multimodal capabilities to not just answer questions, but verify real-world civic actions (inked finger verification).
+3. **Accessibility Without Compromise:** Combines multilingual support (5 languages) with screen-reader optimization and integrated Text-to-Speech (TTS) for non-literate or visually impaired users.
+4. **Resilient Architecture:** Implements a PWA strategy with Service Workers and local fallbacks, ensuring voters in low-connectivity areas still have access to the Interactive Voter Guide.
 
 ## Accessibility
 

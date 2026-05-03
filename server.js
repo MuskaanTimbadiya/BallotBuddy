@@ -15,9 +15,9 @@ const port = process.env.PORT || 8080;
 
 // Serve minified CSS instead of raw CSS
 app.get('/style.css', (req, res) => {
-  res.setHeader('Content-Type', 'text/css');
-  res.setHeader('Cache-Control', 'public, max-age=604800'); // 1 week
-  res.sendFile(path.join(__dirname, 'style.min.css'));
+    res.setHeader('Content-Type', 'text/css');
+    res.setHeader('Cache-Control', 'public, max-age=604800'); // 1 week
+    res.sendFile(path.join(__dirname, 'style.min.css'));
 });
 
 app.use(cors());
@@ -60,7 +60,7 @@ CRITICAL RULES — you must follow all of these without exception:
 
         // Fetches a response from Google Gemini API using the configured system instruction and user message
         const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash",
+            model: "gemini-2.5-flash",
             systemInstruction: systemInstruction
         });
 
@@ -112,7 +112,7 @@ CRITICAL RULES:
 5. Do not include any markdown formatting or text outside the JSON.`;
 
         const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash",
+            model: "gemini-2.5-flash",
             systemInstruction: systemInstruction,
             generationConfig: { responseMimeType: "application/json" }
         });
@@ -122,7 +122,8 @@ CRITICAL RULES:
         const response = await result.response;
 
         const responseText = response.text();
-        const jsonResponse = JSON.parse(responseText);
+        const cleanedText = responseText.replace(/```json|```/gi, "").trim();
+        const jsonResponse = JSON.parse(cleanedText);
         res.json(jsonResponse);
 
     } catch (error) {
@@ -137,7 +138,7 @@ app.post('/api/verify-ink', async (req, res) => {
         const { image } = req.body;
         if (!image) return res.status(400).json({ error: "Image data is required" });
 
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         const prompt = "Analyze this image. Does it show a human finger with the purple indelible ink mark used in Indian elections? Reply ONLY with a JSON object: {\"verified\": true/false, \"reason\": \"brief explanation\"}. If the image is not clear or doesn't show a finger, set verified to false.";
 
@@ -148,11 +149,11 @@ app.post('/api/verify-ink', async (req, res) => {
 
         const response = await result.response;
         const text = response.text();
-        
+
         // Clean markdown if AI includes it
         const cleanedText = text.replace(/```json|```/g, "").trim();
         const jsonResponse = JSON.parse(cleanedText);
-        
+
         res.json(jsonResponse);
 
     } catch (error) {
